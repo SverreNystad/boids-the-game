@@ -41,6 +41,7 @@ public class GameController {
 	}
 
 	public void quitProgram(ActionEvent event) throws IOException{
+		// Kills the Program
 		Platform.exit();
 	}
 }
