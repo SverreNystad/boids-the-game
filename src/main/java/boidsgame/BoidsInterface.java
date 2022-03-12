@@ -12,6 +12,7 @@ public interface BoidsInterface {
 	public void setPosition();
 	public void setVelocity();
 	public void setAcceleration();
+	public void isAlive();
 	
 	public boolean boidInViewRange(BoidsInterface otherBoid);
 	public Collection<BoidsInterface> findAllBoidsInViewRange(Collection<BoidsInterface> allBoids);

@@ -12,7 +12,9 @@ public class Boid{
 	protected int viewRangeRadius;
 	protected boolean isAlive;
 
-		public Boid(
+	private Collection<BoidsInterface> listOfBoidsInRange;
+
+	public Boid(
 		Vector position,
 		Vector velocity,
 		Vector acceleration,
@@ -20,13 +22,23 @@ public class Boid{
 		int maxAcceleration,
 		int viewRangeRadius
 		){
+		vailedArgs(maxVelocity,maxAcceleration,viewRangeRadius);
 		this.position = position;
 		this.velocity = velocity;
 		this.maxVelocity = maxVelocity;
 		this.acceleration = acceleration;
 		this.maxAcceleration = maxAcceleration;
 		this.viewRangeRadius = viewRangeRadius;
-		
+	}
+	/**
+	 * This method will throw IllegalArgumentException if any arguments are negativ.
+	 * @param args can be a variable amount.
+	 */
+	private static void vailedArgs(final int... args) {
+		// TODO: MUST BE TESTED.
+		for (int num : args) {
+			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
+		}
 	}
 	/**
 	 * findAllBoidsInViewRange() Will make a list of all boids that is in the view range of this boid.
@@ -34,7 +46,8 @@ public class Boid{
 	 * @return list of all boids around this boid.
 	 */
 	public Collection<BoidsInterface> findAllBoidsInViewRange(Collection<BoidsInterface> allBoids){
-		Collection<BoidsInterface> listOfBoidsInRange = new Collection<BoidsInterface>();
+		// Collection<BoidsInterface> listOfBoidsInRange = new Collection<BoidsInterface>();
+		listOfBoidsInRange.clear();
 		for (BoidsInterface currentBoid : allBoids) {
 			if (this.boidInViewRange(currentBoid)){
 				listOfBoidsInRange.add(currentBoid);
@@ -51,9 +64,9 @@ public class Boid{
 		// Must find if boid is in ViewRange
 		return 
 		// If X pos of other boid in range of current boid
-		((this.position.getPositionX() - this.viewRangeRadius) <= otherBoid.position.getPositionX() && (this.position.getPositionX() + this.viewRangeRadius) >= otherBoid.position.getPositionX()) 
+		((this.getPosition().getPositionX() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionX() && (this.getPosition().getPositionX() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionX()) 
 		// If Y pos of other boid in range of current boid
-		&& ((this.position.getPositionY() - this.viewRangeRadius) <= otherBoid.position.getPositionY() && (this.position.getPositionY() + this.viewRangeRadius) >= otherBoid.position.getPositionY());
+		&& ((this.getPosition().getPositionY() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionY() && (this.getPosition().getPositionY() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionY());
 	}
 
 	
@@ -94,7 +107,7 @@ public class Boid{
 		this.viewRangeRadius = viewRangeRadius;
 	}
 	public boolean isAlive() {
-		return isAlive;
+		return this.isAlive;
 	}
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;

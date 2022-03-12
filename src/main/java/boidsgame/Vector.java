@@ -30,6 +30,10 @@ public class Vector {
 		this.positionX += vectorAdded.positionX;
 		this.positionY += vectorAdded.positionY;
 	}
+	public Vector subtractionVector(Vector vectorAdded){
+		return new Vector(this.positionX - vectorAdded.positionX, this.positionY - vectorAdded.positionY);
+	}
+	
 	/**
 	 * distenceBetweenVector finds the shortest vector form other vector to this vector in 2d space.
 	 * @param vector
