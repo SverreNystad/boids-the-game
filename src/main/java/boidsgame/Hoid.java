@@ -4,16 +4,14 @@ import java.util.Collection;
 // Herd-oid object
 public class Hoid extends Boid implements BoidsInterface {
 	private Collection<Vector> allSeperationVectors;
-
-
 	private int cohesionCoefficient;
 	private int seperationCoefficient;
 	private int alignmentCoefficient;
 
 
-	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, int cohesionCoefficient, int seperationCoefficient, int alignmentCoefficient){
+	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, int cohesionCoefficient, int seperationCoefficient, int alignmentCoefficient){
 		// TODO: Fix contstuctor. Do validation. Should not be able to be out of World
-		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius);
+		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive);
 		this.cohesionCoefficient = cohesionCoefficient;
 		this.seperationCoefficient = seperationCoefficient;
 		this.alignmentCoefficient = alignmentCoefficient;
@@ -75,6 +73,7 @@ public class Hoid extends Boid implements BoidsInterface {
 		// TODO: Must make the steerimgVector out of the averege direction: steeringVector = disired velocity - this.velocity
 		return commenVector.subtractionVector(this.velocity);
 	}
+	// TODO: Must make function to run from unfriendly boids.
 
 
 

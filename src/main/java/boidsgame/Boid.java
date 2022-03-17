@@ -20,7 +20,8 @@ public class Boid{
 		Vector acceleration,
 		int maxVelocity,
 		int maxAcceleration,
-		int viewRangeRadius
+		int viewRangeRadius,
+		boolean isAlive
 		){
 		vailedArgs(maxVelocity,maxAcceleration,viewRangeRadius);
 		this.position = position;
@@ -29,6 +30,7 @@ public class Boid{
 		this.acceleration = acceleration;
 		this.maxAcceleration = maxAcceleration;
 		this.viewRangeRadius = viewRangeRadius;
+		this.isAlive = isAlive;
 	}
 	/**
 	 * This method will throw IllegalArgumentException if any arguments are negativ.

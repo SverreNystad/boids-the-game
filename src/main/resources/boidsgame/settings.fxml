@@ -25,7 +25,7 @@
          </image>
       </ImageView>
       <Button fx:id="mainMenuButton" layoutX="545.0" layoutY="634.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="190.0" text="Back to main menu" />
-      <Slider fx:id="startBoidsAmountSlider" layoutX="540.0" layoutY="373.0" max="200.0" min="1.0" onDragDetected="#handleStartBoidsAmountSlider" prefHeight="32.0" prefWidth="200.0" showTickMarks="true" value="1.0" />
+      <Slider fx:id="startBoidsAmountSlider" layoutX="540.0" layoutY="373.0" max="200.0" min="1.0" onDragDetected="#handleStartBoidsAmountSlider" onMouseClicked="#handleStartBoidsAmountSlider" onMouseDragged="#handleStartBoidsAmountSlider" prefHeight="32.0" prefWidth="200.0" showTickMarks="true" value="1.0" />
       <Text layoutX="529.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many boids at start:" textAlignment="CENTER" wrappingWidth="222.4000244140625">
          <font>
             <Font size="20.0" />
@@ -36,7 +36,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Slider fx:id="startPoidProsentSlider" layoutX="540.0" layoutY="453.0" onDragDetected="#handleStartPoidProsentSlider" onDragOver="#handleStartPoidProsentSlider" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" />
+      <Slider fx:id="startPoidProsentSlider" layoutX="540.0" layoutY="453.0" onDragDetected="#handleStartPoidProsentSlider" onMouseClicked="#handleStartPoidProsentSlider" onMouseDragged="#handleStartPoidProsentSlider" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" />
       <Text layoutX="515.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulty: Portion being poid" textAlignment="CENTER" wrappingWidth="255.4000244140625">
          <font>
             <Font size="18.0" />

@@ -1,17 +1,16 @@
 package boidsgame;
 import java.util.Collection;
-
-public class Poid extends Boid implements BoidsInterface{
+//Edvard var her :)
+public class Poid extends Boid implements BoidsInterface {
 	private int killRadius;
 	private int killAmount;
 
 
-	public Poid(){
+	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, int killRadius, int killAmount){
 		// # TODO: Fix contstuctor. Do validation. Should not be able to be out of World
-		
-		// super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius)
-		// this.killRadius = killRadius;
-		// this.killAmount = killAmount;
+		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive);
+		this.killRadius = killRadius;
+		this.killAmount = killAmount;
 		
 	}
 
@@ -20,7 +19,6 @@ public class Poid extends Boid implements BoidsInterface{
 		// must check its not another poid
 		BoidsInterface closestBoid = null;
 		Double shortestDistance = null;
-
 
 		for (BoidsInterface currentBoid : allCloseBoids) {
 			if(currentBoid.getClass().getName().equals("Poid")){ // could be fun if a larger poid could eate other poids
@@ -41,8 +39,8 @@ public class Poid extends Boid implements BoidsInterface{
 		}
 	}
 	// TODO: Make a method to move towards the boid
-	public Vector closestBoidVector(BoidsInterface closestboid){
+	// public Vector closestBoidVector(BoidsInterface closestboid){
 
 		
-	}
+	// }
 }

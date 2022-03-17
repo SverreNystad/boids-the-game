@@ -13,9 +13,39 @@ import org.junit.jupiter.api.Test;
 
 public class HoidTest {
 	
-	@BeforeEach
-	public void setup() {
-		Collection<BoidsInterface> allBoids = List<BoidsInterface>.of(new Hoid());
+	// @BeforeEach
+	// public void setup() {
+	// 	int totalAmountOfBoids = 10;
+	// 	Collection<BoidsInterface> allBoidsInLine;
+	// 	Vector position = new Vector(0, 0);
+	// 	Vector velocity = new Vector(0, 0);
+	// 	Vector acceleration = new Vector(0, 0);
+	// 	int maxVelocity = ;
+	// 	int maxAcceleration = ;
+	// 	int viewRangeRadius = ;
+	// 	int cohesionCoefficient = ;
+	// 	int seperationCoefficient = ;
+	// 	int alignmentCoefficient
+	// 	for (int i = 0; i < totalAmountOfBoids; i++){
+	// 		allBoidsInLine.add(Hoid());
+	// 	}
+		
+	// }
+
+	@Test
+	@DisplayName("This test will check if the function isFriendlyBoid give wright input")
+	public void testIsFriendlyBoid() {
+		Vector testVector = new Vector(0, 0);
+		int testInt = 0;
+		boolean alive = true;
+		BoidsInterface poid = new Poid(testVector, testVector, testVector, testInt, testInt, testInt, alive, testInt, testInt);
+		Hoid hoid = new Hoid(testVector, testVector, testVector, testInt, testInt, testInt, alive, testInt, testInt, testInt);
+		BoidsInterface playerBoid = new PlayerBoid();
+
+		assertEquals(true, hoid.isFriendlyBoid(playerBoid));
+
+
+
 		
 	}
 }

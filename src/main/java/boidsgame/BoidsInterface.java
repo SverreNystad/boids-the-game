@@ -9,10 +9,10 @@ public interface BoidsInterface {
 	public Vector getPosition();
 	public Vector getVelocity();
 	public Vector getAcceleration();
-	public void setPosition();
-	public void setVelocity();
-	public void setAcceleration();
-	public void isAlive();
+	public void setPosition(Vector newPosition);
+	public void setVelocity(Vector newVelocity);
+	public void setAcceleration(Vector newAcceleration);
+	public boolean isAlive();
 	
 	public boolean boidInViewRange(BoidsInterface otherBoid);
 	public Collection<BoidsInterface> findAllBoidsInViewRange(Collection<BoidsInterface> allBoids);

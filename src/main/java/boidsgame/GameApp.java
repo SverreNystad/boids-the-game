@@ -1,7 +1,6 @@
 package boidsgame;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -21,10 +20,6 @@ public class GameApp extends Application {
         // primaryStage.setScene(new Scene(FXMLLoader.load(GameApp.class.getResource("settings.fxml"))));
 
         primaryStage.show();
-    }
-
-    public void quitProgram(){
-        Platform.exit();
     }
     
 }
