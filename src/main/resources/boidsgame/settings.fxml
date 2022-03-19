@@ -63,6 +63,6 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <ToggleButton layoutX="595.0" layoutY="603.0" mnemonicParsing="false" text="ToggleButton" />
+      <ToggleButton fx:id="wraparoundButton" layoutX="614.0" layoutY="599.0" mnemonicParsing="false" onAction="#hancleWraparound" text="on/off" />
    </children>
 </AnchorPane>

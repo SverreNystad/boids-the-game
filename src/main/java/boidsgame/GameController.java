@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -57,13 +58,16 @@ public class GameController {
 	@FXML
 	private RadioButton rbPoid;
 
+	@FXML
+	private ToggleButton wraparoundButton;
+
 	// Variables
 	String gameMode = "Hoid";
+	String wraparound = "on";
 	int startBoidsAmountSliderValue;
 	int startPoidProsentSliderValue;
 
 	public void handleGamemodeSwitch(ActionEvent event) throws IOException{
-		// TODO find a way to save info and use gameMode
 		gameMode = (rbHoid.isSelected()) ? rbHoid.getText(): rbPoid.getText(); 
 	}
 
@@ -77,24 +81,23 @@ public class GameController {
 	public void handleStartPoidProsentSlider(MouseEvent event) throws IOException{
 		startPoidProsentSliderValue = (int) Math.floor(startPoidProsentSlider.getValue());
 		startPoidProsent.setText(Integer.toString(startPoidProsentSliderValue) + "%");
-
+	}
+	public void hancleWraparound(ActionEvent event) throws IOException{
+		wraparound = (wraparoundButton.isSelected()) ? "off" : "on";
 	}
 	public void storeSettingsInFile(){
+		// TODO: MUST SAVE RELATIV TO PATH AND IN RESOURCES DIR
 		try{
 			File currentGameSettings = new File("currentGameSettings.txt");
 			FileWriter currentWritter = new FileWriter(currentGameSettings);
 			// FileWriter currentWritter = new FileWriter("currentGameSettings.txt");
-			currentWritter.write("Gamemode, startBoidsAmount, startPoidProsent\n");
-			currentWritter.append(gameMode + ", " + String.valueOf(startBoidsAmountSliderValue) + ", " + String.valueOf(startPoidProsentSliderValue));
+			currentWritter.write("Gamemode, startBoidsAmount, startPoidProsent, wraparound\n");
+			currentWritter.append(gameMode + ", " + String.valueOf(startBoidsAmountSliderValue) + ", " + String.valueOf(startPoidProsentSliderValue) + ", " + wraparound);
 			currentWritter.close();
 		}
 		catch (IOException e){
 			System.out.println("An error has occured. In the storing of gamesettings.");
 		}
-
-		// BufferedReader file = new BufferedReader(
-		// new InputStreamReader(GameController.class.getResourceAsStream("currentGameSettings.txt")));
-		// file.lines().forEach(gameSettings -> System.out.println(gameSettings));
 	}
 
 	// NOTE: Maight only have one function and buttenName be filename except filtype
