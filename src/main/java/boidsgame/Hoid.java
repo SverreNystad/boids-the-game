@@ -9,16 +9,19 @@ public class Hoid extends Boid implements BoidsInterface {
 	private int alignmentCoefficient;
 
 
-	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, int cohesionCoefficient, int seperationCoefficient, int alignmentCoefficient){
+	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, int cohesionCoefficient, int seperationCoefficient, int alignmentCoefficient){
 		// TODO: Fix contstuctor. Do validation. Should not be able to be out of World
-		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive);
+		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
 		this.cohesionCoefficient = cohesionCoefficient;
 		this.seperationCoefficient = seperationCoefficient;
 		this.alignmentCoefficient = alignmentCoefficient;
 	}
 
-
-
+	/**
+	 * 
+	 * @param allCloseBoids
+	 * @return
+	 */
 	public Vector cohesionVector(Collection<BoidsInterface> allCloseBoids){
 		// TODO: cohesionVector MUST BE TESTED
 

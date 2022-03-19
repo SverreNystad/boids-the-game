@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+// import java.awt.*;
+import java.util.Collection;
+import java.util.Collections;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,6 +22,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -61,11 +65,16 @@ public class GameController {
 	@FXML
 	private ToggleButton wraparoundButton;
 
+	@FXML
+	private Canvas worldCanvas;
+
 	// Variables
-	String gameMode = "Hoid";
-	String wraparound = "on";
-	int startBoidsAmountSliderValue;
-	int startPoidProsentSliderValue;
+	private String gameMode = "Hoid";
+	private String wraparound = "on";
+	private int startBoidsAmountSliderValue;
+	private int startPoidProsentSliderValue;
+	private Collection<BoidsInterface> allInitBoids = new ArrayList<>();
+	private World gameWorld;
 
 	public void handleGamemodeSwitch(ActionEvent event) throws IOException{
 		gameMode = (rbHoid.isSelected()) ? rbHoid.getText(): rbPoid.getText(); 
@@ -108,6 +117,12 @@ public class GameController {
 	public void switchToSettings(ActionEvent event) throws IOException{
 		switchToScene(event, "settings.fxml");
 	}
+	public void switchToPlay(ActionEvent event) throws IOException{
+		switchToScene(event, "play.fxml");
+		// readFromSettingsfile();
+		// TEST
+		initGame("Hoid", 200, 20, false);
+	}
 	private void switchToScene(ActionEvent event, String filename) throws IOException{
 		// stage = (Stage)(settingsButton.getSource()).getScrene().getWindow();
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -120,4 +135,55 @@ public class GameController {
 		// Kills the Program
 		Platform.exit();
 	}
+
+	// GAME methods:
+
+	public void initGame(String gameMode, int startBoidsAmount, int startPoidProsent, Boolean wraparound ) {
+		// Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+		// Must add all player boids
+		int canvasLength = 1280;
+		int canvasHeight = 700;
+		gameWorld = new World(canvasLength, canvasHeight, allInitBoids);
+		allInitBoids.add(new PlayerBoid());
+		// Must make
+		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
+		int hoidAmount = startBoidsAmount - poidAmount;
+		// Want boids to spawn randomly
+		for (int i = 1; i < startBoidsAmount; i++){
+
+			int currentPositionX = (int) Math.floor(Math.random()*canvasLength);
+			int currentPositionY = (int) Math.floor(Math.random()*canvasHeight);
+			int currentVelocityX = (int) Math.floor(Math.random()*10);
+			int currentVelocityY = (int) Math.floor(Math.random()*10);
+			if (i < poidAmount){
+				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 5, 1));
+			}
+			else{
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 1, 1, 1));
+			}
+		}
+		gameWorld.setAllInitBoids(allInitBoids);
+		System.out.println("Initialization successful");
+	}
+	
+	public void runGame() {
+		moveAllBoids();
+		drawBoidsOnCanvas();
+		
+	}
+	public void drawBoidsOnCanvas(){
+		// TODO FIND A WAY TO DRAW ON SCREEN.
+		// worldCanvas.pain
+		// worldCanvas.
+		// scene.fill
+		// gameWorld.allInitBoids;
+	}
+	public void moveAllBoids(){
+
+	}
+	// public static void main(String[] args) {
+	// 	GameController test = new GameController();
+	// 	test.initGame("Hoid", 200, 20, false);
+
+	// }
 }

@@ -17,7 +17,7 @@
             <Image url="@Boids%20title.gif" />
          </image>
       </ImageView>
-      <Button fx:id="playButton" layoutX="462.0" layoutY="340.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="358.0" text="Play" />
+      <Button fx:id="playButton" layoutX="462.0" layoutY="340.0" mnemonicParsing="false" onAction="#switchToPlay" prefHeight="40.0" prefWidth="358.0" text="Play" />
       <Button fx:id="settingsButton" layoutX="461.0" layoutY="406.0" mnemonicParsing="false" onAction="#switchToSettings" prefHeight="40.0" prefWidth="358.0" text="Settings" />
       <Button fx:id="quitButton" layoutX="462.0" layoutY="472.0" mnemonicParsing="false" onAction="#quitProgram" prefHeight="40.0" prefWidth="358.0" text="Quit" />
    </children>

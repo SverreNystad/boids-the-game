@@ -13,7 +13,8 @@ public interface BoidsInterface {
 	public void setVelocity(Vector newVelocity);
 	public void setAcceleration(Vector newAcceleration);
 	public boolean isAlive();
+	public void setIsAlive(boolean isAlive);
 	
 	public boolean boidInViewRange(BoidsInterface otherBoid);
-	public Collection<BoidsInterface> findAllBoidsInViewRange(Collection<BoidsInterface> allBoids);
+	public Collection<BoidsInterface> findAllBoidsInViewRange();
 }
