@@ -108,6 +108,10 @@ public class GameController {
 	public void switchToSettings(ActionEvent event) throws IOException{
 		switchToScene(event, "settings.fxml");
 	}
+	public void switchToPlay(ActionEvent event) throws IOException{
+		switchToScene(event, "play.fxml");
+		readFromSettingsfile()
+	}
 	private void switchToScene(ActionEvent event, String filename) throws IOException{
 		// stage = (Stage)(settingsButton.getSource()).getScrene().getWindow();
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();

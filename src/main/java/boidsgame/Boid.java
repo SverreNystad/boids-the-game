@@ -11,6 +11,7 @@ public class Boid{
 
 	protected int viewRangeRadius;
 	protected boolean isAlive;
+	protected World boidWorld;
 
 	private Collection<BoidsInterface> listOfBoidsInRange;
 
@@ -21,7 +22,8 @@ public class Boid{
 		int maxVelocity,
 		int maxAcceleration,
 		int viewRangeRadius,
-		boolean isAlive
+		boolean isAlive,
+		World boidWorld
 		){
 		vailedArgs(maxVelocity,maxAcceleration,viewRangeRadius);
 		this.position = position;
@@ -31,6 +33,8 @@ public class Boid{
 		this.maxAcceleration = maxAcceleration;
 		this.viewRangeRadius = viewRangeRadius;
 		this.isAlive = isAlive;
+		this.boidWorld = boidWorld;
+
 	}
 	/**
 	 * This method will throw IllegalArgumentException if any arguments are negativ.
@@ -47,8 +51,9 @@ public class Boid{
 	 * @param allBoids All initialized boids in a list.
 	 * @return list of all boids around this boid.
 	 */
-	public Collection<BoidsInterface> findAllBoidsInViewRange(Collection<BoidsInterface> allBoids){
+	public Collection<BoidsInterface> findAllBoidsInViewRange(){
 		// Collection<BoidsInterface> listOfBoidsInRange = new Collection<BoidsInterface>();
+		Collection<BoidsInterface> allBoids = this.boidWorld.getAllInitBoids();
 		listOfBoidsInRange.clear();
 		for (BoidsInterface currentBoid : allBoids) {
 			if (this.boidInViewRange(currentBoid)){
@@ -111,7 +116,7 @@ public class Boid{
 	public boolean isAlive() {
 		return this.isAlive;
 	}
-	public void setAlive(boolean isAlive) {
+	public void setIsAlive(boolean isAlive) {
 		this.isAlive = isAlive;
 	}
 	public static void main(String[] args) {

@@ -17,8 +17,11 @@ public class Hoid extends Boid implements BoidsInterface {
 		this.alignmentCoefficient = alignmentCoefficient;
 	}
 
-
-
+	/**
+	 * 
+	 * @param allCloseBoids
+	 * @return
+	 */
 	public Vector cohesionVector(Collection<BoidsInterface> allCloseBoids){
 		// TODO: cohesionVector MUST BE TESTED
 
