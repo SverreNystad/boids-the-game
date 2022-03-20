@@ -108,7 +108,10 @@ public class GameController {
 			System.out.println("An error has occured. In the storing of gamesettings.");
 		}
 	}
-
+	public Collection<String> readFromSettingsfile() {
+		// TODO READ FROM FILE
+		
+	}
 	// NOTE: Maight only have one function and buttenName be filename except filtype
 	public void switchToMainMenu(ActionEvent event) throws IOException{
 		storeSettingsInFile();
@@ -179,7 +182,9 @@ public class GameController {
 		// gameWorld.allInitBoids;
 	}
 	public void moveAllBoids(){
-
+		for (BoidsInterface currentBoid : allInitBoids) {
+			currentBoid.move();
+		}
 	}
 	// public static void main(String[] args) {
 	// 	GameController test = new GameController();
