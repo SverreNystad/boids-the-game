@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 // import java.awt.*;
 import java.util.Collection;
-import java.util.Collections;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,10 +18,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.*;
+// import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -125,6 +126,9 @@ public class GameController {
 		// readFromSettingsfile();
 		// TEST
 		initGame("Hoid", 200, 20, false);
+		// System.out.println(gameWorld.getAllInitBoids());;
+		System.out.println(worldCanvas);
+		runGame();
 	}
 	private void switchToScene(ActionEvent event, String filename) throws IOException{
 		// stage = (Stage)(settingsButton.getSource()).getScrene().getWindow();
@@ -147,7 +151,7 @@ public class GameController {
 		int canvasLength = 1280;
 		int canvasHeight = 700;
 		gameWorld = new World(canvasLength, canvasHeight, allInitBoids);
-		allInitBoids.add(new PlayerBoid());
+		allInitBoids.add(new PlayerBoid(new Vector(canvasLength/2, canvasHeight/2), new Vector(0, 0), new Vector(0, 0), 0,0,0, true, gameWorld));
 		// Must make
 		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
 		int hoidAmount = startBoidsAmount - poidAmount;
@@ -170,12 +174,38 @@ public class GameController {
 	}
 	
 	public void runGame() {
-		moveAllBoids();
+		// moveAllBoids();
 		drawBoidsOnCanvas();
 		
 	}
 	public void drawBoidsOnCanvas(){
 		// TODO FIND A WAY TO DRAW ON SCREEN.
+		
+		GraphicsContext gc = worldCanvas.getGraphicsContext2D();
+		for (BoidsInterface currentBoid : allInitBoids) {
+			gc.beginPath();
+			
+			// Image img;
+			// switch (currentBoid.getClass().toString()) {
+			// 	case "Hoid":
+			// 		img = new Image("Hoid.png");
+			// 		break;
+			// 	case "Poid":
+			// 		img = new Image("Poid.png");
+			// 		break;
+			// 	case "PlayerBoid":
+			// 		img = new Image("PlayerBoid.png");
+			// 		break;
+			// }
+			// // or
+			
+			// Image img = new Image(currentBoid.getClass().toString() + ".png");
+
+
+			Image img = new Image("birdIcon.png");
+			gc.drawImage(img, currentBoid.getPosition().getPositionX(), currentBoid.getPosition().getPositionY());
+			gc.closePath();
+		}
 		// worldCanvas.pain
 		// worldCanvas.
 		// scene.fill

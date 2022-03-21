@@ -78,6 +78,11 @@ public class Hoid extends Boid implements BoidsInterface {
 	}
 	// TODO: Must make function to run from unfriendly boids.
 
+	public void move() {
+		// TODO: Move method
+		
+	}
+
 
 
 
