@@ -1,9 +1,10 @@
 package boidsgame;
 
+import java.util.ArrayList;
 import java.util.Collection;
 // Herd-oid object
 public class Hoid extends Boid implements BoidsInterface {
-	private Collection<Vector> allSeperationVectors;
+	private Collection<Vector> allSeperationVectors = new ArrayList<>();
 	private int cohesionCoefficient;
 	private int seperationCoefficient;
 	private int alignmentCoefficient;
@@ -79,7 +80,18 @@ public class Hoid extends Boid implements BoidsInterface {
 	// TODO: Must make function to run from unfriendly boids.
 
 	public void move() {
-		// TODO: Move method
+		// Removes acceleration from last iteration
+		this.setAcceleration(new Vector(0, 0));
+		// Adds forces to acceleration
+		this.acceleration.addition(cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient));
+		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient));
+		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient));
+		// change speed depending on acceleration
+		this.velocity.addition(this.acceleration);
+		// Move boid
+		this.position.addition(this.velocity);
+
+
 		
 	}
 

@@ -1,5 +1,6 @@
 package boidsgame;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Boid{
@@ -54,7 +55,9 @@ public class Boid{
 	public Collection<BoidsInterface> findAllBoidsInViewRange(){
 		// Collection<BoidsInterface> listOfBoidsInRange = new Collection<BoidsInterface>();
 		Collection<BoidsInterface> allBoids = this.boidWorld.getAllInitBoids();
-		listOfBoidsInRange.clear();
+		listOfBoidsInRange = new ArrayList<>();
+		// listOfBoidsInRange.clear();
+
 		for (BoidsInterface currentBoid : allBoids) {
 			if (this.boidInViewRange(currentBoid)){
 				listOfBoidsInRange.add(currentBoid);

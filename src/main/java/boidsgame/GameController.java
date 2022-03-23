@@ -22,8 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.canvas.*;
-// import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -77,6 +77,10 @@ public class GameController {
 	private Collection<BoidsInterface> allInitBoids = new ArrayList<>();
 	private World gameWorld;
 
+	/**
+	 * 
+	 * 
+	 */
 	public void handleGamemodeSwitch(ActionEvent event) throws IOException{
 		gameMode = (rbHoid.isSelected()) ? rbHoid.getText(): rbPoid.getText(); 
 	}
@@ -127,7 +131,6 @@ public class GameController {
 		// TEST
 		initGame("Hoid", 200, 20, false);
 		// System.out.println(gameWorld.getAllInitBoids());;
-		System.out.println(worldCanvas);
 		runGame();
 	}
 	private void switchToScene(ActionEvent event, String filename) throws IOException{
@@ -163,10 +166,10 @@ public class GameController {
 			int currentVelocityX = (int) Math.floor(Math.random()*10);
 			int currentVelocityY = (int) Math.floor(Math.random()*10);
 			if (i < poidAmount){
-				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 5, 1));
+				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 10, 10));
 			}
 			else{
-				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 1, 1, 1));
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 10, 10, 10));
 			}
 		}
 		gameWorld.setAllInitBoids(allInitBoids);
@@ -174,12 +177,13 @@ public class GameController {
 	}
 	
 	public void runGame() {
-		// moveAllBoids();
+		moveAllBoids();
 		drawBoidsOnCanvas();
 		
 	}
 	public void drawBoidsOnCanvas(){
 		// TODO FIND A WAY TO DRAW ON SCREEN.
+		// System.out.println(worldCanvas);
 		
 		GraphicsContext gc = worldCanvas.getGraphicsContext2D();
 		for (BoidsInterface currentBoid : allInitBoids) {
@@ -213,7 +217,10 @@ public class GameController {
 	}
 	public void moveAllBoids(){
 		for (BoidsInterface currentBoid : allInitBoids) {
+			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
 			currentBoid.move();
+			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
+
 		}
 	}
 	// public static void main(String[] args) {
