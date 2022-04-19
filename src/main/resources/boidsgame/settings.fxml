@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boidsgame.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boidsgame.GameController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1293.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -63,6 +63,6 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <ToggleButton fx:id="wraparoundButton" layoutX="614.0" layoutY="599.0" mnemonicParsing="false" onAction="#hancleWraparound" text="on/off" />
+      <ToggleButton fx:id="wraparoundButton" layoutX="614.0" layoutY="599.0" mnemonicParsing="false" onAction="#handleWraparound" text="on/off" />
    </children>
 </AnchorPane>

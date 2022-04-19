@@ -12,7 +12,7 @@ public class GameApp extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
-    // Problemet oppstå ved at jeg ikke har sagt i fmxlen at dette er controllerclassen    
+   
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Boids the game");

@@ -3,7 +3,7 @@ package boidsgame;
 import java.util.ArrayList;
 import java.util.Collection;
 // Herd-oid object
-public class Hoid extends Boid implements BoidsInterface {
+public class Hoid extends Boid {
 	private Collection<Vector> allSeperationVectors = new ArrayList<>();
 	private int cohesionCoefficient;
 	private int seperationCoefficient;
@@ -23,7 +23,7 @@ public class Hoid extends Boid implements BoidsInterface {
 	 * @param allCloseBoids
 	 * @return
 	 */
-	public Vector cohesionVector(Collection<BoidsInterface> allCloseBoids){
+	public Vector cohesionVector(Collection<Boid> allCloseBoids){
 		// TODO: cohesionVector MUST BE TESTED
 
 		// Size must be not null else DivisionByNullException. Could use try catch and catch it but it is bad pracsis.
@@ -37,18 +37,20 @@ public class Hoid extends Boid implements BoidsInterface {
 			return this.position;
 		}
 	}
-	public static boolean isFriendlyBoid(BoidsInterface boid){
-		return (boid.getClass().getName().equals("Hoid")) || (boid.getClass().getName().equals("PlayerBoid")); // Must
+	public static boolean isFriendlyBoid(Boid boid){
+		// return (boid.getClass().getName().equals("Hoid")) || (boid.getClass().getName().equals("PlayerBoid")); // Must
+		return (boid instanceof Hoid) || (boid instanceof PlayerBoid);
+
 	}
 
 
-	public Vector seperationVector(Collection<BoidsInterface> allCloseBoids){
+	public Vector seperationVector(Collection<Boid> allCloseBoids){
 		// TODO: seperationVector MUST BE TESTED
 
-		// Collection<BoidsInterface> allCloseBoids = this.findAllBoidsInViewRange(); // må legge til listen med alle boids
+		// Collection<Boid> allCloseBoids = this.findAllBoidsInViewRange(); // må legge til listen med alle boids
 		// Must find vector between this and other boids. 
 		
-		for (BoidsInterface currentBoid : allCloseBoids) {
+		for (Boid currentBoid : allCloseBoids) {
 			Vector distanceVector = (this.position).distenceBetweenVector(currentBoid.getPosition()); 
 			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
 			allSeperationVectors.add(distanceVector.scalingNewVector((1/distanceVector.length()))); 
@@ -61,7 +63,7 @@ public class Hoid extends Boid implements BoidsInterface {
 		return vectorsTogheter;//.scalingNewVector(scalar)
 	}
 
-	public Vector alignmentVector(Collection<BoidsInterface> allCloseBoids){
+	public Vector alignmentVector(Collection<Boid> allCloseBoids){
 		// TODO: Must find the averege direction the boids are moving toward.
 		// TODO: alignmentVector MUST BE TESTED
 		Vector commenVector;
@@ -77,8 +79,9 @@ public class Hoid extends Boid implements BoidsInterface {
 		// TODO: Must make the steerimgVector out of the averege direction: steeringVector = disired velocity - this.velocity
 		return commenVector.subtractionVector(this.velocity);
 	}
+	
 	// TODO: Must make function to run from unfriendly boids.
-
+	@Override
 	public void move() {
 		// Removes acceleration from last iteration
 		this.setAcceleration(new Vector(0, 0));
@@ -89,16 +92,6 @@ public class Hoid extends Boid implements BoidsInterface {
 		// change speed depending on acceleration
 		this.velocity.addition(this.acceleration);
 		// Move boid
-		this.position.addition(this.velocity);
-
-
-		
+		this.position.addition(this.velocity);	
 	}
-
-
-
-
-
-
-
 }

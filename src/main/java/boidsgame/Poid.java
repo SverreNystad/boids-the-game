@@ -1,11 +1,9 @@
 package boidsgame;
 import java.util.Collection;
-//Edvard var her :)
-public class Poid extends Boid implements BoidsInterface {
+public class Poid extends Boid{
 	private int killRadius;
 	private int killAmount;
 	private int movementCoefficient;
-
 
 	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, int movementCoefficient){
 		// # TODO: Fix contstuctor. Do validation. Should not be able to be out of World
@@ -13,19 +11,20 @@ public class Poid extends Boid implements BoidsInterface {
 		this.killRadius = killRadius;
 		this.killAmount = 0;
 		this.movementCoefficient = movementCoefficient;
-		
 	}
-
-	public BoidsInterface findClosestBoid(){
+	/**
+	 * findClosestBoid will find the closest boid that this boid can see in findAllBoidsInViewRange(). It loops over the list and compare each boids distance. If it is not a target it will skip its current iteration. 
+	 * @return The closest living non Poid-oid Boid
+	 */
+	private Boid findClosestBoid(){
 		// Loop through and find boid with closes distance.
-		// must check its not another poid
-		Collection<BoidsInterface> allCloseBoids = this.findAllBoidsInViewRange();
-		BoidsInterface closestBoid = null;
+		Collection<Boid> allCloseBoids = this.findAllBoidsInViewRange();
+		Boid closestBoid = null;
 		Double shortestDistance = null;
 
-
-		for (BoidsInterface currentBoid : allCloseBoids) {
-			if(currentBoid.getClass().getName().equals("Poid")){ // could be fun if a larger poid could eate other poids
+		for (Boid currentBoid : allCloseBoids) {
+			// dont look after other Poids or dead boids or Playerboid playing Poid.
+			if(currentBoid instanceof Poid || !currentBoid.isAlive || ((currentBoid instanceof PlayerBoid) && ((PlayerBoid) currentBoid).getGameMode().equals("Hoid")) ){ // could be fun if a larger poid could eate other poids
 				continue;
 			}
 			if (shortestDistance == null){
@@ -39,7 +38,12 @@ public class Poid extends Boid implements BoidsInterface {
 		}
 		return closestBoid;
 	}
-	public Vector closestBoidVector(BoidsInterface closestBoid) {
+	/**
+	 * closestBoidVector(Boid closestBoid) Gives the vector from this boid to the other boid. It is used to change the acceleration.
+	 * @param closestBoid
+	 * @return Vector distance between boids.
+	 */
+	private Vector closestBoidVector(Boid closestBoid) {
 		return this.getPosition().distenceBetweenVector(closestBoid.getPosition());
 		
 	}
@@ -47,8 +51,8 @@ public class Poid extends Boid implements BoidsInterface {
 	 * method to kill closest boids and increment killAmount
 	 * @param closestBoid
 	 */
-	public void killClosestBoid(BoidsInterface closestBoid){
-		if (!closestBoid.equals(null)){
+	private void killClosestBoid(Boid closestBoid){
+		if (closestBoid != null){
 			if (this.position.distenceBetweenVector(closestBoid.getPosition()).length() <= killRadius){
 				closestBoid.setIsAlive(false);
 				this.killAmount++;

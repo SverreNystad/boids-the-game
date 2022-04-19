@@ -16,7 +16,7 @@ public class HoidTest {
 	// @BeforeEach
 	// public void setup() {
 	// 	int totalAmountOfBoids = 10;
-	// 	Collection<BoidsInterface> allBoidsInLine;
+	// 	Collection<Boid> allBoidsInLine;
 	// 	Vector position = new Vector(0, 0);
 	// 	Vector velocity = new Vector(0, 0);
 	// 	Vector acceleration = new Vector(0, 0);
@@ -38,9 +38,9 @@ public class HoidTest {
 		Vector testVector = new Vector(0, 0);
 		int testInt = 0;
 		boolean alive = true;
-		BoidsInterface poid = new Poid(testVector, testVector, testVector, testInt, testInt, testInt, alive, testInt, testInt);
+		Boid poid = new Poid(testVector, testVector, testVector, testInt, testInt, testInt, alive, testInt, testInt);
 		Hoid hoid = new Hoid(testVector, testVector, testVector, testInt, testInt, testInt, alive, testInt, testInt, testInt);
-		BoidsInterface playerBoid = new PlayerBoid();
+		Boid playerBoid = new PlayerBoid();
 
 		assertEquals(true, hoid.isFriendlyBoid(playerBoid));
 

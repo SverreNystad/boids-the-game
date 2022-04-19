@@ -3,7 +3,7 @@ package boidsgame;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Boid{
+public abstract class Boid{
 	protected Vector position;
 	protected Vector velocity;
 	protected Vector acceleration;
@@ -14,7 +14,7 @@ public class Boid{
 	protected boolean isAlive;
 	protected World boidWorld;
 
-	private Collection<BoidsInterface> listOfBoidsInRange;
+	private Collection<Boid> listOfBoidsInRange;
 
 	public Boid(
 		Vector position,
@@ -35,13 +35,12 @@ public class Boid{
 		this.viewRangeRadius = viewRangeRadius;
 		this.isAlive = isAlive;
 		this.boidWorld = boidWorld;
-
 	}
 	/**
 	 * This method will throw IllegalArgumentException if any arguments are negativ.
 	 * @param args can be a variable amount.
 	 */
-	private static void vailedArgs(final int... args) {
+	private static void vailedArgs(final int... args) throws IllegalArgumentException{
 		// TODO: MUST BE TESTED.
 		for (int num : args) {
 			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
@@ -52,14 +51,14 @@ public class Boid{
 	 * @param allBoids All initialized boids in a list.
 	 * @return list of all boids around this boid.
 	 */
-	public Collection<BoidsInterface> findAllBoidsInViewRange(){
-		// Collection<BoidsInterface> listOfBoidsInRange = new Collection<BoidsInterface>();
-		Collection<BoidsInterface> allBoids = this.boidWorld.getAllInitBoids();
+	public Collection<Boid> findAllBoidsInViewRange(){
+		// Collection<Boid> listOfBoidsInRange = new Collection<Boid>();
+		Collection<Boid> allBoids = this.boidWorld.getAllInitBoids();
 		listOfBoidsInRange = new ArrayList<>();
 		// listOfBoidsInRange.clear();
 
-		for (BoidsInterface currentBoid : allBoids) {
-			if (this.boidInViewRange(currentBoid)){
+		for (Boid currentBoid : allBoids) {
+			if (this.boidInViewRange(currentBoid) && this != currentBoid && currentBoid.isAlive){
 				listOfBoidsInRange.add(currentBoid);
 			}
 		}
@@ -70,7 +69,7 @@ public class Boid{
 	 * @param otherBoid Can be any type of boid.
 	 * @return True if in range else false.
 	 */
-	public boolean boidInViewRange(BoidsInterface otherBoid){
+	public boolean boidInViewRange(Boid otherBoid){
 		// Must find if boid is in ViewRange
 		return 
 		// If X pos of other boid in range of current boid
@@ -122,6 +121,8 @@ public class Boid{
 	public void setIsAlive(boolean isAlive) {
 		this.isAlive = isAlive;
 	}
+
+	public abstract void move();
 	public static void main(String[] args) {
 		// // Boid b1 = new Boid(100, 100, 0, 0, 0, 0, 0, 0);
 		// // Boid b2 = new Boid(100, 100, 0, 0, 0, 0, 0, 0);

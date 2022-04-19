@@ -1,2 +1,2 @@
 Gamemode, startBoidsAmount, startPoidProsent, wraparound
-Hoid, 0, 0, on
+Hoid, 0, 0, off

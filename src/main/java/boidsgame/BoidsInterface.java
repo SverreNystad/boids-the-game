@@ -1,20 +1,20 @@
-package boidsgame;
+// package boidsgame;
 
-import java.util.Collection;
+// import java.util.Collection;
 
-public interface BoidsInterface {
+// public interface BoidsInterface {
 	
-	public void move();
+// 	public void move();
 	
-	public Vector getPosition();
-	public Vector getVelocity();
-	public Vector getAcceleration();
-	public void setPosition(Vector newPosition);
-	public void setVelocity(Vector newVelocity);
-	public void setAcceleration(Vector newAcceleration);
-	public boolean isAlive();
-	public void setIsAlive(boolean isAlive);
+// 	public Vector getPosition();
+// 	public Vector getVelocity();
+// 	public Vector getAcceleration();
+// 	public void setPosition(Vector newPosition);
+// 	public void setVelocity(Vector newVelocity);
+// 	public void setAcceleration(Vector newAcceleration);
+// 	public boolean isAlive();
+// 	public void setIsAlive(boolean isAlive);
 	
-	public boolean boidInViewRange(BoidsInterface otherBoid);
-	public Collection<BoidsInterface> findAllBoidsInViewRange();
-}
+// 	public boolean boidInViewRange(BoidsInterface otherBoid);
+// 	public Collection<BoidsInterface> findAllBoidsInViewRange();
+// }

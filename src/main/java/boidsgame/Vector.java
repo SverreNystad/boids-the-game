@@ -18,7 +18,7 @@ public class Vector {
 	 * @param y
 	 * @return valid
 	 */
-	private boolean isValidVector(int x, int y){ // World class must be finished
+	private boolean isValidVector(int x, int y) { // World class must be finished
 		// return (World.getWidth() >= x) ;
 		return true;
 	}
@@ -64,7 +64,10 @@ public class Vector {
 		return new Vector((int) newPosX,(int) newPosY);
 	}
 
-
+	/**
+	 * The length method uses the pytagorean theorem to calculate the length of the vector.
+	 * @return the length in double
+	 */
 	public double length(){
 		return Math.sqrt((getPositionX()*getPositionX())+(getPositionY()*getPositionY()));
 	}
