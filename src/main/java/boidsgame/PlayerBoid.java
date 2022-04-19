@@ -64,7 +64,11 @@ public class PlayerBoid extends Boid{
 		// Adds forces to acceleration
 		this.acceleration.addition(this.movementToCursorVector(this.getMouseX(), this.getMouseY()));
 		// change speed depending on acceleration
+		// Make certain it can not go faster then maxVelocity
 		this.velocity.addition(this.getAcceleration().scalingNewVector(movementToCursorVectorCoefficient));
+		if (this.velocity.length() > this.getMaxVelocity()){ 
+			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
+		}
 		// Move boid
 		this.position.addition(this.getVelocity());
 		if (this.getGameMode().equals("Hoid")){

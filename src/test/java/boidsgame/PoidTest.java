@@ -7,13 +7,13 @@ public class PoidTest {
 
 	@Test
 	@DisplayName("")
-	void testMove() {
+	public void testMove() {
 		
 	}
 
 	@Test
 	@DisplayName("")
-	void killAllCloseBoidThatIsNotPoidoid() {
+	public void killAllCloseBoidThatIsNotPoidoid() {
 		
 	}
 

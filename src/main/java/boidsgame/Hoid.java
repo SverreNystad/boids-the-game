@@ -90,7 +90,11 @@ public class Hoid extends Boid {
 		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient));
 		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient));
 		// change speed depending on acceleration
+		// Make certain it can not go faster then maxVelocity
 		this.velocity.addition(this.acceleration);
+		if (this.velocity.length() > this.getMaxVelocity()){
+			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
+		}
 		// Move boid
 		this.position.addition(this.velocity);	
 	}

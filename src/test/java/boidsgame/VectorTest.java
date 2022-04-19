@@ -92,4 +92,22 @@ public class VectorTest {
 		assertTrue((v1.distenceBetweenVector(v2)).equals(new Vector(-10, -90)));
 		// assertEquals(expected, v1.distenceBetweenVector(v2));
 	}
+
+	@Test
+	@DisplayName("This test will check if the scalingVectorToSize gives right vektor")
+	public void testScalingVectorToSize() {
+		for (int i = 0; i < 10; i++){	// It returns almost the vector that would have the wanted length. If one round the number it becomes right
+			assertTrue(v1.scalingVectorToSize(i).length() <= i); 
+			assertTrue(v2.scalingVectorToSize(i).length() <= i); 
+			assertTrue(v3.scalingVectorToSize(i).length() <= i); 
+			assertTrue(v4.scalingVectorToSize(i).length() <= i); 
+		}
+
+		assertTrue(v4.scalingVectorToSize(0).length() == 0); 
+		assertTrue(new Vector(0, 0).scalingVectorToSize(10).length() == 0); 
+
+
+
+		
+	}
 }

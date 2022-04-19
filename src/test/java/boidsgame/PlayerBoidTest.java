@@ -6,49 +6,49 @@ import org.junit.jupiter.api.Test;
 public class PlayerBoidTest {
 	@Test
 	@DisplayName("")
-	void testGetGameMode() {
+	public void testGetGameMode() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetKillScore() {
+	public void testGetKillScore() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetLifeTime() {
+	public void testGetLifeTime() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetMouseX() {
+	public void testGetMouseX() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetMouseY() {
+	public void testGetMouseY() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testMove() {
+	public void testMove() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetMouseX() {
+	public void testSetMouseX() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetMouseY() {
+	public void testSetMouseY() {
 
 	}
 }

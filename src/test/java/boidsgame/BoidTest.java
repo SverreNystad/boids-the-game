@@ -7,115 +7,115 @@ public class BoidTest {
 	// Should make mock exsampels. 
 	@Test
 	@DisplayName("")
-	void testBoidInViewRange() {
+	public void testBoidInViewRange() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testFindAllBoidsInViewRange() {
+	public void testFindAllBoidsInViewRange() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetAcceleration() {
+	public void testGetAcceleration() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetMaxAcceleration() {
+	public void testGetMaxAcceleration() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetMaxVelocity() {
+	public void testGetMaxVelocity() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetPosition() {
+	public void testGetPosition() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetVelocity() {
+	public void testGetVelocity() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetViewRangeRadius() {
+	public void testGetViewRangeRadius() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testIsAlive() {
+	public void testIsAlive() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testMain() {
+	public void testMain() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testMove() {
+	public void testMove() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetAcceleration() {
+	public void testSetAcceleration() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetIsAlive() {
+	public void testSetIsAlive() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetMaxAcceleration() {
+	public void testSetMaxAcceleration() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetMaxVelocity() {
+	public void testSetMaxVelocity() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetPosition() {
+	public void testSetPosition() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetVelocity() {
+	public void testSetVelocity() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetViewRangeRadius() {
+	public void testSetViewRangeRadius() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testWraparoundCoordinates() {
+	public void testWraparoundCoordinates() {
 
 	}
 }

@@ -63,9 +63,14 @@ public class Poid extends Boid{
 	public void move() {
 		// resets acceleration
 		this.setAcceleration(new Vector(0, 0));
+		// Adds forces to acceleration
 		Vector forces = closestBoidVector(findClosestBoid()).scalingNewVector(this.movementCoefficient);
 		this.acceleration.addition(forces);
 		this.velocity.addition(this.acceleration);
+		// Make certain it can not go faster then maxVelocity
+		if (this.velocity.length() > this.getMaxVelocity()){
+			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
+		}
 		this.position.addition(this.velocity);
 		// at the end of movment kill closest bird
 		this.killClosestBoid(findClosestBoid());

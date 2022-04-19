@@ -63,6 +63,19 @@ public class Vector {
 		double newPosY = this.positionY *= scalar;
 		return new Vector((int) newPosX, (int) newPosY);
 	}
+	/**
+	 * Shall scale the vector so the length is aproxomaly equal to the size.
+	 * @param size double number
+	 * @return vector with same lenght of size
+	 */
+	public Vector scalingVectorToSize(double size){
+		try{
+			if (this.length() == 0) throw new IllegalStateException("Division By zero");
+			return scalingNewVector((size/(this.length())));
+		} catch (IllegalStateException e){
+			return this;
+		}
+	}
 
 	/**
 	 * The length method uses the pytagorean theorem to calculate the length of the vector.

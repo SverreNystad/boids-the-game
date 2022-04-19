@@ -6,73 +6,73 @@ import org.junit.jupiter.api.Test;
 public class WorldTest {
 	@Test
 	@DisplayName("")
-	void testGetAllInitBoids() {
+	public void testGetAllInitBoids() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetMouseX() {
+	public void testGetMouseX() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetMouseY() {
+	public void testGetMouseY() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetxLength() {
+	public void testGetxLength() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testGetyHeight() {
+	public void testGetyHeight() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testInitGame() {
+	public void testInitGame() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testMoveAllBoids() {
+	public void testMoveAllBoids() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testRemoveAllDeadBoids() {
+	public void testRemoveAllDeadBoids() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetAllInitBoids() {
+	public void testSetAllInitBoids() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetMouseX() {
+	public void testSetMouseX() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testSetMouseY() {
+	public void testSetMouseY() {
 
 	}
 
 	@Test
 	@DisplayName("")
-	void testValidWorld() {
+	public void testValidWorld() {
 
 	}
 }

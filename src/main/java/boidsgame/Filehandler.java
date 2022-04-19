@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class Filehandler {
 	
 	public static void storeSettingsInFile(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) throws IOException{
-		// TODO: MUST SAVE RELATIV TO PATH AND IN RESOURCES DIR
 		try{
 			valideStoreSettingsInFileArguments(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound);
 			File currentGameSettings = new File("currentGameSettings.txt");
@@ -43,9 +42,7 @@ public class Filehandler {
 		}
 	}
 
-	// TODO: MUST FIX
 	public static List<String> readFromSettingsfile() throws FileNotFoundException{
-		// TODO READ FROM FILE
 		List<String> settingsResult = new ArrayList<>();
 		
 		File settingsFile = new File("currentGameSettings.txt");

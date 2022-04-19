@@ -94,7 +94,6 @@ public abstract class Boid{
 			this.setPosition(new Vector(this.getPosition().getPositionX(), 0));
 		}
 	}
-
 	
 	public Vector getPosition() {
 		return position;
