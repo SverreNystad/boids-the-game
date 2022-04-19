@@ -16,6 +16,17 @@ public abstract class Boid{
 
 	private Collection<Boid> listOfBoidsInRange;
 
+	/**
+	 * Contructor for the abstract class Boid. The children classes 
+	 * @param position 
+	 * @param velocity 
+	 * @param acceleration 
+	 * @param maxVelocity the max for velocity.
+	 * @param maxAcceleration the max for acceleration.
+	 * @param viewRangeRadius how far it can see
+	 * @param isAlive the life status of the boid. If it is dead it not get to move.
+	 * @param boidWorld The world that the boid is in. It can only interact with boids in the same world.
+	 */
 	public Boid(
 		Vector position,
 		Vector velocity,
@@ -41,13 +52,12 @@ public abstract class Boid{
 	 * @param args can be a variable amount.
 	 */
 	private static void vailedArgs(final int... args) throws IllegalArgumentException{
-		// TODO: MUST BE TESTED.
 		for (int num : args) {
 			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
 		}
 	}
 	/**
-	 * findAllBoidsInViewRange() Will make a list of all boids that is in the view range of this boid.
+	 * <b>findAllBoidsInViewRange()</b> Will make a list of all boids that is in the view range of this boid.
 	 * @param allBoids All initialized boids in a list.
 	 * @return list of all boids around this boid.
 	 */
@@ -70,12 +80,12 @@ public abstract class Boid{
 	 * @return True if in range else false.
 	 */
 	public boolean boidInViewRange(Boid otherBoid){
-		// Must find if boid is in ViewRange
-		return 
-		// If X pos of other boid in range of current boid
-		((this.getPosition().getPositionX() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionX() && (this.getPosition().getPositionX() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionX()) 
-		// If Y pos of other boid in range of current boid
-		&& ((this.getPosition().getPositionY() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionY() && (this.getPosition().getPositionY() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionY());
+		// return 
+		// // If X pos of other boid in range of current boid
+		// ((this.getPosition().getPositionX() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionX() && (this.getPosition().getPositionX() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionX()) 
+		// // If Y pos of other boid in range of current boid
+		// && ((this.getPosition().getPositionY() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionY() && (this.getPosition().getPositionY() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionY());
+		return this.getPosition().distenceBetweenVector(otherBoid.getPosition()).length() <= getViewRangeRadius();
 	}
 	/**
 	 * If the boid goes out of the map and wraparound is allowed set the posision to the other side
@@ -137,7 +147,12 @@ public abstract class Boid{
 	public void setIsAlive(boolean isAlive) {
 		this.isAlive = isAlive;
 	}
-
+	/**
+	 * The move method shall move the boid according to the rules the class sets.
+	 * <b>Poid:</b> <i>Shall move towards any non poid-oid objects, and kill them.</i>
+	 * <b>Hoid:</b> <i>Shall follow the classic Boids algorithm, Seperation, Cohision and Alignment.</i>
+	 * <b>PlayerBoid:</b> <i>Shall follow the last known coordinates of the mouse cursor.</i>
+	 */
 	public abstract void move();
 	public static void main(String[] args) {
 		// // Boid b1 = new Boid(100, 100, 0, 0, 0, 0, 0, 0);
