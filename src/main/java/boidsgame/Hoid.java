@@ -2,7 +2,9 @@ package boidsgame;
 
 import java.util.ArrayList;
 import java.util.Collection;
-// Herd-oid object
+/**
+ * Hoids stands for Herd-oid object. It follows the classic Boids algorithm.
+ */
 public class Hoid extends Boid {
 	private Collection<Vector> allSeperationVectors = new ArrayList<>();
 	private int cohesionCoefficient;
@@ -19,9 +21,20 @@ public class Hoid extends Boid {
 	}
 
 	/**
-	 * 
-	 * @param allCloseBoids
-	 * @return
+	 * Checks if the boid is friendly to hoids. 
+	 * @param boid
+	 * @return true if either it is hoid or it is playerBoid that is hoid-oid. 
+	 */
+	public static boolean isFriendlyBoid(Boid boid){
+		return (boid instanceof Hoid) || (boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Hoid"): false;
+	}
+
+
+	/**
+	 * cohesionVector finds the vector that point to the mass sentrum that is in seight from this boid.
+	 * This makes Hoids try to get to the middel of the flock, where there is most protection from Poids.
+	 * @param allCloseBoids This is the group of Boids this hoid can see.
+	 * @return Vector to local mass sentrum.
 	 */
 	public Vector cohesionVector(Collection<Boid> allCloseBoids){
 		// TODO: cohesionVector MUST BE TESTED
@@ -37,19 +50,15 @@ public class Hoid extends Boid {
 			return this.position;
 		}
 	}
-	public static boolean isFriendlyBoid(Boid boid){
-		// return (boid.getClass().getName().equals("Hoid")) || (boid.getClass().getName().equals("PlayerBoid")); // Must
-		return (boid instanceof Hoid) || (boid instanceof PlayerBoid);
 
-	}
-
-
+	/**
+	 * When boids get to close the boid want to get away to keep a healhy distance. 
+	 * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
+	 * @param allCloseBoids This is the group of Boids this hoid can see.
+	 * @return
+	 */
 	public Vector seperationVector(Collection<Boid> allCloseBoids){
 		// TODO: seperationVector MUST BE TESTED
-
-		// Collection<Boid> allCloseBoids = this.findAllBoidsInViewRange(); // må legge til listen med alle boids
-		// Must find vector between this and other boids. 
-		
 		for (Boid currentBoid : allCloseBoids) {
 			Vector distanceVector = (this.position).distenceBetweenVector(currentBoid.getPosition()); 
 			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
@@ -63,8 +72,13 @@ public class Hoid extends Boid {
 		return vectorsTogheter;//.scalingNewVector(scalar)
 	}
 
+	/**
+	 * alignmentVector find the averege direction the boids are moving toward.
+	 * It tries to steer the boid in the same direction as the local flockmates.
+	 * @param allCloseBoids This is the group of Boids this hoid can see.
+	 * @return the vector that steers the boid so it follows it flockmates.
+	 */
 	public Vector alignmentVector(Collection<Boid> allCloseBoids){
-		// TODO: Must find the averege direction the boids are moving toward.
 		// TODO: alignmentVector MUST BE TESTED
 		Vector commenVector;
 		if (allCloseBoids.size() != 0){
@@ -81,6 +95,20 @@ public class Hoid extends Boid {
 	}
 	
 	// TODO: Must make function to run from unfriendly boids.
+	public Vector scareVector(Collection<Boid> allCloseBoids){
+		// Add the distance from each Poid-oid.
+		// Should use seperationVector but with only scary boids.
+		// CAN CHANGE IT TO LAMBDA EXSPRESSION
+		Collection<Boid> unFriendlyBoids = new ArrayList<>();
+		for (Boid boid : allCloseBoids) {
+			if (!isFriendlyBoid(boid)){
+				unFriendlyBoids.add(boid);
+			}
+		}
+		// allCloseBoids.stream().filter(boid -> !((Hoid) boid).isFriendlyBoid());
+		return this.seperationVector(unFriendlyBoids);
+	}
+
 	@Override
 	public void move() {
 		// Removes acceleration from last iteration
@@ -89,6 +117,8 @@ public class Hoid extends Boid {
 		this.acceleration.addition(cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient));
 		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient));
 		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient));
+		this.acceleration.addition(scareVector(findAllBoidsInViewRange()));
+
 		// change speed depending on acceleration
 		// Make certain it can not go faster then maxVelocity
 		this.velocity.addition(this.acceleration);
