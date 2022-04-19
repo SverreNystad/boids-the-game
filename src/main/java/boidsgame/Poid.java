@@ -36,7 +36,7 @@ public class Poid extends Boid{
 				shortestDistance = (this.position.distenceBetweenVector(currentBoid.getPosition()).length());
 			}
 		}
-		return closestBoid;
+		return (closestBoid == null) ? this: closestBoid;
 	}
 	/**
 	 * closestBoidVector(Boid closestBoid) Gives the vector from this boid to the other boid. It is used to change the acceleration.

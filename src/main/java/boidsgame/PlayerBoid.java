@@ -5,22 +5,29 @@ public class PlayerBoid extends Boid{
 	private int killScore;
 	private int killRadius;
 
-	private double birthTime;
-	private double lifeTime;
+	private long birthTime;
+	private long lifeTime;
 	private double movementToCursorVectorCoefficient;
 	private String gameMode;
 
 	private double mouseX;	
 	private double mouseY;
-	// TODO: Make contructor.
+
 	public PlayerBoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, String gameMode){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
 		this.gameMode = gameMode;
-		this.birthTime = 0d;
-		this.lifeTime = 0d;
+		this.birthTime = System.currentTimeMillis();
+		this.lifeTime = 0l;
 		this.killScore = 0;
 		this.killRadius = 5;
 
+	}
+	/**
+	 * Updates the lifetime to the PlayerBoid. From inizilation to this moment.
+	 */
+	private void updateLifeTime(){
+		long currentTime = System.currentTimeMillis();
+		this.lifeTime = currentTime - this.birthTime;
 	}
 	// TODO: Get info from eventlistener on Canvas and move accordingly.
 	/**
@@ -30,7 +37,7 @@ public class PlayerBoid extends Boid{
 	 * @return Vector in the direction of the mouse pointer
 	 */
 	private Vector movementToCursorVector(double mouseX, double mouseY){
-		if ((this.boidWorld.xLength >= mouseX && 0 <= mouseX) && (this.boidWorld.yHeight >= mouseY && 0 <= mouseY)){
+		if ((this.boidWorld.getxLength() >= mouseX && 0 <= mouseX) && (this.boidWorld.getyHeight() >= mouseY && 0 <= mouseY)){
 			// return new Vector((int) (((double) this.getPosition().getPositionX()) - mouseX), (int) (((double) this.getPosition().getPositionY()) - mouseY));
 			return this.getPosition().distenceBetweenVector(new Vector((int) mouseX, (int) mouseY));	
 		}
@@ -39,7 +46,7 @@ public class PlayerBoid extends Boid{
 		}
 	}
 	/**
-	 * Method to kill all boid in range and increment killScore.:
+	 * Method to kill all boid in killRange and increment killScore for each kill:
 	 */
 	private void killAllCloseBoid(){
 		for (Boid currentBoid : this.findAllBoidsInViewRange()) {
@@ -52,13 +59,18 @@ public class PlayerBoid extends Boid{
 	
 	@Override
 	public void move(){
+		// Removes acceleration from last iteration
 		this.setAcceleration(new Vector(0, 0));
-		this.acceleration = this.movementToCursorVector(this.getMouseX(), this.getMouseY());
-		this.velocity = this.getAcceleration().scalingNewVector(movementToCursorVectorCoefficient);
+		// Adds forces to acceleration
+		this.acceleration.addition(this.movementToCursorVector(this.getMouseX(), this.getMouseY()));
+		// change speed depending on acceleration
+		this.velocity.addition(this.getAcceleration().scalingNewVector(movementToCursorVectorCoefficient));
+		// Move boid
 		this.position.addition(this.getVelocity());
 		if (this.getGameMode().equals("Hoid")){
 			this.killAllCloseBoid();
 		}
+		this.updateLifeTime();
 	}
 	
 	// SETTERS AND GETTERS

@@ -77,6 +77,23 @@ public abstract class Boid{
 		// If Y pos of other boid in range of current boid
 		&& ((this.getPosition().getPositionY() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionY() && (this.getPosition().getPositionY() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionY());
 	}
+	/**
+	 * If the boid goes out of the map and wraparound is allowed set the posision to the other side
+	 */
+	public void wraparoundCoordinates(){
+		if (this.getPosition().getPositionX() < 0){
+			this.setPosition(new Vector(this.boidWorld.getxLength(), this.getPosition().getPositionY()));
+		}
+		if (this.getPosition().getPositionX() > this.boidWorld.getxLength()){
+			this.setPosition(new Vector(0, this.getPosition().getPositionY()));
+		}
+		if (this.getPosition().getPositionY() < 0){
+			this.setPosition(new Vector(this.getPosition().getPositionX(), this.boidWorld.getyHeight()));
+		}
+		if (this.getPosition().getPositionY() > this.boidWorld.getyHeight()){
+			this.setPosition(new Vector(this.getPosition().getPositionX(), 0));
+		}
+	}
 
 	
 	public Vector getPosition() {

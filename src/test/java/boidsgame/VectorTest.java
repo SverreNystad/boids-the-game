@@ -75,7 +75,7 @@ public class VectorTest {
 	@Test
 	@DisplayName("This test will check if addSeveralVectors cam add several vectors ")
 	public void testAddSeveralVectors() {
-		System.out.println((v1.addSeveralVectors(v2, v3, v4)));
+		// System.out.println((v1.addSeveralVectors(v2, v3, v4)));
 		assertTrue((v1.addSeveralVectors(v2, v3, v4)).equals(new Vector(184, 103)));
 	}
 	@Test

@@ -61,7 +61,7 @@ public class Vector {
 	public Vector scalingNewVector(double scalar){
 		double newPosX = this.positionX *= scalar;
 		double newPosY = this.positionY *= scalar;
-		return new Vector((int) newPosX,(int) newPosY);
+		return new Vector((int) newPosX, (int) newPosY);
 	}
 
 	/**
@@ -85,14 +85,13 @@ public class Vector {
 	}
 	// @Override 
 	public boolean equals(Vector otherVector){
-		return (this.positionX == otherVector.positionX) && (this.positionY == otherVector.positionY);
+		return (this.getPositionX() == otherVector.getPositionX()) && (this.getPositionY() == otherVector.getPositionY());
 	}
 	public Vector addSeveralVectors(final Vector ... vectors){
-		Vector result = new Vector(0, 0);
 		for (Vector vector : vectors) {
-			result.addition(vector);
+			this.addition(vector);
 		}
-		return result;
+		return this;
 	}
 	
 }
