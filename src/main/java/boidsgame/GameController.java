@@ -44,11 +44,12 @@ public class GameController {
 	// Play
 	@FXML private Canvas worldCanvas;
 
-	// Variables
+	// Settings Variables
 	private String gameMode = "Hoid";
 	private String wraparound = "on";
 	private int startBoidsAmountSliderValue;
 	private int startPoidProsentSliderValue;
+	// Play Variables
 	private World gameWorld;
 	private GraphicsContext gc;
 		
@@ -56,45 +57,53 @@ public class GameController {
 	/**
 	 * handleGamemodeSwitch is called when one click the button in settings. It checks what gameMode the player wants to play
 	 */
-	public void handleGamemodeSwitch(ActionEvent event) throws IOException{
+	@FXML
+	private void handleGamemodeSwitch(ActionEvent event) throws IOException{
 		gameMode = (rbHoid.isSelected()) ? rbHoid.getText(): rbPoid.getText(); 
 	}
-	public void handleStartBoidsAmountSlider(MouseEvent event) throws IOException{
+
+	@FXML
+	private void handleStartBoidsAmountSlider(MouseEvent event) throws IOException{
 		startBoidsAmountSliderValue = (int) Math.floor(startBoidsAmountSlider.getValue());
 		startBoidsAmount.setText(Integer.toString(startBoidsAmountSliderValue) + " boids");
 		// startBoidsAmount.setText((startBoidsAmountSlider.getValue()) + " boids");
 	}
-	public void handleStartPoidProsentSlider(MouseEvent event) throws IOException{
+
+	@FXML
+	private void handleStartPoidProsentSlider(MouseEvent event) throws IOException{
 		startPoidProsentSliderValue = (int) Math.floor(startPoidProsentSlider.getValue());
 		startPoidProsent.setText(Integer.toString(startPoidProsentSliderValue) + "%");
 	}
-	public void handleWraparound(ActionEvent event) throws IOException{
+	@FXML
+	private void handleWraparound(ActionEvent event) throws IOException{
 		wraparound = (wraparoundButton.isSelected()) ? "off" : "on";
 	}
 	// Main menu controller
-
-	public void switchToMainMenu(ActionEvent event) throws IOException{
+	@FXML
+	private void switchToMainMenu(ActionEvent event) throws IOException{
 		Filehandler.storeSettingsInFile(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound); // Saves settings
 		switchToScene(event, "mainMenu.fxml");
 	}
-	public void switchToSettings(ActionEvent event) throws IOException{
+
+	@FXML
+	private void switchToSettings(ActionEvent event) throws IOException{
 		System.out.println("Load settings");
 		switchToScene(event, "settings.fxml");
 	}
-	public void switchToPlay(ActionEvent event) throws IOException{
+
+	@FXML
+	private void switchToPlay(ActionEvent event) throws IOException{
 		switchToScene(event, "play.fxml");
 		List<String> settings = Filehandler.readFromSettingsfile();
 		System.out.println(settings);
-		int canvasLength = 1280; //(int) worldCanvas.getWidth() TODO: Could get values from canvas
-		int canvasHeight = 700;  //(int) worldCanvas.getHeight() TODO: Could get values from canvas
-
+		int canvasLength = 1280; //(int) worldCanvas.getWidth() TODO: shall get values from canvas when it works.
+		int canvasHeight = 700;  //(int) worldCanvas.getHeight() TODO: shall get values from canvas when it works.
 		gameWorld = World.initGame(canvasLength, canvasHeight, settings.get(4), (int) Integer.valueOf(settings.get(5)),(int) Integer.valueOf(settings.get(6)), (settings.get(7)).equals("on"));
-		// TEST
-		// System.out.println(gameWorld.getAllInitBoids());
-		GraphicsContext gc = worldCanvas.getGraphicsContext2D(); // TODO: HVOR GC blir definert
+		// GraphicsContext gc = worldCanvas.getGraphicsContext2D(); // TODO: HVOR GC blir definert
 
 		runGame();
 	}
+
 	/**
 	 * A general switch to scene method. It takes in the filename and changes scene to current scene.
 	 * @param event ActionEvent fired by the FXML.
@@ -108,36 +117,41 @@ public class GameController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
 	/**
 	 * Kills the Program
 	 * @param event
 	 * @throws IOException
 	 */
-	public void quitProgram(ActionEvent event) throws IOException{
+	@FXML
+	private void quitProgram(ActionEvent event) throws IOException{
 		Platform.exit();
 	}
 
 	// GAME methods:
 	// game controller
 	
-	public void handleMouseCoordinates(MouseEvent event) throws IOException{
+	@FXML
+	private void handleMouseCoordinates(MouseEvent event) throws IOException{
 		gameWorld.setMouseX(event.getX());
 		gameWorld.setMouseY(event.getY());
 		System.out.println("x: " + event.getX() + " y: " + event.getY());
 	}
-	public void runGame() {
-		boolean gameOver = false;
-		// boolean gameOver = PlayerBoid; Should be the status of isalive of playerboid
-		
-		while(!gameOver){
-			long startTime = System.currentTimeMillis(); // TEST SPEED
-			// long startTime = System.nanoTime(); // TEST SPEED
 
-			drawBoidsOnCanvas();
+	public void runGame() {
+		boolean gameOver = gameWorld.isWordsPlayerAlive(); //Should be the status of isalive of playerboid
+		
+		while(gameOver){
+			long startTime = System.currentTimeMillis(); // TEST SPEED
+
+			// drawBoidsOnCanvas();
 			gameWorld.moveAllBoids();
 			try {
-				Thread.sleep(17);
-				// Thread.sleep(17 - (startTime - System.currentTimeMillis()));
+				//  Finds the excecuton time and subtracts it from the sleep. This makes each frame take about 17 ms, witch makes 60 fps.
+				// V-sync, AnimationTimer coulde let eventlisteners fire.
+				long totalTimeExecutionTime = (System.currentTimeMillis() - startTime);
+				System.out.println(totalTimeExecutionTime);
+				Thread.sleep(17 - totalTimeExecutionTime);
 			}
 			catch (InterruptedException e){}
 			System.out.println("Move");
@@ -150,14 +164,12 @@ public class GameController {
 	/**
 	 * Draws each individeual frame on the canvas. Each frame represent the current flora of Boids. 
 	 * It uses the positions of each boid that is in the gameWorld and paints it on the frame.
-	 * 
 	 */
 	public void drawBoidsOnCanvas(){
 		// TODO FIND A WAY TO DRAW ON SCREEN.
 		// System.out.println(worldCanvas);
 		System.out.println("Draw");
 		// GraphicsContext gc = worldCanvas.getGraphicsContext2D();
-
 		// final GraphicsContext gc = worldCanvas.getGraphicsContext2D();
 		
 		// Must clear the screen at the start of each update:

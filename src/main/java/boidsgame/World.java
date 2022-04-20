@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class World {
-	// needs to get the size of the World.
 	private boolean wraparound;
+	private boolean wordsPlayerAlive = true;
 	private int xLength; // Must get the info from javaFX
 	private int yHeight; // Must get the info from javaFX
 	
@@ -31,18 +31,6 @@ public class World {
 		// TODO: Shall throw exceptions if the world is faulty must get the size of the window somehow.
 	}
 	
-
-	public int getxLength() {
-		return xLength;
-	}
-
-	public int getyHeight() {
-		return yHeight;
-	}
-
-	public Collection<Boid> getAllInitBoids() {
-		return allInitBoids;
-	}
 	/**
 	 * The setAllInitBoids adds all the boids into the world. But a World cannot be lifeless. It must have at least one boid.
 	 * Either a Playerboid, Poid, or Hoid.
@@ -100,13 +88,14 @@ public class World {
 	public void moveAllBoids(){
 		for (Boid currentBoid : this.getAllInitBoids()) {
 			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
-			if (!currentBoid.isAlive) continue; // if current boid is not alive it is no reason to move it futher.
 			if (currentBoid instanceof PlayerBoid){
 				/* Only needs to change the mouse coords if it is the PlayerBoid.
-				   Let me use most of the methods given by boid but changes the internal fields to PlayerBoid. */
+				Let me use most of the methods given by boid but changes the internal fields to PlayerBoid. */
 				((PlayerBoid) currentBoid).setMouseX(mouseX);
 				((PlayerBoid) currentBoid).setMouseY(mouseY);
+				this.setWordsPlayerAlive(currentBoid.isAlive);
 			}
+			if (!currentBoid.isAlive) continue; // if current boid is not alive it is no reason to move it futher.
 			currentBoid.move();
 			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
 			// If boids go out of the world bounds and wraparound is legal then change the coordinates
@@ -124,6 +113,24 @@ public class World {
 		this.mouseX = newMouseX;
 	}
 	
+		public int getxLength() {
+		return xLength;
+	}
+
+	public int getyHeight() {
+		return yHeight;
+	}
+
+	public boolean isWordsPlayerAlive() {
+		return wordsPlayerAlive;
+	}
+	public void setWordsPlayerAlive(boolean wordsPlayerAlive) {
+		this.wordsPlayerAlive = wordsPlayerAlive;
+	}
+	public Collection<Boid> getAllInitBoids() {
+		return allInitBoids;
+	}
+
 	public double getMouseX() {
 		return mouseX;
 	}

@@ -26,7 +26,8 @@ public class Hoid extends Boid {
 	 * @return true if either it is hoid or it is playerBoid that is hoid-oid. 
 	 */
 	public static boolean isFriendlyBoid(Boid boid){
-		return (boid instanceof Hoid) || (boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Hoid"): false;
+		// return (boid instanceof Hoid) || (boid instanceof PlayerBoid);
+		return (boid instanceof Hoid) || ((boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Hoid"): false);
 	}
 
 
@@ -98,7 +99,7 @@ public class Hoid extends Boid {
 	public Vector scareVector(Collection<Boid> allCloseBoids){
 		// Add the distance from each Poid-oid.
 		// Should use seperationVector but with only scary boids.
-		// CAN CHANGE IT TO LAMBDA EXSPRESSION
+		// CAN CHANGE IT TO LAMBDA EXSPRESSION OR FUNCTIONAL
 		Collection<Boid> unFriendlyBoids = new ArrayList<>();
 		for (Boid boid : allCloseBoids) {
 			if (!isFriendlyBoid(boid)){
