@@ -7,7 +7,7 @@ public class PlayerBoid extends Boid{
 
 	private long birthTime;
 	private long lifeTime;
-	private double movementToCursorVectorCoefficient;
+	private double movementToCursorVectorCoefficient = 1;
 	private String gameMode;
 
 	private double mouseX;	
@@ -75,6 +75,9 @@ public class PlayerBoid extends Boid{
 			this.killAllCloseBoid();
 		}
 		this.updateLifeTime();
+		System.out.println(toString()
+			
+			); // TODO REMOVE!
 	}
 	
 	// SETTERS AND GETTERS
@@ -114,5 +117,13 @@ public class PlayerBoid extends Boid{
 	// public void setLifeTime(double lifeTime) {
 	// 	this.lifeTime = lifeTime;
 	// }
+	@Override
+	public String toString(){
+		return 
+			"PlayerBoids x: " + this.getPosition().getPositionX() +" y: "+ this.getPosition().getPositionY() + 
+			" Mouse: x: " + mouseX + " y: " + mouseY +
+			" Velocity x: " + velocity.getPositionX() + " y: " + velocity.getPositionY() +
+			" Acceleration x: " + acceleration.getPositionX() + " y: " + acceleration.getPositionY();
+	}
 	
 }

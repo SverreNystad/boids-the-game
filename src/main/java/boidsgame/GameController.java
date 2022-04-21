@@ -29,35 +29,23 @@ public class GameController {
 	private Stage stage;
 	private Scene scene;
 	// Main menu
-	@FXML
-	private Button playButton;
-	@FXML
-	private Button settingsButton;
-	@FXML
-	private Button quitButton;
+	@FXML private Button playButton;
+	@FXML private Button settingsButton;
+	@FXML private Button quitButton;
 
 	// Settings
-	@FXML
-	private Slider startBoidsAmountSlider;
-	@FXML
-	private Label startBoidsAmount;
-	@FXML
-	private Slider startPoidProsentSlider;
-	@FXML
-	private Label startPoidProsent;
-	@FXML
-	private RadioButton rbHoid;
-	@FXML
-	private RadioButton rbPoid;
-	@FXML
-	private ToggleButton wraparoundButton;
+	@FXML private Slider startBoidsAmountSlider;
+	@FXML private Label startBoidsAmount;
+	@FXML private Slider startPoidProsentSlider;
+	@FXML private Label startPoidProsent;
+	@FXML private RadioButton rbHoid;
+	@FXML private RadioButton rbPoid;
+	@FXML private ToggleButton wraparoundButton;
 
-	@FXML
-	private ImageView background;
+	@FXML private ImageView background;
 
 	// Play
-	@FXML
-	private Canvas worldCanvas;
+	@FXML private Canvas worldCanvas;
 
 	// Settings Variables
 	private String gameMode = "Hoid";
@@ -98,8 +86,7 @@ public class GameController {
 	// Main menu controller
 	@FXML
 	private void switchToMainMenu(ActionEvent event) throws IOException {
-		Filehandler.storeSettingsInFile(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound); // Saves
-																															// settings
+		Filehandler.storeSettingsInFile(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound); // Saves settings
 		switchToScene(event, "mainMenu.fxml");
 	}
 
@@ -114,30 +101,21 @@ public class GameController {
 		// switchToScene(event, "play.fxml");
 		List<String> settings = Filehandler.readFromSettingsfile();
 		System.out.println(settings);
-		int canvasLength = 1280; // (int) worldCanvas.getWidth() TODO: shall get values from canvas when it
-									// works.
-		int canvasHeight = 700; // (int) worldCanvas.getHeight() TODO: shall get values from canvas when it
-								// works.
-		gameWorld = World.initGame(canvasLength, canvasHeight, settings.get(4), (int) Integer.valueOf(settings.get(5)),
-				(int) Integer.valueOf(settings.get(6)), (settings.get(7)).equals("on"));
+		int canvasLength = (int) worldCanvas.getWidth(); // TODO: shall get values from canvas when it works.
+		int canvasHeight = (int) worldCanvas.getHeight(); // TODO: shall get values from canvas when it works.
+		gameWorld = World.initGame(canvasLength, canvasHeight, settings.get(4), (int) Integer.valueOf(settings.get(5)), (int) Integer.valueOf(settings.get(6)), (settings.get(7)).equals("on"));
 		background.toFront();
 		worldCanvas.toFront();
-		// worldCanvas = (Canvas) scene.getRoot().getChildrenUnmodifiable().get(0);
-		// GraphicsContext gc = worldCanvas.getGraphicsContext2D(); // TODO: HVOR GC
-		// blir definert
-		// this.gc = gc;
 		runGame();
 	}
 
 	/**
 	 * A general switch to scene method. It takes in the filename and changes scene
 	 * to current scene.
-	 * 
 	 * @param event    ActionEvent fired by the FXML.
 	 * @param filename is a string that represent the filename.
 	 * @throws IOException
 	 */
-
 	private void switchToScene(ActionEvent event, String filename) throws IOException {
 		// stage = (Stage)(settingsButton.getSource()).getScrene().getWindow();
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -148,7 +126,6 @@ public class GameController {
 
 	/**
 	 * Kills the Program
-	 * 
 	 * @param event
 	 * @throws IOException
 	 */
@@ -164,59 +141,30 @@ public class GameController {
 	private void handleMouseCoordinates(MouseEvent event) throws IOException {
 		gameWorld.setMouseX(event.getX());
 		gameWorld.setMouseY(event.getY());
-		System.out.println("x: " + event.getX() + " y: " + event.getY());
+		// System.out.println("x: " + event.getX() + " y: " + event.getY());
 	}
 
 	public void runGame() {
-		// boolean gameOver = gameWorld.isWordsPlayerAlive(); // Should be the status of
-		// isalive of playerboid
-
-		// stage.setScene(new Scene(new Group(worldCanvas)));
-		// stage.show();
-
 		new AnimationTimer() {
 			private long lastUpdate = 0;
 
 			@Override
 			public void handle(long now) {
-				if (now - lastUpdate >= 10_000_000) {
-
+				// Finds the excecuton time and subtracts it from the sleep. This makes each frame take about 10 ms, witch makes 100 fps.
+				if (now - lastUpdate >= 10_000_000) { // 10 000 000 ns = 10 ms
 					drawBoidsOnCanvas();
 					gameWorld.moveAllBoids();
-					System.out.println("Move");
-					var gameOver = gameWorld.isWordsPlayerAlive();
+					// System.out.println("Move");
+					Boolean gameOver = gameWorld.isWordsPlayerAlive();
 					if (!gameOver) {
 						worldCanvas.toBack();
 						background.toBack();
 						stop();
-
 					}
 				}
 				lastUpdate = now;
-
 			}
-
 		}.start();
-		// while (gameOver) {
-		// long startTime = System.currentTimeMillis(); // TEST SPEED
-
-		// drawBoidsOnCanvas();
-		// gameWorld.moveAllBoids();
-		// // try {
-		// // // Finds the excecuton time and subtracts it from the sleep. This makes
-		// each
-		// // // frame take about 17 ms, witch makes 60 fps.
-		// // Thread.sleep(17 - (System.currentTimeMillis() - startTime));
-		// // } catch (InterruptedException e) {
-		// // }
-		// System.out.println("Move");
-
-		// long endTime = System.currentTimeMillis(); // TEST SPEED
-		// long timeElapsed = endTime - startTime; // TEST SPEED
-		// System.out.println("Execution time in milliseconds: " + timeElapsed); // TEST
-		// SPEED
-		// gameOver = gameWorld.isWordsPlayerAlive();
-		// }
 	}
 
 	/**
@@ -226,14 +174,10 @@ public class GameController {
 	 * the frame.
 	 */
 	public void drawBoidsOnCanvas() {
-		// TODO FIND A WAY TO DRAW ON SCREEN.
-		// System.out.println(worldCanvas);
-		System.out.println("Draw");
+		// System.out.println("Draw");
 		GraphicsContext gc = worldCanvas.getGraphicsContext2D();
-		// final GraphicsContext gc = worldCanvas.getGraphicsContext2D();
-
 		// Must clear the screen at the start of each update:
-		// gc.clearRect(0, 0, worldCanvas.getWidth(), worldCanvas.getHeight());
+		gc.clearRect(0, 0, worldCanvas.getWidth(), worldCanvas.getHeight());
 
 		for (Boid currentBoid : gameWorld.getAllInitBoids()) {
 			// gc.beginPath();
@@ -258,11 +202,10 @@ public class GameController {
 					currentColor = Color.BLACK;
 					break;
 			}
+			int radius = 5;
 			gc.setFill(currentColor);
-			gc.strokeRect(currentBoid.getPosition().getPositionX(),
-					currentBoid.getPosition().getPositionX(), 30, 30);
-			gc.fillRect(currentBoid.getPosition().getPositionX(),
-					currentBoid.getPosition().getPositionX(), 30, 30);
+			gc.strokeOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
+			gc.fillOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius); // does not do anything
 			gc.closePath();
 		}
 	}

@@ -58,7 +58,7 @@ public class World {
 		Collection<Boid> allInitBoids = new ArrayList<>();
 		World gameWorld = new World(canvasLength, canvasHeight, allInitBoids, wraparound);
 		// Adds playerBoid.
-		allInitBoids.add(new PlayerBoid(new Vector(canvasLength/2, canvasHeight/2), new Vector(0, 0), new Vector(0, 0), 0,0,0, true, gameWorld, gameMode));
+		allInitBoids.add(new PlayerBoid(new Vector(canvasLength/2, canvasHeight/2), new Vector(0, 0), new Vector(0, 0), 30, 30, 10, true, gameWorld, gameMode));
 		// Adds all Poids and Hoids in random locations and with a random speed
 		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
 		int hoidAmount = startBoidsAmount - poidAmount;
@@ -72,7 +72,7 @@ public class World {
 				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 10, 10));
 			}
 			else{
-				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 10, 10, 10));
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 500, true, gameWorld, 10, 10, 10));
 			}
 		}
 		gameWorld.setAllInitBoids(allInitBoids);
