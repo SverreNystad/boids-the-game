@@ -10,15 +10,29 @@ import java.util.Scanner;
 
 public class Filehandler implements FilehandlerInterface {
 	
-	public static void storeToFile(String filename, String file){
-		// TODO GENERAL STORING;
+	@Override
+	public List<String> readFromFileByLogic(String filename, String file) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void storeToFile(String filename, String headLine, String data, Boolean overwrite) throws IOException{
+		File currentFile = new File(filename);
+		FileWriter currentWriter = new FileWriter(currentFile);
+		if (overwrite){
+			currentWriter.write(headLine + "\n" + data);
+		}
+		else {
+			if (!currentFile.exists()){
+				currentWriter.write(headLine);
+			}
+			currentWriter.append(data);
+		}
+		currentWriter.close();
+		
 	}
 
-	public static List<String> readFromFileByLogic(String filename, String file){
-		//TODO MAKE FUNCTIONAL ORIENTED READING LOGIC
-	}
-
-	public static void storeSettingsInFile(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) throws IOException{
+	public static void storeSettingsInFile(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) {
 		try{
 			valideStoreSettingsInFileArguments(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound);
 			File currentGameSettings = new File("currentGameSettings.txt");
@@ -80,15 +94,17 @@ public class Filehandler implements FilehandlerInterface {
 		currentWriter.close();
 	}
 
-	public static void main(String[] args) {
-		Filehandler temp = new Filehandler();
-		try {
-			System.out.println(temp.readFromSettingsfile());
+	// public static void main(String[] args) {
+	// 	Filehandler temp = new Filehandler();
+	// 	try {
+	// 		System.out.println(temp.readFromSettingsfile());
 			
-		} catch (FileNotFoundException e) {
-			//TODO: handle exception
-			System.out.println("Could not find file");
-		}
-	}
+	// 	} catch (FileNotFoundException e) {
+	// 		//TODO: handle exception
+	// 		System.out.println("Could not find file");
+	// 	}
+	// }
+
+
 }
 
