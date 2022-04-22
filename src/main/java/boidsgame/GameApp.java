@@ -17,6 +17,7 @@ public class GameApp extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Boids the game");
         primaryStage.setScene(new Scene(FXMLLoader.load(GameApp.class.getResource("mainMenu.fxml"))));
+        primaryStage.setResizable(false);
         // primaryStage.setScene(new Scene(FXMLLoader.load(GameApp.class.getResource("settings.fxml"))));
 
         primaryStage.show();

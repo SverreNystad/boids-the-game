@@ -57,6 +57,7 @@ public class SettingsController extends Controller {
 	@FXML
 	private void switchToMainMenu(ActionEvent event) throws IOException {
 		Filehandler.storeSettingsInFile(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound); // Saves settings
+		System.out.println("Saved settings.");
 		switchToScene(event, "mainMenu.fxml");
 	}
 }

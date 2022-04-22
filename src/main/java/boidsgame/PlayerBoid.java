@@ -29,7 +29,6 @@ public class PlayerBoid extends Boid{
 		long currentTime = System.currentTimeMillis();
 		this.lifeTime = currentTime - this.birthTime;
 	}
-	// TODO: Get info from eventlistener on Canvas and move accordingly.
 	/**
 	 *  This method will find the Vector towards the mouse cursor. If the coordinates are not inside the boidWorld they will not count. This info will be changed by an eventlistner. 
 	 * @param mouseX The coordinate of the last known mouse position.
@@ -71,13 +70,12 @@ public class PlayerBoid extends Boid{
 		}
 		// Move boid
 		this.position.addition(this.getVelocity());
-		if (this.getGameMode().equals("Hoid")){
+		// Kill boids in direct vicinity of the PlayerBoid if it is Poid-oid
+		if (this.getGameMode().equals("Poid")){
 			this.killAllCloseBoid();
 		}
 		this.updateLifeTime();
-		System.out.println(toString()
-			
-			); // TODO REMOVE!
+		System.out.println(toString()); // TODO REMOVE!
 	}
 	
 	// SETTERS AND GETTERS
@@ -99,7 +97,7 @@ public class PlayerBoid extends Boid{
 	}
 	public void setMouseY(double mouseY) {
 		// TODO: Test this.
-		if (this.mouseX >= 0 && this.mouseX < this.boidWorld.getyHeight()){
+		if (this.mouseY >= 0 && this.mouseY < this.boidWorld.getyHeight()){
 			this.mouseY = mouseY;
 		}
 	}

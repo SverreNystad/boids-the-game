@@ -53,12 +53,24 @@ public class World {
 			}
 		}
 	}
-
+	/**
+	 * This method makes a new World that is based by the canvas element. 
+	 * It creates all the boids that the parameters call for.
+	 * It adds one PlayerBoid in the middel of the canvas.
+	 * It makes 
+	 * @param canvasLength
+	 * @param canvasHeight
+	 * @param gameMode
+	 * @param startBoidsAmount
+	 * @param startPoidProsent
+	 * @param wraparound
+	 * @return
+	 */
 	public static World initGame(int canvasLength, int canvasHeight, String gameMode, int startBoidsAmount, int startPoidProsent, Boolean wraparound ) {
 		Collection<Boid> allInitBoids = new ArrayList<>();
 		World gameWorld = new World(canvasLength, canvasHeight, allInitBoids, wraparound);
 		// Adds playerBoid.
-		allInitBoids.add(new PlayerBoid(new Vector(canvasLength/2, canvasHeight/2), new Vector(0, 0), new Vector(0, 0), 30, 30, 10, true, gameWorld, gameMode));
+		allInitBoids.add(new PlayerBoid(new Vector(canvasLength/2, canvasHeight/2), new Vector(0, 0), new Vector(0, 0), 10, 30, 10, true, gameWorld, gameMode));
 		// Adds all Poids and Hoids in random locations and with a random speed
 		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
 		int hoidAmount = startBoidsAmount - poidAmount;
