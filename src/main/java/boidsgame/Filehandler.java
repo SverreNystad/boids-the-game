@@ -8,8 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Filehandler {
+public class Filehandler implements FilehandlerInterface {
 	
+	public static void storeToFile(String filename, String file){
+		// TODO GENERAL STORING;
+	}
+
+	public static List<String> readFromFileByLogic(String filename, String file){
+		//TODO MAKE FUNCTIONAL ORIENTED READING LOGIC
+	}
+
 	public static void storeSettingsInFile(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) throws IOException{
 		try{
 			valideStoreSettingsInFileArguments(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound);
