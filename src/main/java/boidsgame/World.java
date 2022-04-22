@@ -55,16 +55,18 @@ public class World {
 	}
 	/**
 	 * This method makes a new World that is based by the canvas element. 
-	 * It creates all the boids that the parameters call for.
+	 * It creates all the boids that the parameters startBoidsAmount calls for. 
+	 * These Boids get a random velocity and starts off with zero acceleration.
+	 * A portion of these will be made to Poids deppending on the startPoidProsent.
 	 * It adds one PlayerBoid in the middel of the canvas.
-	 * It makes 
-	 * @param canvasLength
-	 * @param canvasHeight
-	 * @param gameMode
-	 * @param startBoidsAmount
-	 * @param startPoidProsent
-	 * @param wraparound
-	 * @return
+	 * It makes
+	 * @param canvasLength this int value will correlate with the new World generated.
+	 * @param canvasHeight this int value will correlate with the new World generated.
+	 * @param gameMode Either "Poid" or "Hoid" for now. Will determine the player interactions with other boids.
+	 * @param startBoidsAmount The amount of Boids genetated.
+	 * @param startPoidProsent The amount of Boids being Poid.
+	 * @param wraparound Shall the map be wraparound or shall it be a border.
+	 * @return a new World that all boids (PlayerBoid, Hoids and Poids) lives in.
 	 */
 	public static World initGame(int canvasLength, int canvasHeight, String gameMode, int startBoidsAmount, int startPoidProsent, Boolean wraparound ) {
 		Collection<Boid> allInitBoids = new ArrayList<>();
