@@ -11,6 +11,7 @@ public abstract class Boid{
 	protected int maxAcceleration;
 
 	protected int viewRangeRadius;
+	protected int distanseToFear;
 	protected boolean isAlive;
 	protected World boidWorld;
 
@@ -46,6 +47,7 @@ public abstract class Boid{
 		this.viewRangeRadius = viewRangeRadius;
 		this.isAlive = isAlive;
 		this.boidWorld = boidWorld;
+		this.distanseToFear = 20;
 	}
 	/**
 	 * This method will throw IllegalArgumentException if any arguments are negativ.
@@ -88,6 +90,22 @@ public abstract class Boid{
 		return this.getPosition().distenceBetweenVector(otherBoid.getPosition()).length() <= getViewRangeRadius();
 	}
 	/**
+	 * limitVelocity makes the Velocity not go over the maximum.
+	 */
+	public void limitVelocity(){
+		if (this.getVelocity().length() > this.getMaxVelocity()){
+			this.setVelocity(this.velocity.scalingVectorToSize(this.getMaxVelocity()));
+		}
+	}
+	/**
+	 * limitAcceleration makes the Acceleration not go over the maximum.
+	 */
+	public void limitAcceleration(){
+		if (this.getAcceleration().length() > this.getMaxAcceleration()){
+			this.setAcceleration(this.getAcceleration().scalingVectorToSize(this.getMaxAcceleration()));
+		}
+	}
+	/**
 	 * If the boid goes out of the map and wraparound is allowed set the posision to the other side
 	 */
 	public void wraparoundCoordinates(){
@@ -102,6 +120,22 @@ public abstract class Boid{
 		}
 		if (this.getPosition().getPositionY() > this.boidWorld.getyHeight()){
 			this.setPosition(new Vector(this.getPosition().getPositionX(), 0));
+		}
+	}
+
+	/**
+	 * If the world does not wraparound then the walls shall be scary and keep the boids at bay.
+	 * @return A vector 
+	 */
+	public Vector wallScarVector(){ // TODO make wallScarVector!!!
+		Vector resultVector = new Vector(0, 0);
+		if (this.boidWorld.getWraparound()){
+
+
+			return resultVector;
+		}
+		else{
+			return resultVector;
 		}
 	}
 	
@@ -154,21 +188,5 @@ public abstract class Boid{
 	 * <b>PlayerBoid:</b> <i>Shall follow the last known coordinates of the mouse cursor.</i>
 	 */
 	public abstract void move();
-	public static void main(String[] args) {
-		// // Boid b1 = new Boid(100, 100, 0, 0, 0, 0, 0, 0);
-		// // Boid b2 = new Boid(100, 100, 0, 0, 0, 0, 0, 0);
-		// Vector v1 = new Vector(100, 100);
-		// Vector v2 = new Vector(80, 90);
-		// Vector v3 = new Vector(90, 80);
-		// Vector v4 = new Vector(110, 110);
 
-
-
-		// Boid b1 = new Boid(v1, v1, 0, v1, 0, 10);
-		// Boid b2 = new Boid(v4, v1, 0, v1, 0, 10);
-		// System.out.println(b1.viewRangeRadius);
-		// if(b1.boidInViewRange(b2)){
-		// 	System.out.println("Boid in range.");
-		// }
-	}
 }

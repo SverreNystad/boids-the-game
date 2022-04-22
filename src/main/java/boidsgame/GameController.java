@@ -18,10 +18,6 @@ public class GameController {
 	// Play Variables
 	private World gameWorld;
 	private List<String> settings;
-	// private GraphicsContext gc;
-
-	
-
 
 	@FXML
 	public void initialize() {

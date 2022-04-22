@@ -1,24 +1,17 @@
 package boidsgame;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import javafx.scene.Node;
+
 
 
 public class SettingsController extends Controller {
-	// private Stage stage; 
-	// private Scene scene;
-	
 	@FXML private Slider startBoidsAmountSlider;
 	@FXML private Label startBoidsAmount;
 	@FXML private Slider startPoidProsentSlider;
@@ -31,7 +24,7 @@ public class SettingsController extends Controller {
 	private String wraparound = "on";
 	private int startBoidsAmountSliderValue;
 	private int startPoidProsentSliderValue;
-	// Settings controller
+	
 	/**
 	 * handleGamemodeSwitch is called when one click the button in settings. It checks what gameMode the player wants to play
 	 */

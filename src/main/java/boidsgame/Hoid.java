@@ -6,7 +6,6 @@ import java.util.Collection;
  * Hoids stands for Herd-oid object. It follows the classic Boids algorithm.
  */
 public class Hoid extends Boid {
-	private Collection<Vector> allSeperationVectors = new ArrayList<>();
 	private int cohesionCoefficient;
 	private int seperationCoefficient;
 	private int alignmentCoefficient;
@@ -48,7 +47,7 @@ public class Hoid extends Boid {
 		}
 		else{
 			// if there are no other boids in viewRange its current position is flock sentrum
-			return this.position;
+			return this.getPosition();
 		}
 	}
 
@@ -56,13 +55,16 @@ public class Hoid extends Boid {
 	 * When boids get to close the boid want to get away to keep a healhy distance. 
 	 * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
 	 * @param allCloseBoids This is the group of Boids this hoid can see.
-	 * @return
+	 * @return gives a vector pointing away from boid.
 	 */
-	public Vector seperationVector(Collection<Boid> allCloseBoids){
+	public Vector seperationVector(Collection<Boid> allCloseBoids){ // TODO: seperationVector DOES NOT WORK RIGHT
 		// TODO: seperationVector MUST BE TESTED
+		Collection<Vector> allSeperationVectors = new ArrayList<>();
+
 		for (Boid currentBoid : allCloseBoids) {
-			Vector distanceVector = (this.position).distenceBetweenVector(currentBoid.getPosition()); 
+			Vector distanceVector = (this.getPosition()).distenceBetweenVector(currentBoid.getPosition()); 
 			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
+			if (distanceVector.length() == 0) continue;
 			allSeperationVectors.add(distanceVector.scalingNewVector((1/distanceVector.length()))); 
 		}
 		Vector vectorsTogheter = new Vector(0, 0);
@@ -119,13 +121,12 @@ public class Hoid extends Boid {
 		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient));
 		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient));
 		this.acceleration.addition(scareVector(findAllBoidsInViewRange()));
-
+		// Make certain it can not go faster then maxAcceleration
+		this.limitAcceleration();
 		// change speed depending on acceleration
 		// Make certain it can not go faster then maxVelocity
 		this.velocity.addition(this.acceleration);
-		if (this.velocity.length() > this.getMaxVelocity()){
-			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
-		}
+		this.limitVelocity();
 		// Move boid
 		this.position.addition(this.velocity);	
 	}

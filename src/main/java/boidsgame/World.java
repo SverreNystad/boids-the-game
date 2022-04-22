@@ -15,20 +15,27 @@ public class World {
     private double mouseY; // The last known cursor coordinate.
 	
 	public World(int xLength, int yHeight, Collection<Boid> allInitBoids){
+		validWorld(xLength, yHeight);
 		this.xLength = xLength;
 		this.yHeight = yHeight;
 		this.allInitBoids = allInitBoids;
 		this.wraparound = false;
 	}
 	public World(int xLength, int yHeight, Collection<Boid> allInitBoids, Boolean wraparound){
+		validWorld(xLength, yHeight);
 		this.xLength = xLength;
 		this.yHeight = yHeight;
 		this.allInitBoids = allInitBoids;
 		this.wraparound = wraparound;
 	}
 
-	public void validWorld(int xLength, int yHeight){
-		// TODO: Shall throw exceptions if the world is faulty must get the size of the window somehow.
+	/**
+	 *  Shall throw exceptions if the world is faulty.
+	 * @param xLength
+	 * @param yHeight
+	 */
+	public void validWorld(int xLength, int yHeight) throws IllegalArgumentException {
+		if (xLength < 0 || yHeight < 0) throw new IllegalArgumentException("This world cannot be. The length and height must be positiv");
 	}
 	
 	/**
@@ -75,18 +82,19 @@ public class World {
 		allInitBoids.add(new PlayerBoid(new Vector(canvasLength/2, canvasHeight/2), new Vector(0, 0), new Vector(0, 0), 10, 30, 10, true, gameWorld, gameMode));
 		// Adds all Poids and Hoids in random locations and with a random speed
 		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
-		int hoidAmount = startBoidsAmount - poidAmount;
+		// int hoidAmount = startBoidsAmount - poidAmount;
 		
 		for (int i = 1; i < startBoidsAmount; i++){
-			int currentPositionX = (int) Math.floor(Math.random() * canvasLength);
-			int currentPositionY = (int) Math.floor(Math.random() * canvasHeight);
+			int currentPositionX = (int) Math.floor(Math.random() * canvasLength); // TODO: DOES NOT SEAM TO BE RANDOM!
+			int currentPositionY = (int) Math.floor(Math.random() * canvasHeight); // TODO: DOES NOT SEAM TO BE RANDOM!
 			int currentVelocityX = (int) Math.floor(Math.random() * 10 - 5);
 			int currentVelocityY = (int) Math.floor(Math.random() * 10 - 5);
+			System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
 			if (i < poidAmount){
-				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 50, true, gameWorld, 10, 10));
+				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 60, true, gameWorld, 10, 10));
 			}
 			else{
-				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 500, true, gameWorld, 10, 10, 10));
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 50, true, gameWorld, 1, 1, 1));
 			}
 		}
 		gameWorld.setAllInitBoids(allInitBoids);
@@ -113,7 +121,7 @@ public class World {
 			currentBoid.move();
 			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
 			// If boids go out of the world bounds and wraparound is legal then change the coordinates
-			if (this.wraparound){
+			if (this.getWraparound()){
 				currentBoid.wraparoundCoordinates();
 			}
 		}
@@ -127,7 +135,7 @@ public class World {
 		this.mouseX = newMouseX;
 	}
 	
-		public int getxLength() {
+	public int getxLength() {
 		return xLength;
 	}
 
@@ -159,5 +167,8 @@ public class World {
 
 	public double getMouseY() {
 		return mouseY;
+	}
+	public boolean getWraparound(){
+		return this.wraparound;
 	}
 }

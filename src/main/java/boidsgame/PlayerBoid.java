@@ -65,9 +65,7 @@ public class PlayerBoid extends Boid{
 		// change speed depending on acceleration
 		// Make certain it can not go faster then maxVelocity
 		this.velocity.addition(this.getAcceleration().scalingNewVector(movementToCursorVectorCoefficient));
-		if (this.velocity.length() > this.getMaxVelocity()){ 
-			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
-		}
+		this.limitVelocity();
 		// Move boid
 		this.position.addition(this.getVelocity());
 		// Kill boids in direct vicinity of the PlayerBoid if it is Poid-oid
@@ -87,7 +85,6 @@ public class PlayerBoid extends Boid{
 		return mouseX;
 	}
 	public void setMouseX(double mouseX) {
-		// TODO: Test this.
 		if (this.mouseX >= 0 && this.mouseX < this.boidWorld.getxLength()){
 			this.mouseX = mouseX;
 		}
@@ -96,7 +93,6 @@ public class PlayerBoid extends Boid{
 		return mouseY;
 	}
 	public void setMouseY(double mouseY) {
-		// TODO: Test this.
 		if (this.mouseY >= 0 && this.mouseY < this.boidWorld.getyHeight()){
 			this.mouseY = mouseY;
 		}

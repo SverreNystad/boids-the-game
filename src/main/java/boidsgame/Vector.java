@@ -37,7 +37,7 @@ public class Vector {
 	/**
 	 * distenceBetweenVector finds the shortest vector form other vector to this vector in 2d space.
 	 * @param vector
-	 * @return The shortest vector form other vector to this vector.
+	 * @return The shortest vector from other vector to this vector.
 	 */
 	public Vector distenceBetweenVector(Vector vector){
 		return new Vector(vector.positionX - this.positionX, vector.positionY - this.positionY);
