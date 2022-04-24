@@ -66,7 +66,6 @@ public class World {
 	 * These Boids get a random velocity and starts off with zero acceleration.
 	 * A portion of these will be made to Poids deppending on the startPoidProsent.
 	 * It adds one PlayerBoid in the middel of the canvas.
-	 * It makes
 	 * @param canvasLength this int value will correlate with the new World generated.
 	 * @param canvasHeight this int value will correlate with the new World generated.
 	 * @param gameMode Either "Poid" or "Hoid" for now. Will determine the player interactions with other boids.
@@ -83,15 +82,15 @@ public class World {
 		// Adds all Poids and Hoids in random locations and with a random speed
 		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
 		// int hoidAmount = startBoidsAmount - poidAmount;
-		
+		// System.out.println("Boids " + startBoidsAmount + " poids " + poidAmount + " hoids " + (startBoidsAmount - poidAmount));// TODO: REMOVE
 		for (int i = 1; i < startBoidsAmount; i++){
-			int currentPositionX = (int) Math.floor(Math.random() * canvasLength); // TODO: DOES NOT SEAM TO BE RANDOM!
-			int currentPositionY = (int) Math.floor(Math.random() * canvasHeight); // TODO: DOES NOT SEAM TO BE RANDOM!
+			int currentPositionX = (int) Math.floor(Math.random() * canvasLength); 
+			int currentPositionY = (int) Math.floor(Math.random() * canvasHeight); 
 			int currentVelocityX = (int) Math.floor(Math.random() * 10 - 5);
 			int currentVelocityY = (int) Math.floor(Math.random() * 10 - 5);
 			System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
 			if (i < poidAmount){
-				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 20, 20, 60, true, gameWorld, 10, 10));
+				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 10, 20, 60, true, gameWorld, 10, 10));
 			}
 			else{
 				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 50, true, gameWorld, 1, 1, 1));

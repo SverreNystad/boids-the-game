@@ -105,9 +105,13 @@ public class VectorTest {
 
 		assertTrue(v4.scalingVectorToSize(0).length() == 0); 
 		assertTrue(new Vector(0, 0).scalingVectorToSize(10).length() == 0); 
+	}
+	@Test
+	@DisplayName("This test will check if the scalingNewVector gives right vektor")
+	public void testScalingNewVector() {
+	assertTrue(v1.scalingNewVector(1.5).equals(new Vector(150, 150)));
+	assertTrue(v1.scalingNewVector(0.9).equals(new Vector(90, 90)));
 
 
-
-		
 	}
 }

@@ -6,7 +6,6 @@ public class Poid extends Boid{
 	private int movementCoefficient;
 
 	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, int movementCoefficient){
-		// # TODO: Fix contstuctor. Do validation. Should not be able to be out of World
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, myWorld);
 		this.killRadius = killRadius;
 		this.killAmount = 0;
@@ -24,7 +23,7 @@ public class Poid extends Boid{
 
 		for (Boid currentBoid : allCloseBoids) {
 			// dont look after other Poids or dead boids or Playerboid playing Poid.
-			if(currentBoid instanceof Poid || !currentBoid.isAlive || ((currentBoid instanceof PlayerBoid) && ((PlayerBoid) currentBoid).getGameMode().equals("Hoid")) ){ // could be fun if a larger poid could eate other poids
+			if(currentBoid instanceof Poid || !currentBoid.isAlive || ((currentBoid instanceof PlayerBoid) && ((PlayerBoid) currentBoid).getGameMode().equals("Poid")) ){ // could be fun if a larger poid could eate other poids
 				continue;
 			}
 			if (shortestDistance == null){

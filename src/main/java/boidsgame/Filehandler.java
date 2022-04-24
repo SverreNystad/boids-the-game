@@ -35,12 +35,9 @@ public class Filehandler implements FilehandlerInterface {
 	public static void storeSettingsInFile(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) {
 		try{
 			valideStoreSettingsInFileArguments(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound);
-			File currentGameSettings = new File("currentGameSettings.txt");
-			FileWriter currentWritter = new FileWriter(currentGameSettings);
-			// FileWriter currentWritter = new FileWriter("currentGameSettings.txt");
-			currentWritter.write("Gamemode, startBoidsAmount, startPoidProsent, wraparound\n");
-			currentWritter.append(gameMode + ", " + String.valueOf(startBoidsAmountSliderValue) + ", " + String.valueOf(startPoidProsentSliderValue) + ", " + wraparound);
-			currentWritter.close();
+			Filehandler temp = new Filehandler();
+			// writes to file
+			temp.storeToFile("currentGameSettings.txt", "Gamemode, startBoidsAmount, startPoidProsent, wraparound", gameMode + ", " + String.valueOf(startBoidsAmountSliderValue) + ", " + String.valueOf(startPoidProsentSliderValue) + ", " + wraparound, true);
 		}
 		catch (IOException e){
 			System.out.println("An error has occured. In the storing of gamesettings.");

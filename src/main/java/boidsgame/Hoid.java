@@ -9,6 +9,7 @@ public class Hoid extends Boid {
 	private int cohesionCoefficient;
 	private int seperationCoefficient;
 	private int alignmentCoefficient;
+	private int minDistanceToOtherBoids;
 
 
 	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, int cohesionCoefficient, int seperationCoefficient, int alignmentCoefficient){
@@ -17,6 +18,7 @@ public class Hoid extends Boid {
 		this.cohesionCoefficient = cohesionCoefficient;
 		this.seperationCoefficient = seperationCoefficient;
 		this.alignmentCoefficient = alignmentCoefficient;
+		this.minDistanceToOtherBoids = 5;
 	}
 
 	/**
@@ -43,7 +45,7 @@ public class Hoid extends Boid {
 		if (allCloseBoids.size() != 0){
 			int averegeXCord = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getPosition().getPositionX()).sum()) / allCloseBoids.size();
 			int averegeYCord = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getPosition().getPositionY()).sum()) / allCloseBoids.size();
-			return new Vector(averegeXCord, averegeYCord);
+			return this.getPosition().distenceBetweenVector(new Vector(averegeXCord, averegeYCord));
 		}
 		else{
 			// if there are no other boids in viewRange its current position is flock sentrum
@@ -60,18 +62,18 @@ public class Hoid extends Boid {
 	public Vector seperationVector(Collection<Boid> allCloseBoids){ // TODO: seperationVector DOES NOT WORK RIGHT
 		// TODO: seperationVector MUST BE TESTED
 		Collection<Vector> allSeperationVectors = new ArrayList<>();
-
 		for (Boid currentBoid : allCloseBoids) {
-			Vector distanceVector = (this.getPosition()).distenceBetweenVector(currentBoid.getPosition()); 
+			Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
+			// System.out.println("x " + distanceVector.getPositionX() + " y " + distanceVector.getPositionY() + " len " + distanceVector.length()); // TODO REMOVE
 			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
-			if (distanceVector.length() == 0) continue;
-			allSeperationVectors.add(distanceVector.scalingNewVector((1/distanceVector.length()))); 
+			if (distanceVector.length() == 0) continue; 
+			allSeperationVectors.add(distanceVector.scalingNewVector((this.minDistanceToOtherBoids/distanceVector.length()))); 
 		}
 		Vector vectorsTogheter = new Vector(0, 0);
 		for (Vector currentVector : allSeperationVectors) {
 			vectorsTogheter.addition(currentVector);
 		}
-		allSeperationVectors.clear(); // unsurten if i must clear list. list gets decleared in method.
+		// System.out.println(vectorsTogheter.getPositionX() + " " + vectorsTogheter.getPositionY());
 		return vectorsTogheter;//.scalingNewVector(scalar)
 	}
 
@@ -121,6 +123,13 @@ public class Hoid extends Boid {
 		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient));
 		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient));
 		this.acceleration.addition(scareVector(findAllBoidsInViewRange()));
+		this.acceleration.addition(super.wallScarVector());
+		// System.out.println(
+		// 	"Cohesion: x: " + cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient).getPositionX() + " y: " + cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient).getPositionY() +
+		// 	" Seperation: x: " + seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient).getPositionX() + " y: " + seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient).getPositionY() +
+		// 	" Alignment: x: " + alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient).getPositionX() + " y: " + alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient).getPositionY() +
+		// 	" Scare: x: " + scareVector(findAllBoidsInViewRange()).getPositionX() + " y: " + scareVector(findAllBoidsInViewRange()).getPositionY()
+		// 	);
 		// Make certain it can not go faster then maxAcceleration
 		this.limitAcceleration();
 		// change speed depending on acceleration

@@ -59,8 +59,8 @@ public class Vector {
 	 * @return A new vector based on the original vectors after scaling
 	 */
 	public Vector scalingNewVector(double scalar){
-		double newPosX = this.positionX *= scalar;
-		double newPosY = this.positionY *= scalar;
+		double newPosX = this.positionX * scalar;
+		double newPosY = this.positionY * scalar;
 		return new Vector((int) newPosX, (int) newPosY);
 	}
 	/**
