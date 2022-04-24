@@ -31,7 +31,6 @@ public class Hoid extends Boid {
 		return (boid instanceof Hoid) || ((boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Hoid"): false);
 	}
 
-
 	/**
 	 * cohesionVector finds the vector that point to the mass sentrum that is in seight from this boid.
 	 * This makes Hoids try to get to the middel of the flock, where there is most protection from Poids.
@@ -110,7 +109,6 @@ public class Hoid extends Boid {
 				unFriendlyBoids.add(boid);
 			}
 		}
-		// allCloseBoids.stream().filter(boid -> !((Hoid) boid).isFriendlyBoid());
 		return this.seperationVector(unFriendlyBoids);
 	}
 

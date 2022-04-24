@@ -23,7 +23,7 @@ public class Poid extends Boid{
 
 		for (Boid currentBoid : allCloseBoids) {
 			// dont look after other Poids or dead boids or Playerboid playing Poid.
-			if(currentBoid instanceof Poid || !currentBoid.isAlive || ((currentBoid instanceof PlayerBoid) && ((PlayerBoid) currentBoid).getGameMode().equals("Poid")) ){ // could be fun if a larger poid could eate other poids
+			if(currentBoid == this || currentBoid instanceof Poid || !currentBoid.isAlive || ((currentBoid instanceof PlayerBoid) && ((PlayerBoid) currentBoid).getGameMode().equals("Poid")) ){ // could be fun if a larger poid could eate other poids
 				continue;
 			}
 			if (shortestDistance == null){
@@ -35,7 +35,8 @@ public class Poid extends Boid{
 				shortestDistance = (this.position.distenceBetweenVector(currentBoid.getPosition()).length());
 			}
 		}
-		return (closestBoid == null) ? this: closestBoid;
+		return closestBoid;
+		// return (closestBoid == null) ? this: closestBoid;
 	}
 	/**
 	 * closestBoidVector(Boid closestBoid) Gives the vector from this boid to the other boid. It is used to change the acceleration.
@@ -43,7 +44,7 @@ public class Poid extends Boid{
 	 * @return Vector distance between boids.
 	 */
 	private Vector closestBoidVector(Boid closestBoid) {
-		return this.getPosition().distenceBetweenVector(closestBoid.getPosition());
+		return (closestBoid == null) ? new Vector(0, 0) : this.getPosition().distenceBetweenVector(closestBoid.getPosition());
 		
 	}
 	/**
@@ -63,8 +64,10 @@ public class Poid extends Boid{
 		// resets acceleration
 		this.setAcceleration(new Vector(0, 0));
 		// Adds forces to acceleration
-		Vector forces = closestBoidVector(findClosestBoid()).scalingNewVector(this.movementCoefficient);
-		this.acceleration.addition(forces);
+		// Vector forces = ;
+		this.acceleration.addition(closestBoidVector(findClosestBoid()).scalingNewVector(this.movementCoefficient));
+		this.acceleration.addition(super.wallScarVector());
+
 		// Make certain it can not go faster then maxAcceleration
 		this.limitAcceleration();
 		this.velocity.addition(this.acceleration);

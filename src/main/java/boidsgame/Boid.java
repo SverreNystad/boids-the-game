@@ -125,18 +125,28 @@ public abstract class Boid{
 
 	/**
 	 * If the world does not wraparound then the walls shall be scary and keep the boids at bay.
-	 * @return A vector 
+	 * @return A vector that points away from nearest wall.
 	 */
 	public Vector wallScarVector(){ // TODO make wallScarVector!!!
 		Vector resultVector = new Vector(0, 0);
-		if (this.boidWorld.getWraparound()){
+		int boarderDistance = 50;
+		int turnfactor = 45;
+		if (!this.boidWorld.getWraparound()){
+			if (this.getPosition().getPositionX() < boarderDistance){
+				resultVector.addition(new Vector(turnfactor, 0));
+			}
+			if (this.getPosition().getPositionX() > this.boidWorld.getxLength() - boarderDistance){
+				resultVector.addition(new Vector(-turnfactor, 0));
+			}
+			if (this.getPosition().getPositionY() < boarderDistance){
+				resultVector.addition(new Vector(0, turnfactor));
+			}
+			if (this.getPosition().getPositionY() > this.boidWorld.getyHeight() - boarderDistance){
+				resultVector.addition(new Vector(0, -turnfactor));
+			}
 
-
-			return resultVector;
 		}
-		else{
-			return resultVector;
-		}
+		return resultVector;
 	}
 	
 	public Vector getPosition() {

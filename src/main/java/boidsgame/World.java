@@ -90,10 +90,10 @@ public class World {
 			int currentVelocityY = (int) Math.floor(Math.random() * 10 - 5);
 			System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
 			if (i < poidAmount){
-				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 10, 20, 60, true, gameWorld, 10, 10));
+				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, 60, true, gameWorld, 5, 1));
 			}
 			else{
-				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 50, true, gameWorld, 1, 1, 1));
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 30, true, gameWorld, 1, 1, 1));
 			}
 		}
 		gameWorld.setAllInitBoids(allInitBoids);
@@ -116,7 +116,7 @@ public class World {
 				((PlayerBoid) currentBoid).setMouseY(mouseY);
 				this.setWordsPlayerAlive(currentBoid.isAlive);
 			}
-			if (!currentBoid.isAlive) continue; // if current boid is not alive it is no reason to move it futher.
+			if (!currentBoid.isAlive()) continue; // if current boid is not alive it is no reason to move it futher.
 			currentBoid.move();
 			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
 			// If boids go out of the world bounds and wraparound is legal then change the coordinates
