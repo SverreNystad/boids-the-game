@@ -46,7 +46,8 @@ public class Hoid extends Boid {
 		}
 		else{
 			// if there are no other boids in viewRange its current position is flock sentrum
-			return this.getPosition();
+			// return this.getPosition();
+			return this.getPosition().distenceBetweenVector(this.getPosition());
 		}
 	}
 

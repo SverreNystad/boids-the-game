@@ -82,7 +82,7 @@ public class World {
 		// Adds all Poids and Hoids in random locations and with a random speed
 		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
 		// int hoidAmount = startBoidsAmount - poidAmount;
-		// System.out.println("Boids " + startBoidsAmount + " poids " + poidAmount + " hoids " + (startBoidsAmount - poidAmount));// TODO: REMOVE
+		System.out.println("Boids " + startBoidsAmount + " poids " + poidAmount + " hoids " + (startBoidsAmount - poidAmount));// TODO: REMOVE
 		for (int i = 1; i < startBoidsAmount; i++){
 			int currentPositionX = (int) Math.floor(Math.random() * canvasLength); 
 			int currentPositionY = (int) Math.floor(Math.random() * canvasHeight); 

@@ -77,7 +77,7 @@ public abstract class Boid{
 		return listOfBoidsInRange;
 	}
 	/**
-	 * Finds out if a boid is in range of this boid. Will not find boids out of bouds of screen. 
+	 * Finds out if a boid is in range of this boid. Will not find boids out of bounds of screen. 
 	 * @param otherBoid Can be any type of boid.
 	 * @return True if in range else false.
 	 */

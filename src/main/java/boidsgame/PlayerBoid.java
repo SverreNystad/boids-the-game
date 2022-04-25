@@ -73,7 +73,7 @@ public class PlayerBoid extends Boid{
 			this.killAllCloseBoid();
 		}
 		this.updateLifeTime();
-		System.out.println(toString()); // TODO REMOVE!
+		// System.out.println(toString()); // TODO REMOVE!
 	}
 	
 	// SETTERS AND GETTERS
