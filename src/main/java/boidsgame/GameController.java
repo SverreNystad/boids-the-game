@@ -92,7 +92,7 @@ public class GameController {
 			// TEST With boids
 			gc.beginPath();
 			Color currentColor = new Color(0, 0, 0, 0);
-			switch (currentBoid.getClass().getName()) {
+			switch (currentBoid.getClass().getSimpleName()) {
 				case "Hoid":
 					currentColor = Color.GREEN;
 					break;
@@ -100,10 +100,13 @@ public class GameController {
 					currentColor = Color.RED;
 					break;
 				case "PlayerBoid":
-					currentColor = Color.BLACK;
+					currentColor = Color.WHITE;
 					break;
+				default:
+					currentColor = Color.BLACK;
 			}
 			int radius = 5;
+			// System.out.println(currentBoid.getClass().getSimpleName());
 			gc.setFill(currentColor);
 			gc.strokeOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
 			gc.fillOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius); // does not do anything
