@@ -59,7 +59,7 @@ public class GameController {
 					drawBoidsOnCanvas();
 					gameWorld.moveAllBoids();
 					// System.out.println("Move");
-					Boolean gameOver = gameWorld.isWordsPlayerAlive();
+					Boolean gameOver = gameWorld.isWorldsPlayerAlive();
 					if (!gameOver) {
 						// TODO: LAGRE HIGHSCORES OG SKIFTE TIL MAIN MENU
 						// worldCanvas.toBack();

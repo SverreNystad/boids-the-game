@@ -38,9 +38,7 @@ public class Hoid extends Boid {
 	 * @return Vector to local mass sentrum.
 	 */
 	public Vector cohesionVector(Collection<Boid> allCloseBoids){
-		// TODO: cohesionVector MUST BE TESTED
-
-		// Size must be not null else DivisionByNullException. Could use try catch and catch it but it is bad pracsis.
+		// Size must be not null else DivisionByNullException
 		if (allCloseBoids.size() != 0){
 			int averegeXCord = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getPosition().getPositionX()).sum()) / allCloseBoids.size();
 			int averegeYCord = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getPosition().getPositionY()).sum()) / allCloseBoids.size();
@@ -58,8 +56,7 @@ public class Hoid extends Boid {
 	 * @param allCloseBoids This is the group of Boids this hoid can see.
 	 * @return gives a vector pointing away from boid.
 	 */
-	public Vector seperationVector(Collection<Boid> allCloseBoids){ // TODO: seperationVector DOES NOT WORK RIGHT
-		// TODO: seperationVector MUST BE TESTED
+	public Vector seperationVector(Collection<Boid> allCloseBoids){ 
 		Collection<Vector> allSeperationVectors = new ArrayList<>();
 		for (Boid currentBoid : allCloseBoids) {
 			Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
@@ -83,7 +80,6 @@ public class Hoid extends Boid {
 	 * @return the vector that steers the boid so it follows it flockmates.
 	 */
 	public Vector alignmentVector(Collection<Boid> allCloseBoids){
-		// TODO: alignmentVector MUST BE TESTED
 		Vector commenVector;
 		if (allCloseBoids.size() != 0){
 			int averegeXdirection = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getVelocity().getPositionX()).sum());
@@ -98,7 +94,6 @@ public class Hoid extends Boid {
 		return commenVector.subtractionVector(this.velocity);
 	}
 	
-	// TODO: Must make function to run from unfriendly boids.
 	public Vector scareVector(Collection<Boid> allCloseBoids){
 		// Add the distance from each Poid-oid.
 		// Should use seperationVector but with only scary boids.

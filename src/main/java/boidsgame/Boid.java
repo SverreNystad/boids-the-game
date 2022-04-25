@@ -127,7 +127,7 @@ public abstract class Boid{
 	 * If the world does not wraparound then the walls shall be scary and keep the boids at bay.
 	 * @return A vector that points away from nearest wall.
 	 */
-	public Vector wallScarVector(){ // TODO make wallScarVector!!!
+	public Vector wallScarVector(){ 
 		Vector resultVector = new Vector(0, 0);
 		int boarderDistance = 50;
 		int turnfactor = 45;

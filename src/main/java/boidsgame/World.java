@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public class World {
 	private boolean wraparound;
-	private boolean wordsPlayerAlive = true;
+	private boolean worldsPlayerAlive = true;
 	private int xLength; // Must get the info from javaFX
 	private int yHeight; // Must get the info from javaFX
 	
@@ -114,7 +114,7 @@ public class World {
 				Let me use most of the methods given by boid but changes the internal fields to PlayerBoid. */
 				((PlayerBoid) currentBoid).setMouseX(mouseX);
 				((PlayerBoid) currentBoid).setMouseY(mouseY);
-				this.setWordsPlayerAlive(currentBoid.isAlive);
+				this.setWorldsPlayerAlive(currentBoid.isAlive);
 			}
 			if (!currentBoid.isAlive()) continue; // if current boid is not alive it is no reason to move it futher.
 			currentBoid.move();
@@ -142,11 +142,11 @@ public class World {
 		return yHeight;
 	}
 
-	public boolean isWordsPlayerAlive() {
-		return wordsPlayerAlive;
+	public boolean isWorldsPlayerAlive() {
+		return worldsPlayerAlive;
 	}
-	public void setWordsPlayerAlive(boolean wordsPlayerAlive) {
-		this.wordsPlayerAlive = wordsPlayerAlive;
+	public void setWorldsPlayerAlive(boolean worldsPlayerAlive) {
+		this.worldsPlayerAlive = worldsPlayerAlive;
 	}
 	public Collection<Boid> getAllInitBoids() {
 		return allInitBoids;
