@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boidsgame.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boidsgame.controllers.MainMenuController">
    <children>
       <!-- <Canvas fx:id="worldCanvas" height="700.0" onMouseMoved="#handleMouseCoordinates" width="1280.0" /> -->
       <ImageView fx:id="background" fitHeight="722.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">

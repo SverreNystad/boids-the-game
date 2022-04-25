@@ -1,7 +1,8 @@
-package boidsgame;
+package boidsgame.controllers;
 
 import java.io.IOException;
 
+import boidsgame.GameApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

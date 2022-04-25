@@ -1,6 +1,8 @@
-package boidsgame;
+package boidsgame.controllers;
 
 import java.io.IOException;
+
+import boidsgame.Filehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

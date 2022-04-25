@@ -1,8 +1,12 @@
-package boidsgame;
+package boidsgame.controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+
+import boidsgame.Boid;
+import boidsgame.Filehandler;
+import boidsgame.World;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
