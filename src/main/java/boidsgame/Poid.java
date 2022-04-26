@@ -3,14 +3,14 @@ import java.util.Collection;
 public class Poid extends Boid{
 	private int killRadius;
 	private int killAmount;
-	private int movementCoefficient;
+	private int AttractionToHoidsCoefficient;
 	private int seperationCoefficient;
 
-	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, int movementCoefficient, int seperationCoefficient){
+	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, int AttractionToHoidsCoefficient, int seperationCoefficient){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, myWorld);
 		this.killRadius = killRadius;
 		this.killAmount = 0;
-		this.movementCoefficient = movementCoefficient;
+		this.AttractionToHoidsCoefficient = AttractionToHoidsCoefficient;
 		this.seperationCoefficient = seperationCoefficient;
 	}
 	/**
@@ -63,12 +63,19 @@ public class Poid extends Boid{
 	}
 	
 
+	public int getAttractionToHoidsCoefficient() {
+		return AttractionToHoidsCoefficient;
+	}
+	public int getSeperationCoefficient() {
+		return seperationCoefficient;
+	}
+
 	public void move() {
 		// resets acceleration
 		this.setAcceleration(new Vector(0, 0));
 		// Adds forces to acceleration
-		this.acceleration.addition(closestBoidVector(findClosestBoid()).scalingNewVector(this.movementCoefficient));
-		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(this.seperationCoefficient)); // TODO 
+		this.acceleration.addition(closestBoidVector(findClosestBoid()).scalingNewVector(this.getAttractionToHoidsCoefficient()));
+		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(this.getSeperationCoefficient())); // TODO 
 		this.acceleration.addition(super.wallScarVector());
 
 		// Make certain it can not go faster then maxAcceleration

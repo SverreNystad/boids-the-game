@@ -60,8 +60,6 @@ public class GameController extends Controller{
 	private void updateEndGameTextFilds(){
 		TotalKillAmount.setText(String.valueOf(gameWorld.getWorldsPlayerboid().getKillScore()));
 		totalLifetime.setText(String.valueOf(gameWorld.getWorldsPlayerboid().getLifeTime()));
-
-
 	}
 
 	public void runGame() {
@@ -75,9 +73,8 @@ public class GameController extends Controller{
 					drawBoidsOnCanvas();
 					gameWorld.moveAllBoids();
 					// System.out.println("Move");
-					Boolean gameOver = gameWorld.isWorldsPlayerAlive();
+					Boolean gameOver = gameWorld.isWorldsPlayerAlive(); // TODO MUST CHANGE gameOver so it includs no more hoids when player is poid
 					if (!gameOver) {
-						// TODO: LAGRE HIGHSCORES OG SKIFTE TIL MAIN MENU
 						worldCanvas.toBack();
 						background.toBack();
 						stop();
@@ -126,7 +123,6 @@ public class GameController extends Controller{
 					currentColor = Color.BLACK;
 			}
 			int radius = 10;
-			// System.out.println(currentBoid.getClass().getSimpleName());
 			// Draws base circle
 			gc.setFill(currentColor);
 			gc.strokeOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
@@ -134,16 +130,16 @@ public class GameController extends Controller{
 			// Draws pointer
 			// double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius , directionPoint.getPositionX()};
 			Vector directionPoint = currentBoid.getPosition().additionNewVector(currentBoid.getVelocity().scalingVectorToSize(radius*2));
-			double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius/2, currentBoid.getPosition().getPositionX() + radius/2 , directionPoint.getPositionX()};
-			double[] horisontalY = {currentBoid.getPosition().getPositionY() + radius/2, currentBoid.getPosition().getPositionY() + radius/2, directionPoint.getPositionY()};
+			double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius/4 , directionPoint.getPositionX()};
+			double[] horisontalY = {currentBoid.getPosition().getPositionY() - radius/2, currentBoid.getPosition().getPositionY() - radius/2, directionPoint.getPositionY()};
 			
-			// double[] verticalX = {currentBoid.getPosition().getPositionX(), currentBoid.getPosition().getPositionX(), directionPoint.getPositionX()};
-			// double[] verticalY = {currentBoid.getPosition().getPositionY() + radius/2, currentBoid.getPosition().getPositionY() + radius/2, directionPoint.getPositionY()};
+			// double[] verticalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() - radius, directionPoint.getPositionX()};
+			// double[] verticalY = {currentBoid.getPosition().getPositionY() - radius, currentBoid.getPosition().getPositionY() + radius/2, directionPoint.getPositionY()};
 
 			gc.strokePolygon(horisontalX, horisontalY, 3); // horisontal
-			gc.fillPolygon(horisontalX, horisontalY, 3);
 			// gc.strokePolygon(verticalX, verticalY, 3); // vertical
-			// gc.fillPolygon(verticalX, verticalX, 3);
+			gc.fillPolygon(horisontalX, horisontalY, 3);
+			// gc.fillPolygon(verticalX, verticalY, 3);
 			gc.closePath();
 		}
 	}
