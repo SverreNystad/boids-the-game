@@ -21,6 +21,14 @@ public class World {
 		this.allInitBoids = allInitBoids;
 		this.wraparound = false;
 	}
+	/**
+	 *  dette er oline
+	 * @param xLength dette er x
+	 * @param yHeight dette er y
+	 * @param allInitBoids
+	 * @param wraparound
+	 * 
+	 */
 	public World(int xLength, int yHeight, Collection<Boid> allInitBoids, Boolean wraparound){
 		validWorld(xLength, yHeight);
 		this.xLength = xLength;
@@ -72,9 +80,17 @@ public class World {
 	 * @param startBoidsAmount The amount of Boids genetated.
 	 * @param startPoidProsent The amount of Boids being Poid.
 	 * @param wraparound Shall the map be wraparound or shall it be a border.
+	 * @param poidViewRange
+	 * @param killRadius
+	 * @param poidSeperationCoefficient
+	 * @param attractionToHoidsCoefficient
+	 * @param hoidViewRange
+	 * @param cohesionCoefficient
+	 * @param alignmentCoefficient, 
+	 * @param hoidSeperationCoefficient
 	 * @return a new World that all boids (PlayerBoid, Hoids and Poids) lives in.
 	 */
-	public static World initGame(int canvasLength, int canvasHeight, String gameMode, int startBoidsAmount, int startPoidProsent, Boolean wraparound ) {
+	public static World initGame(int canvasLength, int canvasHeight, String gameMode, int startBoidsAmount, int startPoidProsent, Boolean wraparound, int poidViewRange, int killRadius, double poidSeperationCoefficient, double attractionToHoidsCoefficient, int hoidViewRange, double cohesionCoefficient, double alignmentCoefficient, double hoidSeperationCoefficient) {
 		Collection<Boid> allInitBoids = new ArrayList<>();
 		World gameWorld = new World(canvasLength, canvasHeight, allInitBoids, wraparound);
 		// Adds playerBoid.
@@ -90,10 +106,10 @@ public class World {
 			int currentVelocityY = (int) Math.floor(Math.random() * 10 - 5);
 			// System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
 			if (i < poidAmount){
-				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, 60, true, gameWorld, 5, 1, 1));
+				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, poidViewRange, true, gameWorld, killRadius, attractionToHoidsCoefficient, poidSeperationCoefficient));
 			}
 			else{
-				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 40, true, gameWorld, 1, 1, 1));
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, hoidViewRange, true, gameWorld, 1, 1, 1));
 			}
 		}
 		gameWorld.setAllInitBoids(allInitBoids);
