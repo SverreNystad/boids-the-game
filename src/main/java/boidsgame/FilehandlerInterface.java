@@ -13,12 +13,12 @@ public interface FilehandlerInterface {
 	 * @throws IOException
 	 */
 	public void storeToFile(String filename, String headLine, String data, Boolean overwrite) throws IOException;
-	/**
-	 * A general reading method to read 
-	 * @param filename
-	 * @param file
-	 * @return
-	 */
-	public List<String> readFromFileByLogic(String filename, String file);
+	// /**
+	//  * A general reading method to read 
+	//  * @param filename
+	//  * @param file
+	//  * @return
+	//  */
+	// public List<String> readFromFileByLogic(String filename, String file);
 	
 }

@@ -10,11 +10,11 @@ import java.util.Scanner;
 
 public class Filehandler implements FilehandlerInterface {
 	
-	@Override
-	public List<String> readFromFileByLogic(String filename, String file) {
-		// TODO Auto-generated method stub
+	// @Override
+	// public List<String> readFromFileByLogic(String filename, String file) {
+	// 	// TODO Auto-generated method stub
 		
-	}
+	// }
 	@Override
 	public void storeToFile(String filename, String headLine, String data, Boolean overwrite) throws IOException{
 		File currentFile = new File(filename);

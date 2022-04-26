@@ -2,8 +2,10 @@ package boidsgame;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.Predicate;
 
+/**
+ * Boid stands for bird like object
+ */
 public abstract class Boid{
 	protected Vector position;
 	protected Vector velocity;
@@ -41,6 +43,7 @@ public abstract class Boid{
 		World boidWorld
 		){
 		vailedArgs(maxVelocity,maxAcceleration,viewRangeRadius);
+		vailedVectorArgs(boidWorld, position);
 		this.position = position;
 		this.velocity = velocity;
 		this.maxVelocity = maxVelocity;
@@ -59,6 +62,13 @@ public abstract class Boid{
 	private static void vailedArgs(final int... args) throws IllegalArgumentException{
 		for (int num : args) {
 			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
+		}
+	}
+	
+	private static void vailedVectorArgs(World boidWord, final Vector... vecArgs) throws IllegalArgumentException{
+		for (Vector v : vecArgs) {
+			if (v.getPositionX() < 0 || v.getPositionX() > boidWord.getxLength()) throw new IllegalArgumentException("No negativ arguments allowed");
+			if (v.getPositionY() < 0 || v.getPositionY() > boidWord.getyHeight()) throw new IllegalArgumentException("No negativ arguments allowed");
 		}
 	}
 	/**
@@ -211,6 +221,9 @@ public abstract class Boid{
 	}
 	public void setIsAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}
+	public World getBoidWorld(){
+		return this.boidWorld;
 	}
 	/**
 	 * The move method shall move the boid according to the rules the class sets.

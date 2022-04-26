@@ -115,5 +115,4 @@ public class Vector {
 		}
 		return this;
 	}
-	
 }

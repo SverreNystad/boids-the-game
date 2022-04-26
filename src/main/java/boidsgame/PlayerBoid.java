@@ -101,15 +101,9 @@ public class PlayerBoid extends Boid{
 	public int getKillScore() {
 		return killScore;
 	}
-	// public void setKillScore(int killScore) {
-	// 	this.killScore = killScore;
-	// }
 	public double getLifeTime() {
 		return lifeTime/1000;
 	}
-	// public void setLifeTime(double lifeTime) {
-	// 	this.lifeTime = lifeTime;
-	// }
 	@Override
 	public String toString(){
 		return 

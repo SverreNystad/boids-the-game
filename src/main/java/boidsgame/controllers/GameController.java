@@ -29,7 +29,7 @@ public class GameController extends Controller{
 	private List<String> settings;
 
 	@FXML
-	public void initialize() {
+	private void initialize() {
 		try {
 			settings = Filehandler.readFromSettingsfile();
 		}
