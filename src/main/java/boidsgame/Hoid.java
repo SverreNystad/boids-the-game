@@ -6,13 +6,13 @@ import java.util.Collection;
  * Hoids stands for Herd-oid object. It follows the classic Boids algorithm.
  */
 public class Hoid extends Boid {
-	private int cohesionCoefficient;
-	private int seperationCoefficient;
-	private int alignmentCoefficient;
-	private int minDistanceToOtherBoids;
+	private double cohesionCoefficient;
+	private double seperationCoefficient;
+	private double alignmentCoefficient;
+	private double minDistanceToOtherBoids;
 
 
-	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, int cohesionCoefficient, int seperationCoefficient, int alignmentCoefficient){
+	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, double cohesionCoefficient, double seperationCoefficient, double alignmentCoefficient){
 		// TODO: Fix contstuctor. Do validation. Should not be able to be out of World
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
 		this.cohesionCoefficient = cohesionCoefficient;
@@ -89,10 +89,10 @@ public class Hoid extends Boid {
 		}
 		else{
 			// if there are no other boids in viewRange its current position is flock sentrum
-			commenVector = this.velocity;
+			commenVector = this.getVelocity();
 		}
 		// TODO: Must make the steerimgVector out of the averege direction: steeringVector = disired velocity - this.velocity
-		return commenVector.subtractionVector(this.velocity);
+		return commenVector.subtractionVector(this.getVelocity());
 	}
 	
 	public Vector scareVector(Collection<Boid> allCloseBoids){

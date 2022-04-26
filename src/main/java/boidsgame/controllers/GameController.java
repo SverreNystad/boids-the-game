@@ -39,9 +39,9 @@ public class GameController extends Controller{
 		System.out.println(settings); // TODO FIX INITGAME call
 		gameWorld = World.initGame(
 		(int) worldCanvas.getWidth(), (int) worldCanvas.getHeight(), 
-		settings.get(4), (int) Integer.valueOf(settings.get(5)), (int) Integer.valueOf(settings.get(6)), (settings.get(7)).equals("on")
-		, (int) Integer.valueOf(settings.get(8)), (int) Integer.valueOf(settings.get(9)), (double) Double.valueOf(settings.get(10)), (double) Double.valueOf(settings.get(11))
-		, (int) Integer.valueOf(settings.get(12)), (double) Double.valueOf(settings.get(13)), (double) Double.valueOf(settings.get(14)), 0);
+		settings.get(12), (int) Integer.valueOf(settings.get(13)), (int) Integer.valueOf(settings.get(14)), (settings.get(15)).equals("on")
+		, (int) Integer.valueOf(settings.get(16)), (int) Integer.valueOf(settings.get(17)), (double) Double.valueOf(settings.get(18)), (double) Double.valueOf(settings.get(19))
+		, (int) Integer.valueOf(settings.get(20)), (double) Double.valueOf(settings.get(21)), (double) Double.valueOf(settings.get(22)), (double) Double.valueOf(settings.get(23)));
 		// background.toFront();
 		worldCanvas.toFront();
 
@@ -76,9 +76,8 @@ public class GameController extends Controller{
 				if (now - lastUpdate >= 10_000_000) { // 10 000 000 ns = 10 ms
 					drawBoidsOnCanvas();
 					gameWorld.moveAllBoids();
-					// System.out.println("Move");
-					Boolean gameOver = gameWorld.isWorldsPlayerAlive(); // TODO MUST CHANGE gameOver so it includs no more hoids when player is poid
-					if (!gameOver) {
+					Boolean gameOn = (gameWorld.getWorldsPlayerboid().getGameMode().equals("Hoid")) ?  gameWorld.isWorldsPlayerAlive() : gameWorld.calculateAmountOfHoidsLeftAlive() > 0;
+					if (!gameOn) {
 						worldCanvas.toBack();
 						background.toBack();
 						stop();
@@ -103,14 +102,6 @@ public class GameController extends Controller{
 
 		for (Boid currentBoid : gameWorld.getAllInitBoids()) {
 			if (!currentBoid.isAlive()) continue;
-			// gc.beginPath();
-			// Image img = new Image(new File(currentBoid.getClass().getSimpleName() +".png").toURI().toString());
-			// Image img = new Image(new File("birdIcon.png").toURI().toString());
-			// gc.drawImage(img, currentBoid.getPosition().getPositionX(),
-			// currentBoid.getPosition().getPositionY());
-			// gc.closePath();
-
-			// TEST With boids
 			gc.beginPath();
 			Color currentColor = new Color(0, 0, 0, 0);
 			switch (currentBoid.getClass().getSimpleName()) {

@@ -109,7 +109,7 @@ public class World {
 				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, poidViewRange, true, gameWorld, killRadius, attractionToHoidsCoefficient, poidSeperationCoefficient));
 			}
 			else{
-				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, hoidViewRange, true, gameWorld, 1, 1, 1));
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, hoidViewRange, true, gameWorld, cohesionCoefficient, hoidSeperationCoefficient, alignmentCoefficient));
 			}
 		}
 		gameWorld.setAllInitBoids(allInitBoids);
@@ -165,6 +165,15 @@ public class World {
 			}
 		}
 		return null;
+	}
+	public int calculateAmountOfHoidsLeftAlive(){
+		int amountLeftAlive = 0;
+		for (Boid currentBoid : allInitBoids) {
+			if (currentBoid instanceof Hoid && currentBoid.isAlive()){
+				amountLeftAlive++;
+			}
+		}
+		return amountLeftAlive;
 	}
 
 	public boolean isWorldsPlayerAlive() {

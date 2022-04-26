@@ -18,7 +18,6 @@ public class SettingsController extends Controller {
 	@FXML private Label startBoidsAmount, startPoidProsent;
 	@FXML private RadioButton rbHoid, rbPoid;
 	@FXML private ToggleButton wraparoundButton;
-
 	@FXML private Slider poidViewRangeSlider, killRadiusSlider, poidSeperationCoefficientSlider, AttractionToHoidsCoefficientSlider;
 	@FXML private Slider hoidViewRangeSlider, CohesionCoefficientSlider, AlignmentCoefficientSlider, hoidSeperationCoefficientSlider;
 

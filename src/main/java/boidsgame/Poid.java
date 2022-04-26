@@ -1,16 +1,16 @@
 package boidsgame;
 import java.util.Collection;
 public class Poid extends Boid{
-	private int killRadius;
 	private int killAmount;
-	private int AttractionToHoidsCoefficient;
-	private int seperationCoefficient;
+	private double killRadius;
+	private double attractionToHoidsCoefficient;
+	private double seperationCoefficient;
 
-	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, int AttractionToHoidsCoefficient, int seperationCoefficient){
+	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, double attractionToHoidsCoefficient, double seperationCoefficient){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, myWorld);
 		this.killRadius = killRadius;
 		this.killAmount = 0;
-		this.AttractionToHoidsCoefficient = AttractionToHoidsCoefficient;
+		this.attractionToHoidsCoefficient = attractionToHoidsCoefficient;
 		this.seperationCoefficient = seperationCoefficient;
 	}
 	/**
@@ -63,11 +63,11 @@ public class Poid extends Boid{
 	}
 	
 
-	public int getAttractionToHoidsCoefficient() {
-		return AttractionToHoidsCoefficient;
+	public double getAttractionToHoidsCoefficient() {
+		return this.attractionToHoidsCoefficient;
 	}
-	public int getSeperationCoefficient() {
-		return seperationCoefficient;
+	public double getSeperationCoefficient() {
+		return this.seperationCoefficient;
 	}
 
 	public void move() {
