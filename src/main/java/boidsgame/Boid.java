@@ -2,6 +2,7 @@ package boidsgame;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 public abstract class Boid{
 	protected Vector position;
@@ -12,6 +13,7 @@ public abstract class Boid{
 
 	protected int viewRangeRadius;
 	protected int distanseToFear;
+	protected int minDistanceToOtherBoids;
 	protected boolean isAlive;
 	protected World boidWorld;
 
@@ -47,6 +49,7 @@ public abstract class Boid{
 		this.viewRangeRadius = viewRangeRadius;
 		this.isAlive = isAlive;
 		this.boidWorld = boidWorld;
+		this.minDistanceToOtherBoids = 10;
 		this.distanseToFear = 20;
 	}
 	/**
@@ -82,11 +85,6 @@ public abstract class Boid{
 	 * @return True if in range else false.
 	 */
 	public boolean boidInViewRange(Boid otherBoid){
-		// return 
-		// // If X pos of other boid in range of current boid
-		// ((this.getPosition().getPositionX() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionX() && (this.getPosition().getPositionX() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionX()) 
-		// // If Y pos of other boid in range of current boid
-		// && ((this.getPosition().getPositionY() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionY() && (this.getPosition().getPositionY() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionY());
 		return this.getPosition().distenceBetweenVector(otherBoid.getPosition()).length() <= getViewRangeRadius();
 	}
 	/**
@@ -104,6 +102,29 @@ public abstract class Boid{
 		if (this.getAcceleration().length() > this.getMaxAcceleration()){
 			this.setAcceleration(this.getAcceleration().scalingVectorToSize(this.getMaxAcceleration()));
 		}
+	}
+	/**
+	 * When boids get to close the boid want to get away to keep a healhy distance. 
+	 * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
+	 * @param allCloseBoids This is the group of Boids this hoid can see.
+	 * @return gives a vector pointing away from boid.
+	 */
+	public Vector seperationVector(Collection<Boid> allCloseFriendlyBoids){ 
+		Collection<Vector> allSeperationVectors = new ArrayList<>();
+		for (Boid currentBoid : allCloseFriendlyBoids) {
+			if (!this.isFriendlyBoid(currentBoid)) continue;
+			Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
+			// System.out.println("x " + distanceVector.getPositionX() + " y " + distanceVector.getPositionY() + " len " + distanceVector.length()); // TODO REMOVE
+			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
+			if (distanceVector.length() == 0) continue; 
+			allSeperationVectors.add(distanceVector.scalingNewVector((this.minDistanceToOtherBoids/distanceVector.length()))); 
+		}
+		Vector vectorsTogheter = new Vector(0, 0);
+		for (Vector currentVector : allSeperationVectors) {
+			vectorsTogheter.addition(currentVector);
+		}
+		// System.out.println(vectorsTogheter.getPositionX() + " " + vectorsTogheter.getPositionY());
+		return vectorsTogheter;//.scalingNewVector(scalar)
 	}
 	/**
 	 * If the boid goes out of the map and wraparound is allowed set the posision to the other side
@@ -198,5 +219,12 @@ public abstract class Boid{
 	 * <b>PlayerBoid:</b> <i>Shall follow the last known coordinates of the mouse cursor.</i>
 	 */
 	public abstract void move();
+	/**
+	 * The isFriendlyBoid method will check if Boid is friendly.
+	 * @param boid the testsubject
+	 * @return Boolean value of the friendliness.
+	 */
+	public abstract boolean isFriendlyBoid(Boid boid);
+
 
 }

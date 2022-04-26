@@ -83,7 +83,7 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test getter for acceleration")
 	public void testGetAcceleration() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()){
 			assertEquals(nullVector, currentBoid.getAcceleration());
@@ -139,11 +139,6 @@ public class BoidTest {
 		}
 	}
 
-	@Test
-	@DisplayName("")
-	public void testMain() {
-
-	}
 
 	@Test
 	@DisplayName("")

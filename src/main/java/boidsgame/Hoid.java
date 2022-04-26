@@ -18,7 +18,7 @@ public class Hoid extends Boid {
 		this.cohesionCoefficient = cohesionCoefficient;
 		this.seperationCoefficient = seperationCoefficient;
 		this.alignmentCoefficient = alignmentCoefficient;
-		this.minDistanceToOtherBoids = 5;
+		this.minDistanceToOtherBoids = 10;
 	}
 
 	/**
@@ -26,8 +26,8 @@ public class Hoid extends Boid {
 	 * @param boid
 	 * @return true if either it is hoid or it is playerBoid that is hoid-oid. 
 	 */
-	public static boolean isFriendlyBoid(Boid boid){
-		// return (boid instanceof Hoid) || (boid instanceof PlayerBoid);
+	@Override
+	public boolean isFriendlyBoid(Boid boid){
 		return (boid instanceof Hoid) || ((boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Hoid"): false);
 	}
 
@@ -51,28 +51,28 @@ public class Hoid extends Boid {
 		}
 	}
 
-	/**
-	 * When boids get to close the boid want to get away to keep a healhy distance. 
-	 * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
-	 * @param allCloseBoids This is the group of Boids this hoid can see.
-	 * @return gives a vector pointing away from boid.
-	 */
-	public Vector seperationVector(Collection<Boid> allCloseBoids){ 
-		Collection<Vector> allSeperationVectors = new ArrayList<>();
-		for (Boid currentBoid : allCloseBoids) {
-			Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
-			// System.out.println("x " + distanceVector.getPositionX() + " y " + distanceVector.getPositionY() + " len " + distanceVector.length()); // TODO REMOVE
-			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
-			if (distanceVector.length() == 0) continue; 
-			allSeperationVectors.add(distanceVector.scalingNewVector((this.minDistanceToOtherBoids/distanceVector.length()))); 
-		}
-		Vector vectorsTogheter = new Vector(0, 0);
-		for (Vector currentVector : allSeperationVectors) {
-			vectorsTogheter.addition(currentVector);
-		}
-		// System.out.println(vectorsTogheter.getPositionX() + " " + vectorsTogheter.getPositionY());
-		return vectorsTogheter;//.scalingNewVector(scalar)
-	}
+	// /**
+	//  * When boids get to close the boid want to get away to keep a healhy distance. 
+	//  * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
+	//  * @param allCloseBoids This is the group of Boids this hoid can see.
+	//  * @return gives a vector pointing away from boid.
+	//  */
+	// public Vector seperationVector(Collection<Boid> allCloseBoids){ 
+	// 	Collection<Vector> allSeperationVectors = new ArrayList<>();
+	// 	for (Boid currentBoid : allCloseBoids) {
+	// 		Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
+	// 		// System.out.println("x " + distanceVector.getPositionX() + " y " + distanceVector.getPositionY() + " len " + distanceVector.length()); // TODO REMOVE
+	// 		// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
+	// 		if (distanceVector.length() == 0) continue; 
+	// 		allSeperationVectors.add(distanceVector.scalingNewVector((this.minDistanceToOtherBoids/distanceVector.length()))); 
+	// 	}
+	// 	Vector vectorsTogheter = new Vector(0, 0);
+	// 	for (Vector currentVector : allSeperationVectors) {
+	// 		vectorsTogheter.addition(currentVector);
+	// 	}
+	// 	// System.out.println(vectorsTogheter.getPositionX() + " " + vectorsTogheter.getPositionY());
+	// 	return vectorsTogheter;//.scalingNewVector(scalar)
+	// }
 
 	/**
 	 * alignmentVector find the averege direction the boids are moving toward.
@@ -105,7 +105,7 @@ public class Hoid extends Boid {
 				unFriendlyBoids.add(boid);
 			}
 		}
-		return this.seperationVector(unFriendlyBoids);
+		return super.seperationVector(unFriendlyBoids);
 	}
 
 	@Override

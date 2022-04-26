@@ -26,7 +26,7 @@ public class Filehandler implements FilehandlerInterface {
 			if (!currentFile.exists()){
 				currentWriter.write(headLine);
 			}
-			currentWriter.append(data);
+			currentWriter.append(data); // TODO APPEND DOES NOT WORK
 		}
 		currentWriter.close();
 		
@@ -81,27 +81,10 @@ public class Filehandler implements FilehandlerInterface {
 	}
 
 	// TODO: Gets scores from playerBoid.
-	public void storeHighscoresInFile(PlayerBoid player) throws IOException{
-		File highScoreFile = new File("highscores.txt");
-		FileWriter currentWriter = new FileWriter(highScoreFile);
-		if (!highScoreFile.exists()){
-			currentWriter.write("Kills, Lifetime\n");
-		}
-		currentWriter.append(String.valueOf(player.getKillScore()) + ", " + String.valueOf(player.getLifeTime()) + "\n");
-		currentWriter.close();
+	public static void storeHighscoresInFile(PlayerBoid player) throws IOException{
+		Filehandler temp = new Filehandler();
+		// writes to file
+		temp.storeToFile("highscores.txt", "Kills, Lifetime", String.valueOf(player.getKillScore()) + ", " + String.valueOf(player.getLifeTime()) + "\n", false);
 	}
-
-	// public static void main(String[] args) {
-	// 	Filehandler temp = new Filehandler();
-	// 	try {
-	// 		System.out.println(temp.readFromSettingsfile());
-			
-	// 	} catch (FileNotFoundException e) {
-	// 		//TODO: handle exception
-	// 		System.out.println("Could not find file");
-	// 	}
-	// }
-
-
 }
 

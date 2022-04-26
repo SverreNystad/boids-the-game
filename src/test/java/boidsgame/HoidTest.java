@@ -38,9 +38,9 @@ public class HoidTest {
 		Vector testVector = new Vector(0, 0);
 		int testInt = 0;
 		boolean alive = true;
-		Boid poid = new Poid(testVector, testVector, testVector, testInt, testInt, testInt, alive, testInt, testInt);
-		Hoid hoid = new Hoid(testVector, testVector, testVector, testInt, testInt, testInt, alive, testInt, testInt, testInt);
-		Boid playerBoid = new PlayerBoid();
+		Boid poid = new Poid(testVector, testVector, testVector, testInt, testInt, testInt, alive, null, testInt, testInt, testInt);
+		Hoid hoid = new Hoid(testVector, testVector, testVector, testInt, testInt, testInt, alive, null, testInt, testInt, testInt);
+		Boid playerBoid = new PlayerBoid(testVector, testVector, testVector, testInt, testInt, testInt, alive, null, null);
 
 		assertEquals(true, hoid.isFriendlyBoid(playerBoid));
 

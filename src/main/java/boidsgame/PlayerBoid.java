@@ -37,7 +37,6 @@ public class PlayerBoid extends Boid{
 	 */
 	private Vector movementToCursorVector(double mouseX, double mouseY){
 		if ((this.boidWorld.getxLength() >= mouseX && 0 <= mouseX) && (this.boidWorld.getyHeight() >= mouseY && 0 <= mouseY)){
-			// return new Vector((int) (((double) this.getPosition().getPositionX()) - mouseX), (int) (((double) this.getPosition().getPositionY()) - mouseY));
 			return this.getPosition().distenceBetweenVector(new Vector((int) mouseX, (int) mouseY));	
 		}
 		else {
@@ -106,7 +105,7 @@ public class PlayerBoid extends Boid{
 	// 	this.killScore = killScore;
 	// }
 	public double getLifeTime() {
-		return lifeTime;
+		return lifeTime/1000;
 	}
 	// public void setLifeTime(double lifeTime) {
 	// 	this.lifeTime = lifeTime;
@@ -118,6 +117,10 @@ public class PlayerBoid extends Boid{
 			" Mouse: x: " + mouseX + " y: " + mouseY +
 			" Velocity x: " + velocity.getPositionX() + " y: " + velocity.getPositionY() +
 			" Acceleration x: " + acceleration.getPositionX() + " y: " + acceleration.getPositionY();
+	}
+	@Override
+	public boolean isFriendlyBoid(Boid boid) {
+		return false;
 	}
 	
 }

@@ -88,12 +88,12 @@ public class World {
 			int currentPositionY = (int) Math.floor(Math.random() * canvasHeight); 
 			int currentVelocityX = (int) Math.floor(Math.random() * 10 - 5);
 			int currentVelocityY = (int) Math.floor(Math.random() * 10 - 5);
-			System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
+			// System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
 			if (i < poidAmount){
-				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, 60, true, gameWorld, 5, 1));
+				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, 60, true, gameWorld, 5, 1, 1));
 			}
 			else{
-				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 30, true, gameWorld, 1, 1, 1));
+				allInitBoids.add(new Hoid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 5, 20, 40, true, gameWorld, 1, 1, 1));
 			}
 		}
 		gameWorld.setAllInitBoids(allInitBoids);
@@ -140,6 +140,15 @@ public class World {
 
 	public int getyHeight() {
 		return yHeight;
+	}
+
+	public PlayerBoid getWorldsPlayerboid(){
+		for (Boid currentBoid : allInitBoids) {
+			if (currentBoid instanceof PlayerBoid){
+				return (PlayerBoid) currentBoid;
+			}
+		}
+		return null;
 	}
 
 	public boolean isWorldsPlayerAlive() {

@@ -30,6 +30,15 @@ public class Vector {
 		this.positionX += vectorAdded.positionX;
 		this.positionY += vectorAdded.positionY;
 	}
+
+	/**
+	 * Adds the second vector to the first vector.
+	 * @param vectorAdded
+	 */
+	public Vector additionNewVector(Vector vectorAdded){
+		return new Vector(this.positionX + vectorAdded.positionX, this.positionY + vectorAdded.positionY);
+	}
+
 	public Vector subtractionVector(Vector vectorAdded){
 		return new Vector(this.positionX - vectorAdded.positionX, this.positionY - vectorAdded.positionY);
 	}
