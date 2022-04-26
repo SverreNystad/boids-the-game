@@ -81,7 +81,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Slider fx:id="poidViewRangeSlider" layoutX="178.0" layoutY="371.0" max="200.0" onDragDetected="#handlePoidViewRange" onMouseClicked="#handlePoidViewRange" onMouseDragged="#handlePoidViewRange" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="60.0" />
+      <Slider fx:id="poidViewRangeSlider" layoutX="178.0" layoutY="371.0" max="200.0" onDragDetected="#handlePoidSettings" onMouseClicked="#handlePoidSettings" onMouseDragged="#handlePoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="60.0" />
       <Text layoutX="172.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View range:" wrappingWidth="211.4000244140625">
          <font>
             <Font size="20.0" />

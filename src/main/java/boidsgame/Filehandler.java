@@ -32,12 +32,20 @@ public class Filehandler implements FilehandlerInterface {
 		
 	}
 
-	public static void storeSettingsInFile(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) {
+	// public static void storeSettingsInFile(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) {
+	public static void storeSettingsInFile(
+		String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound, 
+		int poidViewRangeSliderValue, int killRadiusSliderValue, double poidSeperationCoefficientValue, double attractionToHoidsCoefficientValue, 
+		int hoidViewRangeSliderValue, double cohesionCoefficientValue, double alignmentCoefficientValue, double hoidSeperationCoefficientValue) {
+
 		try{
 			valideStoreSettingsInFileArguments(gameMode, startBoidsAmountSliderValue, startPoidProsentSliderValue, wraparound);
 			Filehandler temp = new Filehandler();
 			// writes to file
-			temp.storeToFile("currentGameSettings.txt", "Gamemode, startBoidsAmount, startPoidProsent, wraparound", gameMode + ", " + String.valueOf(startBoidsAmountSliderValue) + ", " + String.valueOf(startPoidProsentSliderValue) + ", " + wraparound, true);
+			temp.storeToFile("currentGameSettings.txt", 
+			"Gamemode, startBoidsAmount, startPoidProsent, wraparound, poidViewRangeSliderValue, killRadiusSliderValue, poidSeperationCoefficientValue, AttractionToHoidsCoefficientValue, hoidViewRangeSliderValue,  CohesionCoefficientValue,  AlignmentCoefficientValue,  hoidSeperationCoefficientValue"
+			, gameMode + ", " + startBoidsAmountSliderValue + ", " + startPoidProsentSliderValue + ", " + wraparound + ", " + poidViewRangeSliderValue + ", " + killRadiusSliderValue + ", " + poidSeperationCoefficientValue + ", " + attractionToHoidsCoefficientValue + ", " + hoidViewRangeSliderValue + ", " + cohesionCoefficientValue + ", " + alignmentCoefficientValue + ", " + hoidSeperationCoefficientValue
+			, true);
 		}
 		catch (IOException e){
 			System.out.println("An error has occured. In the storing of gamesettings.");

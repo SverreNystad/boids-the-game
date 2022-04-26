@@ -16,7 +16,9 @@
  	<dependency>
 		<groupId>org.openjfx</groupId>
 	  <artifactId>javafx-fxml</artifactId>
-	  <version>17-ea+8</version>
+	  <!-- <version>17-ea+8</version> -->
+	  <version>18</version>
+
 	</dependency>
 
 

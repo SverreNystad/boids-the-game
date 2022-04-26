@@ -38,9 +38,13 @@ public class Vector {
 	public Vector additionNewVector(Vector vectorAdded){
 		return new Vector(this.positionX + vectorAdded.positionX, this.positionY + vectorAdded.positionY);
 	}
-
-	public Vector subtractionVector(Vector vectorAdded){
-		return new Vector(this.positionX - vectorAdded.positionX, this.positionY - vectorAdded.positionY);
+	/**
+	 * Makes a new vector that is the subtraction by the this vector - vectorSubtracted. Does not mutate any of the vectors.
+	 * @param vectorAdded Vector to subtract
+	 * @return new Vector
+	 */
+	public Vector subtractionVector(Vector vectorSubtracted){
+		return new Vector(this.positionX - vectorSubtracted.positionX, this.positionY - vectorSubtracted.positionY);
 	}
 	
 	/**
