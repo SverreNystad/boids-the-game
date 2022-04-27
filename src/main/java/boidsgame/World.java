@@ -3,11 +3,15 @@ package boidsgame;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 public class World {
 	private boolean wraparound;
 	private boolean worldsPlayerAlive = true;
-	private int xLength; // Must get the info from javaFX
-	private int yHeight; // Must get the info from javaFX
+	private int xLength;
+	private int yHeight;
 	
 	private Collection<Boid> allInitBoids; // Must get the info from settings.json or javaFX
 
@@ -21,14 +25,7 @@ public class World {
 		this.allInitBoids = allInitBoids;
 		this.wraparound = false;
 	}
-	/**
-	 *  dette er oline
-	 * @param xLength dette er x
-	 * @param yHeight dette er y
-	 * @param allInitBoids
-	 * @param wraparound
-	 * 
-	 */
+
 	public World(int xLength, int yHeight, Collection<Boid> allInitBoids, Boolean wraparound){
 		validWorld(xLength, yHeight);
 		this.xLength = xLength;
@@ -41,6 +38,7 @@ public class World {
 	 *  Shall throw exceptions if the world is faulty.
 	 * @param xLength
 	 * @param yHeight
+	 * @throws IllegalArgumentException if a negative parameter is given.
 	 */
 	public void validWorld(int xLength, int yHeight) throws IllegalArgumentException {
 		if (xLength < 0 || yHeight < 0) throw new IllegalArgumentException("This world cannot be. The length and height must be positiv");
@@ -57,17 +55,7 @@ public class World {
 		if (allInitBoids.size() == 0) throw new IllegalArgumentException("No boid are initialization\n Initialization failed!");
 		this.allInitBoids = allInitBoids;
 	}
-	/**
-	 * removeAllDeadBoids goes trough each boid in the world and removes all non living boids.
-	 * This can be handy to reduce lag.
-	 */
-	public void removeAllDeadBoids(){
-		for (Boid currentBoid : allInitBoids) {
-			if (!currentBoid.isAlive()){
-				allInitBoids.remove(currentBoid);
-			}
-		}
-	}
+
 	/**
 	 * This method makes a new World that is based by the canvas element. 
 	 * It creates all the boids that the parameters startBoidsAmount calls for. 
@@ -80,14 +68,14 @@ public class World {
 	 * @param startBoidsAmount The amount of Boids genetated.
 	 * @param startPoidProsent The amount of Boids being Poid.
 	 * @param wraparound Shall the map be wraparound or shall it be a border.
-	 * @param poidViewRange
-	 * @param killRadius
-	 * @param poidSeperationCoefficient
-	 * @param attractionToHoidsCoefficient
-	 * @param hoidViewRange
-	 * @param cohesionCoefficient
-	 * @param alignmentCoefficient, 
-	 * @param hoidSeperationCoefficient
+	 * @param poidViewRange how far the poid can see.
+	 * @param killRadius the distance to kill other boids
+	 * @param poidSeperationCoefficient how strong the will to seperate is.
+	 * @param attractionToHoidsCoefficient how strong the will to kill hoids is.
+	 * @param hoidViewRange how far the hoid can see.
+	 * @param cohesionCoefficient how strong the will to stay together is.
+	 * @param alignmentCoefficient how strong the will to align is.
+	 * @param hoidSeperationCoefficient how strong the will to seperate is.
 	 * @return a new World that all boids (PlayerBoid, Hoids and Poids) lives in.
 	 */
 	public static World initGame(int canvasLength, int canvasHeight, String gameMode, int startBoidsAmount, int startPoidProsent, Boolean wraparound, int poidViewRange, int killRadius, double poidSeperationCoefficient, double attractionToHoidsCoefficient, int hoidViewRange, double cohesionCoefficient, double alignmentCoefficient, double hoidSeperationCoefficient) {
@@ -203,5 +191,55 @@ public class World {
 	}
 	public boolean getWraparound(){
 		return this.wraparound;
+	}
+
+	/**
+	 * Draws each individeual frame on the canvas. Each frame represent the current
+	 * flora of Boids.
+	 * It uses the positions of each boid that is in the gameWorld and paints it on
+	 * the frame.
+	 */
+	public void drawBoidsOnCanvas(Canvas worldCanvas) {
+		GraphicsContext gc = worldCanvas.getGraphicsContext2D();
+		// Must clear the screen at the start of each update:
+		gc.clearRect(0, 0, worldCanvas.getWidth(), worldCanvas.getHeight());
+
+		for (Boid currentBoid : this.getAllInitBoids()) {
+			if (!currentBoid.isAlive()) continue;
+			gc.beginPath();
+			Color currentColor = new Color(0, 0, 0, 0);
+			switch (currentBoid.getClass().getSimpleName()) {
+				case "Hoid":
+					currentColor = Color.GREEN;
+					break;
+				case "Poid":
+					currentColor = Color.RED;
+					break;
+				case "PlayerBoid":
+					currentColor = Color.BLUE;
+					break;
+				default:
+					currentColor = Color.BLACK;
+			}
+			int radius = 10;
+			// Draws base circle
+			gc.setFill(currentColor);
+			gc.strokeOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
+			gc.fillOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
+			// Draws pointer
+			// double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius , directionPoint.getPositionX()};
+			Vector directionPoint = currentBoid.getPosition().additionNewVector(currentBoid.getVelocity().scalingVectorToSize(radius*2));
+			double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius/4 , directionPoint.getPositionX()};
+			double[] horisontalY = {currentBoid.getPosition().getPositionY() - radius/2, currentBoid.getPosition().getPositionY() - radius/2, directionPoint.getPositionY()};
+			
+			// double[] verticalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() - radius, directionPoint.getPositionX()};
+			// double[] verticalY = {currentBoid.getPosition().getPositionY() - radius, currentBoid.getPosition().getPositionY() + radius/2, directionPoint.getPositionY()};
+
+			gc.strokePolygon(horisontalX, horisontalY, 3); // horisontal
+			// gc.strokePolygon(verticalX, verticalY, 3); // vertical
+			gc.fillPolygon(horisontalX, horisontalY, 3);
+			// gc.fillPolygon(verticalX, verticalY, 3);
+			gc.closePath();
+		}
 	}
 }
