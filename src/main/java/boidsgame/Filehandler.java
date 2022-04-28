@@ -163,12 +163,13 @@ public class Filehandler implements FilehandlerInterface {
 		sortedHighscore.add(hoidList);
 		return sortedHighscore;
 	}
+	
 	public static String formatScores(List<List<String>> sortedHighscore){
-		return "Boid, Kills, Lifetime\n"+sortedHighscore.toString().replace('[', ' ').replace("]]", "").replace("],", "\n");
+		return "Boid, Kills, Lifetime\n" + sortedHighscore.toString().replace('[', ' ').replace("]]", "").replace("],", "\n");
 	}
 
 	
-
+	//  // Ønsker å sortere liseter på et element i en av kolonnene.
 	// public  List<List<List<String>>> sortHighscoreByGamemodeValue(List<List<String>> highscoreResult){
 	// 	List<List<List<String>>> sortedHighscore = new ArrayList<>();
 	// 	List<List<String>> poidList = new ArrayList<>();
