@@ -53,6 +53,9 @@ public class World {
 	 */
 	public void setAllInitBoids(Collection<Boid> allInitBoids) throws IllegalArgumentException{
 		if (allInitBoids.size() == 0) throw new IllegalArgumentException("No boid are initialization\n Initialization failed!");
+		for (Boid currentBoid : allInitBoids) {
+			currentBoid.setBoidWorld(this);
+		}
 		this.allInitBoids = allInitBoids;
 	}
 

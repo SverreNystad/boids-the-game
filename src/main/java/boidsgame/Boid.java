@@ -16,6 +16,8 @@ public abstract class Boid{
 	protected int viewRangeRadius;
 	protected int distanseToFear;
 	protected int minDistanceToOtherBoids;
+	protected int boarderDistance;
+	protected int turnfactor;
 	protected boolean isAlive;
 	protected World boidWorld;
 
@@ -54,6 +56,8 @@ public abstract class Boid{
 		this.boidWorld = boidWorld;
 		this.minDistanceToOtherBoids = 10;
 		this.distanseToFear = 20;
+		this.boarderDistance = 50;
+		this.turnfactor = 45;
 	}
 	/**
 	 * This method will throw IllegalArgumentException if any arguments are negativ.
@@ -160,20 +164,18 @@ public abstract class Boid{
 	 */
 	public Vector wallScarVector(){ 
 		Vector resultVector = new Vector(0, 0);
-		int boarderDistance = 50;
-		int turnfactor = 45;
 		if (!this.boidWorld.getWraparound()){
-			if (this.getPosition().getPositionX() < boarderDistance){
-				resultVector.addition(new Vector(turnfactor, 0));
+			if (this.getPosition().getPositionX() < this.getBoarderDistance()){
+				resultVector.addition(new Vector(this.getTurnfactor(), 0));
 			}
-			if (this.getPosition().getPositionX() > this.boidWorld.getxLength() - boarderDistance){
-				resultVector.addition(new Vector(-turnfactor, 0));
+			if (this.getPosition().getPositionX() > this.boidWorld.getxLength() - this.getBoarderDistance()){
+				resultVector.addition(new Vector(-this.getTurnfactor(), 0));
 			}
-			if (this.getPosition().getPositionY() < boarderDistance){
-				resultVector.addition(new Vector(0, turnfactor));
+			if (this.getPosition().getPositionY() < this.getBoarderDistance()){
+				resultVector.addition(new Vector(0, this.getTurnfactor()));
 			}
-			if (this.getPosition().getPositionY() > this.boidWorld.getyHeight() - boarderDistance){
-				resultVector.addition(new Vector(0, -turnfactor));
+			if (this.getPosition().getPositionY() > this.boidWorld.getyHeight() - this.getBoarderDistance()){
+				resultVector.addition(new Vector(0, -this.getTurnfactor()));
 			}
 		}
 		return resultVector;
@@ -226,6 +228,24 @@ public abstract class Boid{
 	}
 	public World getBoidWorld(){
 		return this.boidWorld;
+	}
+	public void setBoidWorld(World newWorld){
+		// if (newWorld == null) throw new IllegalArgumentException("This is no world for a boid. This world is null");
+		this.boidWorld = newWorld;
+	}
+	public int getBoarderDistance() {
+		return boarderDistance;
+	}
+	public void setBoarderDistance(int boarderDistance) {
+		if (boarderDistance < 0) boarderDistance = 0;
+		this.boarderDistance = boarderDistance;
+	}
+	public int getTurnfactor() {
+		return turnfactor;
+	}
+	public void setTurnfactor(int turnfactor) {
+		if (turnfactor < 0) turnfactor = 0;
+		this.turnfactor = turnfactor;
 	}
 	/**
 	 * The move method shall move the boid according to the rules the class sets.

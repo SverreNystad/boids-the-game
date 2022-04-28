@@ -57,7 +57,7 @@ public class WorldTest {
 	World testInitGameWorld = World.initGame(canvasLength, canvasHeight, gameMode, startBoidsAmount, startPoidProsent, wraparound, poidViewRange, killRadius, poidSeperationCoefficient, attractionToHoidsCoefficient, hoidViewRange, cohesionCoefficient, alignmentCoefficient, hoidSeperationCoefficient);
 
 	for (Boid currentBoid : testInitGameWorld.getAllInitBoids()){
-		// Checks if the boids 
+		// TODO: Checks if the amount of boids are correct. Rigth amount of hoids, and poids.
 		}
 	}
 
@@ -101,17 +101,35 @@ public class WorldTest {
 			hoidList.add(poidTest);
 			hoidList.add(HoidoidPlayerBoid);
 			testWorld.setAllInitBoids(hoidList);
-			assertEquals(i, testWorld.calculateAmountOfHoidsLeftAlive());
+			assertEquals(i, testWorld.calculateAmountOfHoidsLeftAlive(), "There are not as many Hoids as expected.");
+		}
+	}
+	@Test
+	@DisplayName("Test if WraparoundCoordinates works")
+	public void testWraparoundCoordinates() {
+		// wraparoundCoordinates
+		Boid hoidoidPlayerBoid = new PlayerBoid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 0, 0, 0, true, null, "Hoid");
+		Boid poidoidPlayerBoid = new PlayerBoid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 0, 0, 0, true, null, "Poid");
+
+		Boid hoidTest = new Hoid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 0, 0, 0, true, null, 1, 1, 1);
+		Boid poidTest = new Poid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 0, 0, 0, true, null, 1, 1, 1);
+
+		ArrayList<Boid> boidList = new ArrayList<>();
+		boidList.add(hoidoidPlayerBoid);
+		boidList.add(poidoidPlayerBoid);
+		boidList.add(hoidTest);
+		boidList.add(poidTest);
+
+		World testWorld = new World(0, 0, boidList);
+		ArrayList<Vector> pointList = new ArrayList<>();
+		
+		for (Vector vec : pointList) {
+			for (Boid currentBoid : testWorld.getAllInitBoids()) {
+				currentBoid.setPosition(vec);
+				// assertEquals(expected, actual);
+				// TODO check wraparound	
+			}
 		}
 	}
 
-	// @Test
-	// @DisplayName("shall test ")
-
-
-	
-
-
-
-	
 }

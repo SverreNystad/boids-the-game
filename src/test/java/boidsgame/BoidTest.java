@@ -189,4 +189,10 @@ public class BoidTest {
 	public void testWraparoundCoordinates() {
 		
 	}
+
+	@Test
+	@DisplayName("")
+	public void testWallScarVector() {
+		
+	}
 }
