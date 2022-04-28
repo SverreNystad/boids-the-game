@@ -3,7 +3,7 @@ package boidsgame;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-// import javafx.scene.image.Image;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 // import java.io.File;
@@ -20,8 +20,8 @@ public class GameApp extends Application {
 		primaryStage.setTitle("Boids the game");
 		primaryStage.setScene(new Scene(FXMLLoader.load(GameApp.class.getResource("mainMenu.fxml"))));
 		primaryStage.setResizable(false);
-		// Image gameLogo = new Image(getClass().getResource("boidsLogo.png"));
-		// primaryStage.getIcons().add(gameLogo);
+		Image gameLogo = new Image(getClass().getResourceAsStream("boidsLogo.png"));
+		primaryStage.getIcons().add(gameLogo);
 		primaryStage.show();
 	}
 	

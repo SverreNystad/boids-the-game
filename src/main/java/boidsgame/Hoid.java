@@ -9,12 +9,9 @@ public class Hoid extends Boid {
 	private double cohesionCoefficient;
 	private double seperationCoefficient;
 	private double alignmentCoefficient;
-	private double minDistanceToOtherBoids;
-
 
 	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, double cohesionCoefficient, double seperationCoefficient, double alignmentCoefficient){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
-		this.minDistanceToOtherBoids = 10;
 		try {
 			vailedArgs(cohesionCoefficient, seperationCoefficient, alignmentCoefficient);
 			this.cohesionCoefficient = cohesionCoefficient;
