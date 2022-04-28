@@ -3,6 +3,9 @@ package boidsgame;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Boid stands for bird like object
+ */
 public abstract class Boid{
 	protected Vector position;
 	protected Vector velocity;
@@ -11,6 +14,10 @@ public abstract class Boid{
 	protected int maxAcceleration;
 
 	protected int viewRangeRadius;
+	protected int distanseToFear;
+	protected int minDistanceToOtherBoids;
+	protected int boarderDistance;
+	protected int turnfactor;
 	protected boolean isAlive;
 	protected World boidWorld;
 
@@ -38,6 +45,7 @@ public abstract class Boid{
 		World boidWorld
 		){
 		vailedArgs(maxVelocity,maxAcceleration,viewRangeRadius);
+		vailedVectorArgs(boidWorld, position);
 		this.position = position;
 		this.velocity = velocity;
 		this.maxVelocity = maxVelocity;
@@ -46,6 +54,10 @@ public abstract class Boid{
 		this.viewRangeRadius = viewRangeRadius;
 		this.isAlive = isAlive;
 		this.boidWorld = boidWorld;
+		this.minDistanceToOtherBoids = 10;
+		this.distanseToFear = 20;
+		this.boarderDistance = 50;
+		this.turnfactor = 45;
 	}
 	/**
 	 * This method will throw IllegalArgumentException if any arguments are negativ.
@@ -56,16 +68,23 @@ public abstract class Boid{
 			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
 		}
 	}
+	
+	private static void vailedVectorArgs(World boidWord, final Vector... vecArgs) throws IllegalArgumentException{
+		if (boidWord == null) return;
+		for (Vector v : vecArgs) {
+			if (v.getPositionX() < 0 || v.getPositionX() >= boidWord.getxLength()) throw new IllegalArgumentException("No negativ arguments allowed");
+			if (v.getPositionY() < 0 || v.getPositionY() >= boidWord.getyHeight()) throw new IllegalArgumentException("No negativ arguments allowed");
+		}
+	}
+
 	/**
 	 * <b>findAllBoidsInViewRange()</b> Will make a list of all boids that is in the view range of this boid.
 	 * @param allBoids All initialized boids in a list.
 	 * @return list of all boids around this boid.
 	 */
 	public Collection<Boid> findAllBoidsInViewRange(){
-		// Collection<Boid> listOfBoidsInRange = new Collection<Boid>();
 		Collection<Boid> allBoids = this.boidWorld.getAllInitBoids();
 		listOfBoidsInRange = new ArrayList<>();
-		// listOfBoidsInRange.clear();
 
 		for (Boid currentBoid : allBoids) {
 			if (this.boidInViewRange(currentBoid) && this != currentBoid && currentBoid.isAlive){
@@ -75,17 +94,51 @@ public abstract class Boid{
 		return listOfBoidsInRange;
 	}
 	/**
-	 * Finds out if a boid is in range of this boid. Will not find boids out of bouds of screen. 
+	 * Finds out if a boid is in range of this boid. Will not find boids out of bounds of screen. 
 	 * @param otherBoid Can be any type of boid.
 	 * @return True if in range else false.
 	 */
 	public boolean boidInViewRange(Boid otherBoid){
-		// return 
-		// // If X pos of other boid in range of current boid
-		// ((this.getPosition().getPositionX() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionX() && (this.getPosition().getPositionX() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionX()) 
-		// // If Y pos of other boid in range of current boid
-		// && ((this.getPosition().getPositionY() - this.viewRangeRadius) <= otherBoid.getPosition().getPositionY() && (this.getPosition().getPositionY() + this.viewRangeRadius) >= otherBoid.getPosition().getPositionY());
 		return this.getPosition().distenceBetweenVector(otherBoid.getPosition()).length() <= getViewRangeRadius();
+	}
+	/**
+	 * limitVelocity makes the Velocity not go over the maximum.
+	 */
+	public void limitVelocity(){
+		if (this.getVelocity().length() > this.getMaxVelocity()){
+			this.setVelocity(this.velocity.scalingVectorToSize(this.getMaxVelocity()));
+		}
+	}
+	/**
+	 * limitAcceleration makes the Acceleration not go over the maximum.
+	 */
+	public void limitAcceleration(){
+		if (this.getAcceleration().length() > this.getMaxAcceleration()){
+			this.setAcceleration(this.getAcceleration().scalingVectorToSize(this.getMaxAcceleration()));
+		}
+	}
+	/**
+	 * When boids get to close the boid want to get away to keep a healhy distance. 
+	 * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
+	 * @param allCloseBoids This is the group of Boids this hoid can see.
+	 * @return gives a vector pointing away from boid.
+	 */
+	public Vector seperationVector(Collection<Boid> allCloseFriendlyBoids){ 
+		Collection<Vector> allSeperationVectors = new ArrayList<>();
+		for (Boid currentBoid : allCloseFriendlyBoids) {
+			if (!this.isFriendlyBoid(currentBoid)) continue;
+			Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
+			// System.out.println("x " + distanceVector.getPositionX() + " y " + distanceVector.getPositionY() + " len " + distanceVector.length()); // TODO REMOVE
+			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
+			if (distanceVector.length() == 0) continue; 
+			allSeperationVectors.add(distanceVector.scalingNewVector((this.minDistanceToOtherBoids/distanceVector.length()))); 
+		}
+		Vector vectorsTogheter = new Vector(0, 0);
+		for (Vector currentVector : allSeperationVectors) {
+			vectorsTogheter.addition(currentVector);
+		}
+		// System.out.println(vectorsTogheter.getPositionX() + " " + vectorsTogheter.getPositionY());
+		return vectorsTogheter;
 	}
 	/**
 	 * If the boid goes out of the map and wraparound is allowed set the posision to the other side
@@ -103,6 +156,29 @@ public abstract class Boid{
 		if (this.getPosition().getPositionY() > this.boidWorld.getyHeight()){
 			this.setPosition(new Vector(this.getPosition().getPositionX(), 0));
 		}
+	}
+
+	/**
+	 * If the world does not wraparound then the walls shall be scary and keep the boids at bay.
+	 * @return A vector that points away from nearest wall.
+	 */
+	public Vector wallScarVector(){ 
+		Vector resultVector = new Vector(0, 0);
+		if (!this.boidWorld.getWraparound()){
+			if (this.getPosition().getPositionX() < this.getBoarderDistance()){
+				resultVector.addition(new Vector(this.getTurnfactor(), 0));
+			}
+			if (this.getPosition().getPositionX() > this.boidWorld.getxLength() - this.getBoarderDistance()){
+				resultVector.addition(new Vector(-this.getTurnfactor(), 0));
+			}
+			if (this.getPosition().getPositionY() < this.getBoarderDistance()){
+				resultVector.addition(new Vector(0, this.getTurnfactor()));
+			}
+			if (this.getPosition().getPositionY() > this.boidWorld.getyHeight() - this.getBoarderDistance()){
+				resultVector.addition(new Vector(0, -this.getTurnfactor()));
+			}
+		}
+		return resultVector;
 	}
 	
 	public Vector getPosition() {
@@ -147,6 +223,30 @@ public abstract class Boid{
 	public void setIsAlive(boolean isAlive) {
 		this.isAlive = isAlive;
 	}
+	public void setDistanseToFear(int newDistanseToFear){
+		this.distanseToFear = newDistanseToFear;
+	}
+	public World getBoidWorld(){
+		return this.boidWorld;
+	}
+	public void setBoidWorld(World newWorld){
+		// if (newWorld == null) throw new IllegalArgumentException("This is no world for a boid. This world is null");
+		this.boidWorld = newWorld;
+	}
+	public int getBoarderDistance() {
+		return boarderDistance;
+	}
+	public void setBoarderDistance(int boarderDistance) {
+		if (boarderDistance < 0) boarderDistance = 0;
+		this.boarderDistance = boarderDistance;
+	}
+	public int getTurnfactor() {
+		return turnfactor;
+	}
+	public void setTurnfactor(int turnfactor) {
+		if (turnfactor < 0) turnfactor = 0;
+		this.turnfactor = turnfactor;
+	}
 	/**
 	 * The move method shall move the boid according to the rules the class sets.
 	 * <b>Poid:</b> <i>Shall move towards any non poid-oid objects, and kill them.</i>
@@ -154,21 +254,12 @@ public abstract class Boid{
 	 * <b>PlayerBoid:</b> <i>Shall follow the last known coordinates of the mouse cursor.</i>
 	 */
 	public abstract void move();
-	public static void main(String[] args) {
-		// // Boid b1 = new Boid(100, 100, 0, 0, 0, 0, 0, 0);
-		// // Boid b2 = new Boid(100, 100, 0, 0, 0, 0, 0, 0);
-		// Vector v1 = new Vector(100, 100);
-		// Vector v2 = new Vector(80, 90);
-		// Vector v3 = new Vector(90, 80);
-		// Vector v4 = new Vector(110, 110);
+	/**
+	 * The isFriendlyBoid method will check if Boid is friendly.
+	 * @param boid the testsubject
+	 * @return Boolean value of the friendliness.
+	 */
+	public abstract boolean isFriendlyBoid(Boid boid);
 
 
-
-		// Boid b1 = new Boid(v1, v1, 0, v1, 0, 10);
-		// Boid b2 = new Boid(v4, v1, 0, v1, 0, 10);
-		// System.out.println(b1.viewRangeRadius);
-		// if(b1.boidInViewRange(b2)){
-		// 	System.out.println("Boid in range.");
-		// }
-	}
 }

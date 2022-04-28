@@ -2,26 +2,16 @@ package boidsgame;
 public class Vector {
 	private int positionX;
 	private int positionY;
-
-	public Vector(int x,int y){
-		if (isValidVector(x,y)){
-			this.positionX = x;
-			this.positionY = y;
-		}
-		else{
-			throw new IllegalArgumentException("This vector is not valid.");
-		}
-	}
 	/**
-	 * The isValidVector method will check if the x and y coordinates are in the coordinatespace.
-	 * @param x
-	 * @param y
-	 * @return valid
+	 * The Vector shall represent a mathematical 2d vector. All values are accepted and does not need validation
+	 * @param x X coordinate of the vector
+	 * @param y Y coordinate of the vector
 	 */
-	private boolean isValidVector(int x, int y) { // World class must be finished
-		// return (World.getWidth() >= x) ;
-		return true;
+	public Vector(int x,int y){
+		this.positionX = x;
+		this.positionY = y;
 	}
+
 	/**
 	 * Adds the second vector to the first vector.
 	 * @param vectorAdded
@@ -30,14 +20,27 @@ public class Vector {
 		this.positionX += vectorAdded.positionX;
 		this.positionY += vectorAdded.positionY;
 	}
-	public Vector subtractionVector(Vector vectorAdded){
-		return new Vector(this.positionX - vectorAdded.positionX, this.positionY - vectorAdded.positionY);
+
+	/**
+	 * Adds the second vector to the first vector.
+	 * @param vectorAdded
+	 */
+	public Vector additionNewVector(Vector vectorAdded){
+		return new Vector(this.positionX + vectorAdded.positionX, this.positionY + vectorAdded.positionY);
+	}
+	/**
+	 * Makes a new vector that is the subtraction by the this vector - vectorSubtracted. Does not mutate any of the vectors.
+	 * @param vectorAdded Vector to subtract
+	 * @return new Vector
+	 */
+	public Vector subtractionVector(Vector vectorSubtracted){
+		return new Vector(this.positionX - vectorSubtracted.positionX, this.positionY - vectorSubtracted.positionY);
 	}
 	
 	/**
 	 * distenceBetweenVector finds the shortest vector form other vector to this vector in 2d space.
 	 * @param vector
-	 * @return The shortest vector form other vector to this vector.
+	 * @return The shortest vector from other vector to this vector.
 	 */
 	public Vector distenceBetweenVector(Vector vector){
 		return new Vector(vector.positionX - this.positionX, vector.positionY - this.positionY);
@@ -59,8 +62,8 @@ public class Vector {
 	 * @return A new vector based on the original vectors after scaling
 	 */
 	public Vector scalingNewVector(double scalar){
-		double newPosX = this.positionX *= scalar;
-		double newPosY = this.positionY *= scalar;
+		double newPosX = this.positionX * scalar;
+		double newPosY = this.positionY * scalar;
 		return new Vector((int) newPosX, (int) newPosY);
 	}
 	/**
@@ -106,5 +109,4 @@ public class Vector {
 		}
 		return this;
 	}
-	
 }

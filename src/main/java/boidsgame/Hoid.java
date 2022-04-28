@@ -6,18 +6,34 @@ import java.util.Collection;
  * Hoids stands for Herd-oid object. It follows the classic Boids algorithm.
  */
 public class Hoid extends Boid {
-	private Collection<Vector> allSeperationVectors = new ArrayList<>();
-	private int cohesionCoefficient;
-	private int seperationCoefficient;
-	private int alignmentCoefficient;
+	private double cohesionCoefficient;
+	private double seperationCoefficient;
+	private double alignmentCoefficient;
 
-
-	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, int cohesionCoefficient, int seperationCoefficient, int alignmentCoefficient){
-		// TODO: Fix contstuctor. Do validation. Should not be able to be out of World
+	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, double cohesionCoefficient, double seperationCoefficient, double alignmentCoefficient){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
-		this.cohesionCoefficient = cohesionCoefficient;
-		this.seperationCoefficient = seperationCoefficient;
-		this.alignmentCoefficient = alignmentCoefficient;
+		try {
+			vailedArgs(cohesionCoefficient, seperationCoefficient, alignmentCoefficient);
+			this.cohesionCoefficient = cohesionCoefficient;
+			this.seperationCoefficient = seperationCoefficient;
+			this.alignmentCoefficient = alignmentCoefficient;
+
+		} catch (IllegalArgumentException e) {
+			this.cohesionCoefficient = 0d;
+			this.seperationCoefficient = 0d;
+			this.alignmentCoefficient = 0d;
+		}
+		
+	}
+
+	/**
+	 * This method will throw IllegalArgumentException if any arguments are negativ.
+	 * @param args can be a variable amount.
+	 */
+	private static void vailedArgs(final double... args) throws IllegalArgumentException{
+		for (double num : args) {
+			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
+		}
 	}
 
 	/**
@@ -25,11 +41,10 @@ public class Hoid extends Boid {
 	 * @param boid
 	 * @return true if either it is hoid or it is playerBoid that is hoid-oid. 
 	 */
-	public static boolean isFriendlyBoid(Boid boid){
-		// return (boid instanceof Hoid) || (boid instanceof PlayerBoid);
+	@Override
+	public boolean isFriendlyBoid(Boid boid){
 		return (boid instanceof Hoid) || ((boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Hoid"): false);
 	}
-
 
 	/**
 	 * cohesionVector finds the vector that point to the mass sentrum that is in seight from this boid.
@@ -38,40 +53,19 @@ public class Hoid extends Boid {
 	 * @return Vector to local mass sentrum.
 	 */
 	public Vector cohesionVector(Collection<Boid> allCloseBoids){
-		// TODO: cohesionVector MUST BE TESTED
-
-		// Size must be not null else DivisionByNullException. Could use try catch and catch it but it is bad pracsis.
+		// Size must be not null else DivisionByNullException
 		if (allCloseBoids.size() != 0){
 			int averegeXCord = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getPosition().getPositionX()).sum()) / allCloseBoids.size();
 			int averegeYCord = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getPosition().getPositionY()).sum()) / allCloseBoids.size();
-			return new Vector(averegeXCord, averegeYCord);
+			return this.getPosition().distenceBetweenVector(new Vector(averegeXCord, averegeYCord));
 		}
 		else{
 			// if there are no other boids in viewRange its current position is flock sentrum
-			return this.position;
+			// return this.getPosition();
+			return this.getPosition().distenceBetweenVector(this.getPosition());
 		}
 	}
 
-	/**
-	 * When boids get to close the boid want to get away to keep a healhy distance. 
-	 * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
-	 * @param allCloseBoids This is the group of Boids this hoid can see.
-	 * @return
-	 */
-	public Vector seperationVector(Collection<Boid> allCloseBoids){
-		// TODO: seperationVector MUST BE TESTED
-		for (Boid currentBoid : allCloseBoids) {
-			Vector distanceVector = (this.position).distenceBetweenVector(currentBoid.getPosition()); 
-			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
-			allSeperationVectors.add(distanceVector.scalingNewVector((1/distanceVector.length()))); 
-		}
-		Vector vectorsTogheter = new Vector(0, 0);
-		for (Vector currentVector : allSeperationVectors) {
-			vectorsTogheter.addition(currentVector);
-		}
-		allSeperationVectors.clear(); // unsurten if i must clear list. list gets decleared in method.
-		return vectorsTogheter;//.scalingNewVector(scalar)
-	}
 
 	/**
 	 * alignmentVector find the averege direction the boids are moving toward.
@@ -80,7 +74,6 @@ public class Hoid extends Boid {
 	 * @return the vector that steers the boid so it follows it flockmates.
 	 */
 	public Vector alignmentVector(Collection<Boid> allCloseBoids){
-		// TODO: alignmentVector MUST BE TESTED
 		Vector commenVector;
 		if (allCloseBoids.size() != 0){
 			int averegeXdirection = (int) (allCloseBoids.stream().filter(boid -> isFriendlyBoid(boid)).mapToInt(boid -> boid.getVelocity().getPositionX()).sum());
@@ -89,13 +82,11 @@ public class Hoid extends Boid {
 		}
 		else{
 			// if there are no other boids in viewRange its current position is flock sentrum
-			commenVector = this.velocity;
+			commenVector = this.getVelocity();
 		}
-		// TODO: Must make the steerimgVector out of the averege direction: steeringVector = disired velocity - this.velocity
-		return commenVector.subtractionVector(this.velocity);
+		return commenVector.subtractionVector(this.getVelocity());
 	}
 	
-	// TODO: Must make function to run from unfriendly boids.
 	public Vector scareVector(Collection<Boid> allCloseBoids){
 		// Add the distance from each Poid-oid.
 		// Should use seperationVector but with only scary boids.
@@ -106,8 +97,10 @@ public class Hoid extends Boid {
 				unFriendlyBoids.add(boid);
 			}
 		}
-		// allCloseBoids.stream().filter(boid -> !((Hoid) boid).isFriendlyBoid());
-		return this.seperationVector(unFriendlyBoids);
+		this.setDistanseToFear(this.getViewRangeRadius());
+		Vector resultVector = super.seperationVector(unFriendlyBoids);
+		this.setDistanseToFear(20);
+		return resultVector;
 	}
 
 	@Override
@@ -119,13 +112,19 @@ public class Hoid extends Boid {
 		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient));
 		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient));
 		this.acceleration.addition(scareVector(findAllBoidsInViewRange()));
-
+		this.acceleration.addition(super.wallScarVector());
+		// System.out.println(
+		// 	"Cohesion: x: " + cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient).getPositionX() + " y: " + cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient).getPositionY() +
+		// 	" Seperation: x: " + seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient).getPositionX() + " y: " + seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient).getPositionY() +
+		// 	" Alignment: x: " + alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient).getPositionX() + " y: " + alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient).getPositionY() +
+		// 	" Scare: x: " + scareVector(findAllBoidsInViewRange()).getPositionX() + " y: " + scareVector(findAllBoidsInViewRange()).getPositionY()
+		// 	);
+		// Make certain it can not go faster then maxAcceleration
+		this.limitAcceleration();
 		// change speed depending on acceleration
 		// Make certain it can not go faster then maxVelocity
 		this.velocity.addition(this.acceleration);
-		if (this.velocity.length() > this.getMaxVelocity()){
-			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
-		}
+		this.limitVelocity();
 		// Move boid
 		this.position.addition(this.velocity);	
 	}

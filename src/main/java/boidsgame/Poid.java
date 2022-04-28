@@ -1,16 +1,31 @@
 package boidsgame;
 import java.util.Collection;
 public class Poid extends Boid{
-	private int killRadius;
 	private int killAmount;
-	private int movementCoefficient;
+	private double killRadius;
+	private double attractionToHoidsCoefficient;
+	private double seperationCoefficient;
 
-	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, int movementCoefficient){
-		// # TODO: Fix contstuctor. Do validation. Should not be able to be out of World
+	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, double attractionToHoidsCoefficient, double seperationCoefficient){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, myWorld);
-		this.killRadius = killRadius;
 		this.killAmount = 0;
-		this.movementCoefficient = movementCoefficient;
+		try{
+			validePoidArgs(killRadius, attractionToHoidsCoefficient, seperationCoefficient);
+			this.killRadius = killRadius;
+			this.attractionToHoidsCoefficient = attractionToHoidsCoefficient;
+			this.seperationCoefficient = seperationCoefficient;
+		}
+		catch (IllegalArgumentException e){
+			this.killRadius = 0;
+			this.attractionToHoidsCoefficient = 0;
+			this.seperationCoefficient = 0;
+		}
+	}
+
+	private void validePoidArgs(final double... args) throws IllegalArgumentException {
+		for (double arg : args) {
+			if (arg < 0) throw new IllegalArgumentException("");
+		}
 	}
 	/**
 	 * findClosestBoid will find the closest boid that this boid can see in findAllBoidsInViewRange(). It loops over the list and compare each boids distance. If it is not a target it will skip its current iteration. 
@@ -24,7 +39,7 @@ public class Poid extends Boid{
 
 		for (Boid currentBoid : allCloseBoids) {
 			// dont look after other Poids or dead boids or Playerboid playing Poid.
-			if(currentBoid instanceof Poid || !currentBoid.isAlive || ((currentBoid instanceof PlayerBoid) && ((PlayerBoid) currentBoid).getGameMode().equals("Hoid")) ){ // could be fun if a larger poid could eate other poids
+			if(currentBoid == this || this.isFriendlyBoid(currentBoid)){
 				continue;
 			}
 			if (shortestDistance == null){
@@ -36,7 +51,8 @@ public class Poid extends Boid{
 				shortestDistance = (this.position.distenceBetweenVector(currentBoid.getPosition()).length());
 			}
 		}
-		return (closestBoid == null) ? this: closestBoid;
+		return closestBoid;
+		// return (closestBoid == null) ? this: closestBoid;
 	}
 	/**
 	 * closestBoidVector(Boid closestBoid) Gives the vector from this boid to the other boid. It is used to change the acceleration.
@@ -44,12 +60,12 @@ public class Poid extends Boid{
 	 * @return Vector distance between boids.
 	 */
 	private Vector closestBoidVector(Boid closestBoid) {
-		return this.getPosition().distenceBetweenVector(closestBoid.getPosition());
+		return (closestBoid == null) ? new Vector(0, 0) : this.getPosition().distenceBetweenVector(closestBoid.getPosition());
 		
 	}
 	/**
-	 * method to kill closest boids and increment killAmount
-	 * @param closestBoid
+	 * Method to kill closest boids and increment killAmount
+	 * @param closestBoid 
 	 */
 	private void killClosestBoid(Boid closestBoid){
 		if (closestBoid != null){
@@ -59,20 +75,38 @@ public class Poid extends Boid{
 			}
 		}
 	}
+	
+
+	public double getAttractionToHoidsCoefficient() {
+		return this.attractionToHoidsCoefficient;
+	}
+	public double getSeperationCoefficient() {
+		return this.seperationCoefficient;
+	}
 
 	public void move() {
 		// resets acceleration
 		this.setAcceleration(new Vector(0, 0));
 		// Adds forces to acceleration
-		Vector forces = closestBoidVector(findClosestBoid()).scalingNewVector(this.movementCoefficient);
-		this.acceleration.addition(forces);
-		this.velocity.addition(this.acceleration);
+		this.acceleration.addition(closestBoidVector(findClosestBoid()).scalingNewVector(this.getAttractionToHoidsCoefficient()));
+		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(this.getSeperationCoefficient())); // TODO 
+		this.acceleration.addition(super.wallScarVector());
+
+		// Make certain it can not go faster then maxAcceleration
+		this.limitAcceleration();
+		this.velocity.addition(this.getAcceleration());
 		// Make certain it can not go faster then maxVelocity
-		if (this.velocity.length() > this.getMaxVelocity()){
-			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
-		}
-		this.position.addition(this.velocity);
+		this.limitVelocity();
+
+		this.position.addition(this.getVelocity());
 		// at the end of movment kill closest bird
 		this.killClosestBoid(findClosestBoid());
+	}
+	/**
+	 * Could be fun if a larger poid could eat other poids
+	 */
+	@Override
+	public boolean isFriendlyBoid(Boid boid) {
+		return (boid instanceof Poid) || ((boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Poid"): false);
 	}
 }

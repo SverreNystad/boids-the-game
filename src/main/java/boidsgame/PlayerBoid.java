@@ -7,7 +7,7 @@ public class PlayerBoid extends Boid{
 
 	private long birthTime;
 	private long lifeTime;
-	private double movementToCursorVectorCoefficient;
+	private double movementToCursorVectorCoefficient = 1;
 	private String gameMode;
 
 	private double mouseX;	
@@ -15,7 +15,12 @@ public class PlayerBoid extends Boid{
 
 	public PlayerBoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, String gameMode){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
-		this.gameMode = gameMode;
+		try {
+			valideGameMode(gameMode);
+			this.gameMode = gameMode;
+		} catch (IllegalArgumentException e) {
+			this.gameMode = "Hoid";
+		}
 		this.birthTime = System.currentTimeMillis();
 		this.lifeTime = 0l;
 		this.killScore = 0;
@@ -23,13 +28,22 @@ public class PlayerBoid extends Boid{
 
 	}
 	/**
+	 * Checks that the player playes a legal gameMode.
+	 * @param gameMode either "Hoid" or "Poid".
+	 * @throws IllegalArgumentException if gamemode is not a legal case.
+	 */
+	private void valideGameMode(String gameMode) throws IllegalArgumentException {
+		if (gameMode == null) throw new IllegalArgumentException("Cant give null as argument");
+		if (!gameMode.equals("Hoid") && !gameMode.equals("Poid")) throw new IllegalArgumentException("No legal argument given");
+	}
+
+	/**
 	 * Updates the lifetime to the PlayerBoid. From inizilation to this moment.
 	 */
 	private void updateLifeTime(){
 		long currentTime = System.currentTimeMillis();
 		this.lifeTime = currentTime - this.birthTime;
 	}
-	// TODO: Get info from eventlistener on Canvas and move accordingly.
 	/**
 	 *  This method will find the Vector towards the mouse cursor. If the coordinates are not inside the boidWorld they will not count. This info will be changed by an eventlistner. 
 	 * @param mouseX The coordinate of the last known mouse position.
@@ -38,13 +52,13 @@ public class PlayerBoid extends Boid{
 	 */
 	private Vector movementToCursorVector(double mouseX, double mouseY){
 		if ((this.boidWorld.getxLength() >= mouseX && 0 <= mouseX) && (this.boidWorld.getyHeight() >= mouseY && 0 <= mouseY)){
-			// return new Vector((int) (((double) this.getPosition().getPositionX()) - mouseX), (int) (((double) this.getPosition().getPositionY()) - mouseY));
 			return this.getPosition().distenceBetweenVector(new Vector((int) mouseX, (int) mouseY));	
 		}
 		else {
 			return new Vector(0, 0);
 		}
 	}
+
 	/**
 	 * Method to kill all boid in killRange and increment killScore for each kill:
 	 */
@@ -66,15 +80,15 @@ public class PlayerBoid extends Boid{
 		// change speed depending on acceleration
 		// Make certain it can not go faster then maxVelocity
 		this.velocity.addition(this.getAcceleration().scalingNewVector(movementToCursorVectorCoefficient));
-		if (this.velocity.length() > this.getMaxVelocity()){ 
-			this.velocity = this.velocity.scalingVectorToSize(this.getMaxVelocity());
-		}
+		this.limitVelocity();
 		// Move boid
 		this.position.addition(this.getVelocity());
-		if (this.getGameMode().equals("Hoid")){
+		// Kill boids in direct vicinity of the PlayerBoid if it is Poid-oid
+		if (this.getGameMode().equals("Poid")){
 			this.killAllCloseBoid();
 		}
 		this.updateLifeTime();
+		// System.out.println(toString()); // TODO REMOVE!
 	}
 	
 	// SETTERS AND GETTERS
@@ -86,7 +100,6 @@ public class PlayerBoid extends Boid{
 		return mouseX;
 	}
 	public void setMouseX(double mouseX) {
-		// TODO: Test this.
 		if (this.mouseX >= 0 && this.mouseX < this.boidWorld.getxLength()){
 			this.mouseX = mouseX;
 		}
@@ -95,8 +108,7 @@ public class PlayerBoid extends Boid{
 		return mouseY;
 	}
 	public void setMouseY(double mouseY) {
-		// TODO: Test this.
-		if (this.mouseX >= 0 && this.mouseX < this.boidWorld.getyHeight()){
+		if (this.mouseY >= 0 && this.mouseY < this.boidWorld.getyHeight()){
 			this.mouseY = mouseY;
 		}
 	}
@@ -105,14 +117,20 @@ public class PlayerBoid extends Boid{
 	public int getKillScore() {
 		return killScore;
 	}
-	// public void setKillScore(int killScore) {
-	// 	this.killScore = killScore;
-	// }
 	public double getLifeTime() {
-		return lifeTime;
+		return lifeTime/1000;
 	}
-	// public void setLifeTime(double lifeTime) {
-	// 	this.lifeTime = lifeTime;
-	// }
+	@Override
+	public String toString(){
+		return 
+			"PlayerBoids x: " + this.getPosition().getPositionX() +" y: "+ this.getPosition().getPositionY() + 
+			" Mouse: x: " + mouseX + " y: " + mouseY +
+			" Velocity x: " + velocity.getPositionX() + " y: " + velocity.getPositionY() +
+			" Acceleration x: " + acceleration.getPositionX() + " y: " + acceleration.getPositionY();
+	}
+	@Override
+	public boolean isFriendlyBoid(Boid boid) {
+		return false;
+	}
 	
 }
