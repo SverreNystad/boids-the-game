@@ -15,13 +15,28 @@ public class PlayerBoid extends Boid{
 
 	public PlayerBoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, String gameMode){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
-		this.gameMode = gameMode;
+		try {
+			valideGameMode(gameMode);
+			this.gameMode = gameMode;
+		} catch (IllegalArgumentException e) {
+			this.gameMode = "Hoid";
+		}
 		this.birthTime = System.currentTimeMillis();
 		this.lifeTime = 0l;
 		this.killScore = 0;
 		this.killRadius = 5;
 
 	}
+	/**
+	 * Checks that the player playes a legal gameMode.
+	 * @param gameMode either "Hoid" or "Poid".
+	 * @throws IllegalArgumentException if gamemode is not a legal case.
+	 */
+	private void valideGameMode(String gameMode) throws IllegalArgumentException {
+		if (gameMode == null) throw new IllegalArgumentException("Cant give null as argument");
+		if (!gameMode.equals("Hoid") && !gameMode.equals("Poid")) throw new IllegalArgumentException("No legal argument given");
+	}
+
 	/**
 	 * Updates the lifetime to the PlayerBoid. From inizilation to this moment.
 	 */
@@ -43,6 +58,7 @@ public class PlayerBoid extends Boid{
 			return new Vector(0, 0);
 		}
 	}
+
 	/**
 	 * Method to kill all boid in killRange and increment killScore for each kill:
 	 */

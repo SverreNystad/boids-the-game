@@ -66,21 +66,21 @@ public abstract class Boid{
 	}
 	
 	private static void vailedVectorArgs(World boidWord, final Vector... vecArgs) throws IllegalArgumentException{
+		if (boidWord == null) return;
 		for (Vector v : vecArgs) {
-			if (v.getPositionX() < 0 || v.getPositionX() > boidWord.getxLength()) throw new IllegalArgumentException("No negativ arguments allowed");
-			if (v.getPositionY() < 0 || v.getPositionY() > boidWord.getyHeight()) throw new IllegalArgumentException("No negativ arguments allowed");
+			if (v.getPositionX() < 0 || v.getPositionX() >= boidWord.getxLength()) throw new IllegalArgumentException("No negativ arguments allowed");
+			if (v.getPositionY() < 0 || v.getPositionY() >= boidWord.getyHeight()) throw new IllegalArgumentException("No negativ arguments allowed");
 		}
 	}
+
 	/**
 	 * <b>findAllBoidsInViewRange()</b> Will make a list of all boids that is in the view range of this boid.
 	 * @param allBoids All initialized boids in a list.
 	 * @return list of all boids around this boid.
 	 */
 	public Collection<Boid> findAllBoidsInViewRange(){
-		// Collection<Boid> listOfBoidsInRange = new Collection<Boid>();
 		Collection<Boid> allBoids = this.boidWorld.getAllInitBoids();
 		listOfBoidsInRange = new ArrayList<>();
-		// listOfBoidsInRange.clear();
 
 		for (Boid currentBoid : allBoids) {
 			if (this.boidInViewRange(currentBoid) && this != currentBoid && currentBoid.isAlive){
@@ -134,7 +134,7 @@ public abstract class Boid{
 			vectorsTogheter.addition(currentVector);
 		}
 		// System.out.println(vectorsTogheter.getPositionX() + " " + vectorsTogheter.getPositionY());
-		return vectorsTogheter;//.scalingNewVector(scalar)
+		return vectorsTogheter;
 	}
 	/**
 	 * If the boid goes out of the map and wraparound is allowed set the posision to the other side
@@ -175,7 +175,6 @@ public abstract class Boid{
 			if (this.getPosition().getPositionY() > this.boidWorld.getyHeight() - boarderDistance){
 				resultVector.addition(new Vector(0, -turnfactor));
 			}
-
 		}
 		return resultVector;
 	}
@@ -221,6 +220,9 @@ public abstract class Boid{
 	}
 	public void setIsAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}
+	public void setDistanseToFear(int newDistanseToFear){
+		this.distanseToFear = newDistanseToFear;
 	}
 	public World getBoidWorld(){
 		return this.boidWorld;

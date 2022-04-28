@@ -2,26 +2,16 @@ package boidsgame;
 public class Vector {
 	private int positionX;
 	private int positionY;
-
-	public Vector(int x,int y){
-		if (isValidVector(x,y)){
-			this.positionX = x;
-			this.positionY = y;
-		}
-		else{
-			throw new IllegalArgumentException("This vector is not valid.");
-		}
-	}
 	/**
-	 * The isValidVector method will check if the x and y coordinates are in the coordinatespace.
-	 * @param x
-	 * @param y
-	 * @return valid
+	 * The Vector shall represent a mathematical 2d vector. All values are accepted and does not need validation
+	 * @param x X coordinate of the vector
+	 * @param y Y coordinate of the vector
 	 */
-	private boolean isValidVector(int x, int y) { // World class must be finished
-		// return (World.getWidth() >= x) ;
-		return true;
+	public Vector(int x,int y){
+		this.positionX = x;
+		this.positionY = y;
 	}
+
 	/**
 	 * Adds the second vector to the first vector.
 	 * @param vectorAdded

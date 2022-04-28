@@ -13,12 +13,30 @@ public class Hoid extends Boid {
 
 
 	public Hoid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World boidWorld, double cohesionCoefficient, double seperationCoefficient, double alignmentCoefficient){
-		// TODO: Fix contstuctor. Do validation. Should not be able to be out of World
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, boidWorld);
-		this.cohesionCoefficient = cohesionCoefficient;
-		this.seperationCoefficient = seperationCoefficient;
-		this.alignmentCoefficient = alignmentCoefficient;
 		this.minDistanceToOtherBoids = 10;
+		try {
+			vailedArgs(cohesionCoefficient, seperationCoefficient, alignmentCoefficient);
+			this.cohesionCoefficient = cohesionCoefficient;
+			this.seperationCoefficient = seperationCoefficient;
+			this.alignmentCoefficient = alignmentCoefficient;
+
+		} catch (IllegalArgumentException e) {
+			this.cohesionCoefficient = 0d;
+			this.seperationCoefficient = 0d;
+			this.alignmentCoefficient = 0d;
+		}
+		
+	}
+
+	/**
+	 * This method will throw IllegalArgumentException if any arguments are negativ.
+	 * @param args can be a variable amount.
+	 */
+	private static void vailedArgs(final double... args) throws IllegalArgumentException{
+		for (double num : args) {
+			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
+		}
 	}
 
 	/**
@@ -51,28 +69,6 @@ public class Hoid extends Boid {
 		}
 	}
 
-	// /**
-	//  * When boids get to close the boid want to get away to keep a healhy distance. 
-	//  * SperationVector gives the vector that goes away from all boids and tries to create greater distance with boids that are closer.
-	//  * @param allCloseBoids This is the group of Boids this hoid can see.
-	//  * @return gives a vector pointing away from boid.
-	//  */
-	// public Vector seperationVector(Collection<Boid> allCloseBoids){ 
-	// 	Collection<Vector> allSeperationVectors = new ArrayList<>();
-	// 	for (Boid currentBoid : allCloseBoids) {
-	// 		Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
-	// 		// System.out.println("x " + distanceVector.getPositionX() + " y " + distanceVector.getPositionY() + " len " + distanceVector.length()); // TODO REMOVE
-	// 		// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
-	// 		if (distanceVector.length() == 0) continue; 
-	// 		allSeperationVectors.add(distanceVector.scalingNewVector((this.minDistanceToOtherBoids/distanceVector.length()))); 
-	// 	}
-	// 	Vector vectorsTogheter = new Vector(0, 0);
-	// 	for (Vector currentVector : allSeperationVectors) {
-	// 		vectorsTogheter.addition(currentVector);
-	// 	}
-	// 	// System.out.println(vectorsTogheter.getPositionX() + " " + vectorsTogheter.getPositionY());
-	// 	return vectorsTogheter;//.scalingNewVector(scalar)
-	// }
 
 	/**
 	 * alignmentVector find the averege direction the boids are moving toward.
@@ -91,7 +87,6 @@ public class Hoid extends Boid {
 			// if there are no other boids in viewRange its current position is flock sentrum
 			commenVector = this.getVelocity();
 		}
-		// TODO: Must make the steerimgVector out of the averege direction: steeringVector = disired velocity - this.velocity
 		return commenVector.subtractionVector(this.getVelocity());
 	}
 	
@@ -105,7 +100,10 @@ public class Hoid extends Boid {
 				unFriendlyBoids.add(boid);
 			}
 		}
-		return super.seperationVector(unFriendlyBoids);
+		this.setDistanseToFear(this.getViewRangeRadius());
+		Vector resultVector = super.seperationVector(unFriendlyBoids);
+		this.setDistanseToFear(20);
+		return resultVector;
 	}
 
 	@Override

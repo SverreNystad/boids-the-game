@@ -3,8 +3,8 @@ package boidsgame;
 public class SettingsContainer {
 	private String gameMode = "Hoid";
 	private String wraparound = "on";
-	private int startBoidsAmountSliderValue;
-	private int startPoidProsentSliderValue;
+	private int startBoidsAmountSliderValue = 100;
+	private int startPoidProsentSliderValue = 1;
 	private int poidViewRangeSliderValue = 60;
 	private int killRadiusSliderValue = 5;
 	private double poidSeperationCoefficientValue = 1;

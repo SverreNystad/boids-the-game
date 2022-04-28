@@ -1,5 +1,6 @@
 package boidsgame;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,12 +14,13 @@ public interface FilehandlerInterface {
 	 * @throws IOException
 	 */
 	public void storeToFile(String filename, String headLine, String data, Boolean overwrite) throws IOException;
-	// /**
-	//  * A general reading method to read 
-	//  * @param filename
-	//  * @param file
-	//  * @return
-	//  */
-	// public List<String> readFromFileByLogic(String filename, String file);
+	/**
+	 * A general reading method to get the text in file.
+	 * @param filename filename with zufix.
+	 * @param splitter any string.
+	 * @return A list where each line is an array with the elements between the splitter is elements
+	 * @throws FileNotFoundException If filename is not correct or does not exist throw.
+	 */
+	public List<String> readFromFileAndSplitBy(String filename, String splitter) throws FileNotFoundException;
 	
 }

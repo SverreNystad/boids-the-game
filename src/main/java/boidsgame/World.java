@@ -93,7 +93,7 @@ public class World {
 			int currentVelocityX = (int) Math.floor(Math.random() * 10 - 5);
 			int currentVelocityY = (int) Math.floor(Math.random() * 10 - 5);
 			// System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
-			if (i < poidAmount){
+			if (i <= poidAmount){
 				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, poidViewRange, true, gameWorld, killRadius, attractionToHoidsCoefficient, poidSeperationCoefficient));
 			}
 			else{
@@ -230,7 +230,7 @@ public class World {
 			// double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius , directionPoint.getPositionX()};
 			Vector directionPoint = currentBoid.getPosition().additionNewVector(currentBoid.getVelocity().scalingVectorToSize(radius*2));
 			double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius/4 , directionPoint.getPositionX()};
-			double[] horisontalY = {currentBoid.getPosition().getPositionY() - radius/2, currentBoid.getPosition().getPositionY() - radius/2, directionPoint.getPositionY()};
+			double[] horisontalY = {currentBoid.getPosition().getPositionY() - radius/2, currentBoid.getPosition().getPositionY() - radius/2, directionPoint.getPositionY() - radius/2};
 			
 			// double[] verticalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() - radius, directionPoint.getPositionX()};
 			// double[] verticalY = {currentBoid.getPosition().getPositionY() - radius, currentBoid.getPosition().getPositionY() + radius/2, directionPoint.getPositionY()};

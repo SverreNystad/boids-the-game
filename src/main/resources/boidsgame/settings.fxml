@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boidsgame.controllers.SettingsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boidsgame.controllers.SettingsController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1293.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -25,7 +25,7 @@
          </image>
       </ImageView>
       <Button fx:id="mainMenuButton" layoutX="545.0" layoutY="634.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="38.0" prefWidth="190.0" text="Back to main menu" />
-      <Slider fx:id="startBoidsAmountSlider" layoutX="540.0" layoutY="373.0" max="200.0" min="1.0" onDragDetected="#handleStartBoidsAmountSlider" onMouseClicked="#handleStartBoidsAmountSlider" onMouseDragged="#handleStartBoidsAmountSlider" prefHeight="32.0" prefWidth="200.0" showTickMarks="true" value="1.0" />
+      <Slider fx:id="startBoidsAmountSlider" layoutX="540.0" layoutY="373.0" max="200.0" min="1.0" onDragDetected="#handleStartBoidsAmountSlider" onMouseClicked="#handleStartBoidsAmountSlider" onMouseDragged="#handleStartBoidsAmountSlider" prefHeight="32.0" prefWidth="200.0" showTickMarks="true" value="100.0" />
       <Text layoutX="529.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many boids at start:" textAlignment="CENTER" wrappingWidth="222.4000244140625">
          <font>
             <Font size="20.0" />
@@ -36,7 +36,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Slider fx:id="startPoidProsentSlider" layoutX="540.0" layoutY="453.0" onDragDetected="#handleStartPoidProsentSlider" onMouseClicked="#handleStartPoidProsentSlider" onMouseDragged="#handleStartPoidProsentSlider" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" />
+      <Slider fx:id="startPoidProsentSlider" layoutX="540.0" layoutY="453.0" onDragDetected="#handleStartPoidProsentSlider" onMouseClicked="#handleStartPoidProsentSlider" onMouseDragged="#handleStartPoidProsentSlider" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
       <Text layoutX="515.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulty: Portion being poid" textAlignment="CENTER" wrappingWidth="255.4000244140625">
          <font>
             <Font size="18.0" />
@@ -65,7 +65,7 @@
       </Text>
       <ToggleButton fx:id="wraparoundButton" layoutX="614.0" layoutY="599.0" mnemonicParsing="false" onAction="#handleWraparound" text="on/off" />
       <Slider fx:id="hoidViewRangeSlider" layoutX="896.0" layoutY="370.0" max="200.0" onDragDetected="#handleHoidSettings" onMouseClicked="#handleHoidSettings" onMouseDragged="#handleHoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="40.0" />
-      <Slider fx:id="CohesionCoefficientSlider" blockIncrement="0.5" layoutX="896.0" layoutY="453.0" majorTickUnit="0.5" max="5.0" onDragDetected="#handleHoidSettings" onMouseClicked="#handleHoidSettings" onMouseDragged="#handleHoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+      <Slider fx:id="CohesionCoefficientSlider" blockIncrement="0.5" layoutX="896.0" layoutY="453.0" majorTickUnit="0.5" max="2.0" onDragDetected="#handleHoidSettings" onMouseClicked="#handleHoidSettings" onMouseDragged="#handleHoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
       <Text layoutX="896.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hoid attributes" textAlignment="CENTER" wrappingWidth="222.4000244140625">
          <font>
             <Font size="20.0" />
@@ -97,14 +97,14 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Slider fx:id="AlignmentCoefficientSlider" blockIncrement="0.5" layoutX="896.0" layoutY="523.0" majorTickUnit="0.5" max="5.0" onDragDetected="#handleHoidSettings" onMouseClicked="#handleHoidSettings" onMouseDragged="#handleHoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
-      <Slider fx:id="hoidSeperationCoefficientSlider" blockIncrement="0.5" layoutX="896.0" layoutY="593.0" majorTickUnit="0.5" max="5.0" onDragDetected="#handleHoidSettings" onMouseClicked="#handleHoidSettings" onMouseDragged="#handleHoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+      <Slider fx:id="AlignmentCoefficientSlider" blockIncrement="0.5" layoutX="896.0" layoutY="523.0" majorTickUnit="0.5" max="2.0" onDragDetected="#handleHoidSettings" onMouseClicked="#handleHoidSettings" onMouseDragged="#handleHoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+      <Slider fx:id="hoidSeperationCoefficientSlider" blockIncrement="0.5" layoutX="896.0" layoutY="593.0" majorTickUnit="0.5" max="2.0" onDragDetected="#handleHoidSettings" onMouseClicked="#handleHoidSettings" onMouseDragged="#handleHoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
       <Text layoutX="890.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AlignmentCoefficient:" wrappingWidth="211.4000244140625">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Slider fx:id="killRadiusSlider" blockIncrement="1.0" layoutX="178.0" layoutY="453.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" onDragDetected="#handlePoidSettings" onMouseClicked="#handlePoidSettings" onMouseDragged="#handlePoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+      <Slider fx:id="killRadiusSlider" blockIncrement="1.0" layoutX="178.0" layoutY="453.0" majorTickUnit="2.0" max="20.0" minorTickCount="1" onDragDetected="#handlePoidSettings" onMouseClicked="#handlePoidSettings" onMouseDragged="#handlePoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="5.0" />
       <Text layoutX="172.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KillRadius:" wrappingWidth="211.4000244140625">
          <font>
             <Font size="20.0" />
@@ -115,8 +115,8 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Slider fx:id="poidSeperationCoefficientSlider" blockIncrement="0.5" layoutX="178.0" layoutY="523.0" majorTickUnit="0.5" max="5.0" onDragDetected="#handlePoidSettings" onMouseClicked="#handlePoidSettings" onMouseDragged="#handlePoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
-      <Slider fx:id="AttractionToHoidsCoefficientSlider" blockIncrement="0.5" layoutX="178.0" layoutY="593.0" majorTickUnit="0.5" max="5.0" onDragDetected="#handlePoidSettings" onMouseClicked="#handlePoidSettings" onMouseDragged="#handlePoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+      <Slider fx:id="poidSeperationCoefficientSlider" blockIncrement="0.5" layoutX="178.0" layoutY="523.0" majorTickUnit="0.5" max="2.0" onDragDetected="#handlePoidSettings" onMouseClicked="#handlePoidSettings" onMouseDragged="#handlePoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+      <Slider fx:id="AttractionToHoidsCoefficientSlider" blockIncrement="0.5" layoutX="178.0" layoutY="593.0" majorTickUnit="0.5" max="2.0" onDragDetected="#handlePoidSettings" onMouseClicked="#handlePoidSettings" onMouseDragged="#handlePoidSettings" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" />
       <Text layoutX="172.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AttractionToHoidsCoefficient" wrappingWidth="262.4000244140625">
          <font>
             <Font size="20.0" />

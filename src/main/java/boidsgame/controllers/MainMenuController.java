@@ -8,15 +8,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class MainMenuController extends Controller{
-	// Main menu
-	@FXML private Button playButton;
-	@FXML private Button settingsButton;
-	@FXML private Button quitButton;
+	@FXML private Button playButton, settingsButton, quitButton, leaderboardButton;
 
 	@FXML 
 	private void switchToSettings(ActionEvent event) throws IOException{
 		System.out.println("Load settings");
 		switchToScene(event, "settings.fxml");
+	}
+	@FXML
+	private void switchToLeaderboard(ActionEvent event) throws IOException {
+		switchToScene(event, "leaderboard.fxml");
 	}
 	@FXML 
 	private void switchToPlay(ActionEvent event) throws IOException{

@@ -8,10 +8,24 @@ public class Poid extends Boid{
 
 	public Poid(Vector position, Vector velocity, Vector acceleration, int maxVelocity, int maxAcceleration, int viewRangeRadius, boolean isAlive, World myWorld , int killRadius, double attractionToHoidsCoefficient, double seperationCoefficient){
 		super(position, velocity, acceleration, maxVelocity, maxAcceleration, viewRangeRadius, isAlive, myWorld);
-		this.killRadius = killRadius;
 		this.killAmount = 0;
-		this.attractionToHoidsCoefficient = attractionToHoidsCoefficient;
-		this.seperationCoefficient = seperationCoefficient;
+		try{
+			validePoidArgs(killRadius, attractionToHoidsCoefficient, seperationCoefficient);
+			this.killRadius = killRadius;
+			this.attractionToHoidsCoefficient = attractionToHoidsCoefficient;
+			this.seperationCoefficient = seperationCoefficient;
+		}
+		catch (IllegalArgumentException e){
+			this.killRadius = 0;
+			this.attractionToHoidsCoefficient = 0;
+			this.seperationCoefficient = 0;
+		}
+	}
+
+	private void validePoidArgs(final double... args) throws IllegalArgumentException {
+		for (double arg : args) {
+			if (arg < 0) throw new IllegalArgumentException("");
+		}
 	}
 	/**
 	 * findClosestBoid will find the closest boid that this boid can see in findAllBoidsInViewRange(). It loops over the list and compare each boids distance. If it is not a target it will skip its current iteration. 
@@ -25,7 +39,7 @@ public class Poid extends Boid{
 
 		for (Boid currentBoid : allCloseBoids) {
 			// dont look after other Poids or dead boids or Playerboid playing Poid.
-			if(currentBoid == this || currentBoid instanceof Poid || !currentBoid.isAlive || ((currentBoid instanceof PlayerBoid) && ((PlayerBoid) currentBoid).getGameMode().equals("Poid")) ){ // could be fun if a larger poid could eate other poids
+			if(currentBoid == this || this.isFriendlyBoid(currentBoid)){
 				continue;
 			}
 			if (shortestDistance == null){
@@ -50,8 +64,8 @@ public class Poid extends Boid{
 		
 	}
 	/**
-	 * method to kill closest boids and increment killAmount
-	 * @param closestBoid
+	 * Method to kill closest boids and increment killAmount
+	 * @param closestBoid 
 	 */
 	private void killClosestBoid(Boid closestBoid){
 		if (closestBoid != null){
@@ -88,6 +102,9 @@ public class Poid extends Boid{
 		// at the end of movment kill closest bird
 		this.killClosestBoid(findClosestBoid());
 	}
+	/**
+	 * Could be fun if a larger poid could eat other poids
+	 */
 	@Override
 	public boolean isFriendlyBoid(Boid boid) {
 		return (boid instanceof Poid) || ((boid instanceof PlayerBoid) ? ((PlayerBoid) boid).getGameMode().equals("Poid"): false);

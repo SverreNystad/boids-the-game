@@ -4,17 +4,24 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerBoidTest {
+	
 	@Test
 	@DisplayName("")
-	public void testGetGameMode() {
+	public void testPlayerBoidContructor() {
 
 	}
 
-	@Test
-	@DisplayName("")
-	public void testGetKillScore() {
+	// @Test
+	// @DisplayName("")
+	// public void testGetGameMode() {
 
-	}
+	// }
+
+	// @Test
+	// @DisplayName("")
+	// public void testGetKillScore() {
+
+	// }
 
 	@Test
 	@DisplayName("")
@@ -22,17 +29,17 @@ public class PlayerBoidTest {
 
 	}
 
-	@Test
-	@DisplayName("")
-	public void testGetMouseX() {
+	// @Test
+	// @DisplayName("")
+	// public void testGetMouseX() {
 
-	}
+	// }
 
-	@Test
-	@DisplayName("")
-	public void testGetMouseY() {
+	// @Test
+	// @DisplayName("")
+	// public void testGetMouseY() {
 
-	}
+	// }
 
 	@Test
 	@DisplayName("")

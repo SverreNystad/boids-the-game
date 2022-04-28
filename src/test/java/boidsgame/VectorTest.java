@@ -112,6 +112,12 @@ public class VectorTest {
 		assertTrue(v1.equals(new Vector(200, 200)), "The vector is not correct");
 
 	}
+	@Test
+	@DisplayName("This test will check if the scalingNewVector gives right vektor")
+	public void testScalingNewVector() {
+		assertTrue(v1.scalingNewVector(1.5).equals(new Vector(150, 150)));
+		assertTrue(v1.scalingNewVector(0.9).equals(new Vector(90, 90)));
+	}
 
 	@Test
 	@DisplayName("This test will check if the scalingVectorToSize gives right vektor")
@@ -126,10 +132,5 @@ public class VectorTest {
 		assertTrue(v4.scalingVectorToSize(0).length() == 0, "Vector is not null after making it to size 0"); 
 		assertTrue(new Vector(0, 0).scalingVectorToSize(10).length() == 0, "Vector is not 0 in length"); 
 	}
-	@Test
-	@DisplayName("This test will check if the scalingNewVector gives right vektor")
-	public void testScalingNewVector() {
-	assertTrue(v1.scalingNewVector(1.5).equals(new Vector(150, 150)));
-	assertTrue(v1.scalingNewVector(0.9).equals(new Vector(90, 90)));
-	}
+
 }

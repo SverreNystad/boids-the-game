@@ -40,22 +40,18 @@ public class BoidTest {
 		nullVector = new Vector(0, 0);
 		placeHolderNum = 10;
 		hoid1 = new Hoid(posVec1, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, 1, 1, 1);
-		poid1 = new Poid(posVec1, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, 0, 1);
+		poid1 = new Poid(posVec1, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, 0, 1, placeHolderNum);
 		playerBoidHoid1 = new PlayerBoid(posVec1, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, "Hoid");
 		playerBoidPoid1 = new PlayerBoid(posVec1, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, "Poid");
 
 		hoid2 = new Hoid(posVec2, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, 1, 1, 1);
-		poid2 = new Poid(posVec2, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, 0, 1);
+		poid2 = new Poid(posVec2, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, 0, 1, placeHolderNum);
 		playerBoidHoid2 = new PlayerBoid(posVec2, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, "Hoid");
 		playerBoidPoid2 = new PlayerBoid(posVec2, nullVector, nullVector, placeHolderNum, placeHolderNum, placeHolderNum, true , boidsAtSamePointWorld, "Poid");
-
-		
 		initBoids.add(hoid1);
 		initBoids.add(poid1);
 		initBoids.add(playerBoidHoid1);
 		initBoids.add(playerBoidPoid1);
-
-
 		boidsAtSamePointWorld.setAllInitBoids(initBoids);
 	}
 
