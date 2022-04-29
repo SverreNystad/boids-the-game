@@ -124,8 +124,8 @@ public class World {
 				Let me use most of the methods given by boid but changes the internal fields to PlayerBoid. */
 				((PlayerBoid) currentBoid).setMouseX(this.getMouseX());
 				((PlayerBoid) currentBoid).setMouseY(this.getMouseY());
-				this.setWorldsPlayerAlive(currentBoid.isAlive);
-				gameOn = (this.getWorldsPlayerboid().getGameMode().equals("Hoid")) ?  this.isWorldsPlayerAlive() : this.calculateAmountOfHoidsLeftAlive() > 0;
+				this.setWorldsPlayerAlive(currentBoid.isAlive());
+				setGameOn((this.getWorldsPlayerboid().getGameMode().equals("Hoid")) ?  this.isWorldsPlayerAlive() : this.calculateAmountOfHoidsLeftAlive() > 0);
 			}
 			if (!currentBoid.isAlive()) continue; // if current boid is not alive it is no reason to move it futher.
 			currentBoid.move();
@@ -164,6 +164,9 @@ public class World {
 	
 	public Boolean getGameOn() {
 		return gameOn;
+	}
+	private void setGameOn(boolean newGameOn){
+		gameOn = newGameOn;
 	}
 
 

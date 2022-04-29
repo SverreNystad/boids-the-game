@@ -15,7 +15,7 @@ public class GameApp extends Application {
    
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		primaryStage.setTitle("Boids the game");
+		primaryStage.setTitle("Boids the Game");
 		primaryStage.setScene(new Scene(FXMLLoader.load(GameApp.class.getResource("mainMenu.fxml"))));
 		primaryStage.setResizable(false);
 		Image gameLogo = new Image(getClass().getResourceAsStream("boidsLogo.png"));

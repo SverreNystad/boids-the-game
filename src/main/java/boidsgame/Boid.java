@@ -68,7 +68,12 @@ public abstract class Boid{
 			if (num < 0) throw new IllegalArgumentException("No negativ arguments allowed");
 		}
 	}
-	
+	/**
+	 * 
+	 * @param boidWord
+	 * @param vecArgs
+	 * @throws IllegalArgumentException
+	 */
 	private static void vailedVectorArgs(World boidWord, final Vector... vecArgs) throws IllegalArgumentException{
 		if (boidWord == null) return;
 		for (Vector v : vecArgs) {
@@ -260,6 +265,4 @@ public abstract class Boid{
 	 * @return Boolean value of the friendliness.
 	 */
 	public abstract boolean isFriendlyBoid(Boid boid);
-
-
 }
