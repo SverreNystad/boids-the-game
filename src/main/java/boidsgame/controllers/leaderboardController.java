@@ -12,24 +12,16 @@ public class leaderboardController extends Controller{
 	@FXML private Button mainMenuButton;
 	@FXML private Label poidRunsLabel, hoidRunsLabel;
 
-
 	
 	@FXML
 	private void initialize() {
 		try {
-			System.out.println(Filehandler.readFromHighscoreFile());
-			poidRunsLabel.setText(Filehandler.formatScores(Filehandler.readFromHighscoreFile().get(0)));
-			hoidRunsLabel.setText(Filehandler.formatScores(Filehandler.readFromHighscoreFile().get(1)));
-			// hoidRunsLabel.setText(Filehandler.readFromHighscoreFile().toString());
-
-
+			poidRunsLabel.setText(Filehandler.formatScores(Filehandler.sortHighscoreByGamemodeValue(Filehandler.readFromHighscoreFile()).get(0)));
+			hoidRunsLabel.setText(Filehandler.formatScores(Filehandler.sortHighscoreByGamemodeValue(Filehandler.readFromHighscoreFile()).get(1)));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-
-
-
 
 	@FXML
 	private void switchToMainMenu(ActionEvent event) throws IOException {

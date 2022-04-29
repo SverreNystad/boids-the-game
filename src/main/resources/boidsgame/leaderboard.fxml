@@ -22,8 +22,8 @@
             <Image url="@Boids%20title.gif" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c8e4ff" height="364.0" layoutX="270.0" layoutY="313.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c8e4ff" height="364.0" layoutX="829.0" layoutY="313.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c8e4ff" height="383.0" layoutX="270.0" layoutY="313.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c8e4ff" height="383.0" layoutX="829.0" layoutY="313.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
       <Text layoutX="280.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Previous Poid runs:" underline="true" wrappingWidth="170.2734375">
          <font>
             <Font size="20.0" />

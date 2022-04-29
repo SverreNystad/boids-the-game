@@ -5,12 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-// import java.util.Arrays;
-// import java.util.Collections;
-// import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-// import javafx.print.Collation;
 
 public class Filehandler implements FilehandlerInterface {
 	
@@ -32,22 +28,6 @@ public class Filehandler implements FilehandlerInterface {
 		}
 		else throw new FileNotFoundException("The settings file could not be found.");
 		return settingsResult;
-		
-		// List<String> readResult = new ArrayList<>();
-		// File readFile = new File(filename);
-		// if (readFile.exists()){
-		// 	Scanner readFileReader = new Scanner(filename);
-
-		// 	while(readFileReader.hasNextLine()) {
-		// 		String line = readFileReader.nextLine();
-		// 		for (String dataFromFile : line.split(splitter)){
-		// 			readResult.add(dataFromFile);
-		// 		}
-		// 	}
-		// 	readFileReader.close();
-		// }
-		// else throw new FileNotFoundException("The " + filename + " file could not be found.");
-		// return readResult;
 	}
 
 	@Override
@@ -64,7 +44,6 @@ public class Filehandler implements FilehandlerInterface {
 			currentWriter.append(data);
 		}
 		currentWriter.close();
-		
 	}
 
 	public static void storeSettingsInFile(
@@ -120,8 +99,6 @@ public class Filehandler implements FilehandlerInterface {
 		}
 		else throw new FileNotFoundException("The settings file could not be found.");
 		return settingsResult;
-		// Filehandler temp = new Filehandler();
-		// return temp.readFromFileAndSplitBy("currentGameSettings.txt", ", ");
 	}
 
 	public static void storeHighscoresInFile(PlayerBoid player) throws IOException{
@@ -130,7 +107,7 @@ public class Filehandler implements FilehandlerInterface {
 		temp.storeToFile("highscores.txt", "Gamemode, Kills, Lifetime", player.getGameMode() + ", " + String.valueOf(player.getKillScore()) + ", " + String.valueOf(player.getLifeTime()) + "\n", false);
 	}
 
-	public static List<List<List<String>>> readFromHighscoreFile() throws FileNotFoundException {
+	public static List<List<String>> readFromHighscoreFile() throws FileNotFoundException {
 		List<List<String>> highscoreResult = new ArrayList<>();
 		File settingsFile = new File("highscores.txt");
 		if (settingsFile.exists()){
@@ -148,6 +125,11 @@ public class Filehandler implements FilehandlerInterface {
 			settingsFileReader.close();
 		}
 		else throw new FileNotFoundException("The highscores file could not be found.");
+		return highscoreResult;
+	}
+	
+	 // Ønsker å sortere liseter på et element i en av kolonnene.
+	public static List<List<List<String>>> sortHighscoreByGamemodeValue(List<List<String>> highscoreResult){
 		List<List<List<String>>> sortedHighscore = new ArrayList<>();
 		List<List<String>> poidList = new ArrayList<>();
 		List<List<String>> hoidList = new ArrayList<>();
@@ -159,41 +141,15 @@ public class Filehandler implements FilehandlerInterface {
 				poidList.add(stringList);
 			}
 		}
+		poidList.sort((List<String> score1, List<String> score2 ) -> Double.valueOf(score2.get(1)).compareTo(Double.valueOf(score1.get(1))));
+		hoidList.sort((List<String> score1, List<String> score2 ) -> Double.valueOf(score2.get(2)).compareTo(Double.valueOf(score1.get(2))));
 		sortedHighscore.add(poidList);
 		sortedHighscore.add(hoidList);
+
 		return sortedHighscore;
 	}
-	
 	public static String formatScores(List<List<String>> sortedHighscore){
 		return "Boid, Kills, Lifetime\n" + sortedHighscore.toString().replace('[', ' ').replace("]]", "").replace("],", "\n");
 	}
 
-	
-	//  // Ønsker å sortere liseter på et element i en av kolonnene.
-	// public  List<List<List<String>>> sortHighscoreByGamemodeValue(List<List<String>> highscoreResult){
-	// 	List<List<List<String>>> sortedHighscore = new ArrayList<>();
-	// 	List<List<String>> poidList = new ArrayList<>();
-	// 	List<List<String>> hoidList = new ArrayList<>();
-	// 	for (List<String> stringList : highscoreResult) {
-	// 		if (stringList.get(0).equals("Hoid")) {
-	// 			hoidList.add(stringList);
-	// 		}
-	// 		else {
-	// 			poidList.add(stringList);
-	// 		}
-	// 	}
-		
-	// 	// Collections.sort(poidList, Comparator.comparing(a -> a[1]));
-	// 	Arrays.sort(poidList, Comparator.comparingDouble(o -> o[0][1]));
-	// 	Arrays.sort(hoidList, Comparator.comparingDouble(o -> o[0][2]));
-
-
-	// 	Collections.sort(poidList, (Comparator.<List<List<String>>>
-    //                     comparingDouble(poidScore1 -> Double.valueOf(poidScore1.get(0).get(1)))
-    //                     .thenComparingDouble(poidScore2 -> Double.valueOf(poidScore2.get(0).get(1)))));
-	// 	sortedHighscore.add(poidList);
-	// 	sortedHighscore.add(hoidList);
-
-	// 	return sortedHighscore;
-	// }
 }

@@ -100,7 +100,7 @@ public class PlayerBoid extends Boid{
 		return mouseX;
 	}
 	public void setMouseX(double mouseX) {
-		if (this.mouseX >= 0 && this.mouseX < this.boidWorld.getxLength()){
+		if (mouseX >= 0 && mouseX < this.boidWorld.getxLength()){
 			this.mouseX = mouseX;
 		}
 	}
@@ -108,7 +108,7 @@ public class PlayerBoid extends Boid{
 		return mouseY;
 	}
 	public void setMouseY(double mouseY) {
-		if (this.mouseY >= 0 && this.mouseY < this.boidWorld.getyHeight()){
+		if (mouseY >= 0 && mouseY < this.boidWorld.getyHeight()){
 			this.mouseY = mouseY;
 		}
 	}

@@ -51,6 +51,7 @@ public class World {
 	 * @param allInitBoids All boids that shall live in this World.
 	 * @throws IllegalArgumentException Cannot be a lifeless World.
 	 */
+
 	public void setAllInitBoids(Collection<Boid> allInitBoids) throws IllegalArgumentException{
 		if (allInitBoids.size() == 0) throw new IllegalArgumentException("No boid are initialization\n Initialization failed!");
 		for (Boid currentBoid : allInitBoids) {

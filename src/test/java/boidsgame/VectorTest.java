@@ -23,7 +23,9 @@ public class VectorTest {
 	@Test
 	@DisplayName("This test will check the vectors constructor.")
 	public void testConstructor() {
-		Vector testVector = new Vector(1,1);
+		Vector testVector = new Vector(1,10);
+		assertEquals(1, testVector.getPositionX());
+		assertEquals(10, testVector.getPositionY());
 	}
 
 	@Test
@@ -78,7 +80,6 @@ public class VectorTest {
 	@Test
 	@DisplayName("This test will check if addSeveralVectors cam add several vectors ")
 	public void testAddSeveralVectors() {
-		// System.out.println((v1.addSeveralVectors(v2, v3, v4)));
 		assertTrue((v1.addSeveralVectors(v2, v3, v4)).equals(new Vector(184, 103)));
 	}
 
@@ -98,10 +99,7 @@ public class VectorTest {
 	@Test
 	@DisplayName("This test will check if the distenceBetweenVector gives right vektor")
 	public void testDistenceBetweenVector(){
-		// System.out.println(v1.distenceBetweenVector(v2).getPositionX());
-		// System.out.println(v1.distenceBetweenVector(v2).getPositionY());
 		assertTrue((v1.distenceBetweenVector(v2)).equals(new Vector(-10, -90)), "The distance is not correct");
-		// assertEquals(expected, v1.distenceBetweenVector(v2));
 	}
 
 	@Test
@@ -128,7 +126,6 @@ public class VectorTest {
 			assertTrue(v3.scalingVectorToSize(i).length() <= i, "The vector is larger then size"); 
 			assertTrue(v4.scalingVectorToSize(i).length() <= i, "The vector is larger then size"); 
 		}
-
 		assertTrue(v4.scalingVectorToSize(0).length() == 0, "Vector is not null after making it to size 0"); 
 		assertTrue(new Vector(0, 0).scalingVectorToSize(10).length() == 0, "Vector is not 0 in length"); 
 	}

@@ -13,27 +13,26 @@ import org.junit.jupiter.api.Test;
 
 public class BoidTest {
 	// Should make mock exsampels. 
-		private Collection<Boid> initBoids;
-		private World boidsAtSamePointWorld;
-		private Vector posVec1;
-		private Vector nullVector;
-		private Hoid hoid1;
-		private Poid poid1;
-		private PlayerBoid playerBoidHoid1;
-		private PlayerBoid playerBoidPoid1;
-		private int placeHolderNum;
-
-		private Vector posVec2;
-		private Hoid hoid2;
-		private Poid poid2;
-		private PlayerBoid playerBoidHoid2;
-		private PlayerBoid playerBoidPoid2;
+	private Collection<Boid> initBoids;
+	private World boidsAtSamePointWorld;
+	private Vector posVec1;
+	private Vector nullVector;
+	private Hoid hoid1;
+	private Poid poid1;
+	private PlayerBoid playerBoidHoid1;
+	private PlayerBoid playerBoidPoid1;
+	private int placeHolderNum;
+	private Vector posVec2;
+	private Hoid hoid2;
+	private Poid poid2;
+	private PlayerBoid playerBoidHoid2;
+	private PlayerBoid playerBoidPoid2;
 
 
 	@BeforeEach
 	public void setUp(){
 		initBoids = new ArrayList<>();
-		boidsAtSamePointWorld = new World(100, 100, initBoids);
+		boidsAtSamePointWorld = new World(1000, 1000, initBoids);
 		posVec1 = new Vector(50, 50);
 		posVec2 = new Vector(100, 100);
 
@@ -67,13 +66,11 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if findALlBoidsInviewRange is the expected amount")
 	public void testFindAllBoidsInViewRange() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()) {
-			Collection<Boid> tempBoids = initBoids.;
-			tempBoids.remove(currentBoid);
-			assertEquals(tempBoids, currentBoid.findAllBoidsInViewRange());;
-			
+			assertFalse(currentBoid.findAllBoidsInViewRange().contains(this), "This boid should not be in list");
+			assertEquals(3, currentBoid.findAllBoidsInViewRange().size(), "The amount is not correct");
 		}
 		// assertFalse(hoid2.boidInViewRange(hoid1));
 	}
@@ -88,7 +85,7 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if GetMaxAcceleration gives right amount")
 	public void testGetMaxAcceleration() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()){
 			assertEquals(placeHolderNum, currentBoid.getMaxAcceleration());
@@ -96,7 +93,7 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if GetMaxVelocity gives right amount")
 	public void testGetMaxVelocity() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()){
 			assertEquals(placeHolderNum, currentBoid.getMaxVelocity());
@@ -104,7 +101,7 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if GetPosition gives right amount")
 	public void testGetPosition() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()){
 			assertEquals(posVec1, currentBoid.getPosition());
@@ -112,7 +109,7 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if GetVelocity gives right amount")
 	public void testGetVelocity() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()){
 			assertEquals(nullVector, currentBoid.getVelocity());
@@ -120,7 +117,7 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if GetViewRangeRadius gives right amount")
 	public void testGetViewRangeRadius() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()){
 			assertEquals(placeHolderNum, currentBoid.getViewRangeRadius());
@@ -128,7 +125,7 @@ public class BoidTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if isAlive works")
 	public void testIsAlive() {
 		for (Boid currentBoid : boidsAtSamePointWorld.getAllInitBoids()){
 			assertEquals(true , currentBoid.isAlive());
@@ -138,56 +135,8 @@ public class BoidTest {
 
 	@Test
 	@DisplayName("")
-	public void testMove() {
-
-	}
-
-	@Test
-	@DisplayName("")
-	public void testSetAcceleration() {
-
-	}
-
-	@Test
-	@DisplayName("")
-	public void testSetIsAlive() {
-
-	}
-
-	@Test
-	@DisplayName("")
-	public void testSetMaxAcceleration() {
-
-	}
-
-	@Test
-	@DisplayName("")
-	public void testSetMaxVelocity() {
-
-	}
-
-	@Test
-	@DisplayName("")
-	public void testSetPosition() {
-
-	}
-
-	@Test
-	@DisplayName("")
-	public void testSetVelocity() {
-
-	}
-
-	@Test
-	@DisplayName("")
 	public void testSetViewRangeRadius() {
 
-	}
-
-	@Test
-	@DisplayName("")
-	public void testWraparoundCoordinates() {
-		
 	}
 
 	@Test

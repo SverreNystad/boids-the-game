@@ -1,5 +1,8 @@
 package boidsgame;
 import java.util.Collection;
+/**
+ * The poid class is meant to represent a Predetorial boid
+ */
 public class Poid extends Boid{
 	private int killAmount;
 	private double killRadius;
@@ -21,10 +24,14 @@ public class Poid extends Boid{
 			this.seperationCoefficient = 0;
 		}
 	}
-
+	/**
+	 * No negativ parameters allowed
+	 * @param args any amount of doubles
+	 * @throws IllegalArgumentException if an arg is negativ throw
+	 */
 	private void validePoidArgs(final double... args) throws IllegalArgumentException {
 		for (double arg : args) {
-			if (arg < 0) throw new IllegalArgumentException("");
+			if (arg < 0) throw new IllegalArgumentException("No negativ arguments allowed");
 		}
 	}
 	/**
@@ -52,7 +59,6 @@ public class Poid extends Boid{
 			}
 		}
 		return closestBoid;
-		// return (closestBoid == null) ? this: closestBoid;
 	}
 	/**
 	 * closestBoidVector(Boid closestBoid) Gives the vector from this boid to the other boid. It is used to change the acceleration.
@@ -75,8 +81,13 @@ public class Poid extends Boid{
 			}
 		}
 	}
-	
+	public int getKillAmount(){
+		return this.killAmount;
+	}
+	public double getKillRadius() {
+		return this.killRadius;
 
+	}
 	public double getAttractionToHoidsCoefficient() {
 		return this.attractionToHoidsCoefficient;
 	}

@@ -29,6 +29,7 @@ public class Hoid extends Boid {
 	/**
 	 * This method will throw IllegalArgumentException if any arguments are negativ.
 	 * @param args can be a variable amount.
+	 * @throws IllegalArgumentException 
 	 */
 	private static void vailedArgs(final double... args) throws IllegalArgumentException{
 		for (double num : args) {
@@ -103,14 +104,26 @@ public class Hoid extends Boid {
 		return resultVector;
 	}
 
+	public double getCohesionCoefficient() {
+		return cohesionCoefficient;
+	}
+
+	public double getSeperationCoefficient() {
+		return seperationCoefficient;
+	}
+
+	public double getAlignmentCoefficient() {
+		return alignmentCoefficient;
+	}
+
 	@Override
 	public void move() {
 		// Removes acceleration from last iteration
 		this.setAcceleration(new Vector(0, 0));
 		// Adds forces to acceleration
-		this.acceleration.addition(cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient));
-		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient));
-		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient));
+		this.acceleration.addition(cohesionVector(findAllBoidsInViewRange()).scalingNewVector(getCohesionCoefficient()));
+		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(getSeperationCoefficient()));
+		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(getAlignmentCoefficient()));
 		this.acceleration.addition(scareVector(findAllBoidsInViewRange()));
 		this.acceleration.addition(super.wallScarVector());
 		// System.out.println(

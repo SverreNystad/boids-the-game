@@ -26,6 +26,7 @@ public class SettingsController extends Controller {
 	@FXML
 	private void initialize(){
 		settings = new SettingsContainer();
+
 	}
 	
 	/**
@@ -34,6 +35,8 @@ public class SettingsController extends Controller {
 	@FXML
 	private void handleGamemodeSwitch(ActionEvent event) throws IOException {
 		settings.setGameMode((rbHoid.isSelected()) ? rbHoid.getText() : rbPoid.getText());
+		wraparoundButton.setText(settings.getGameMode());
+		// wraparoundButton.setText(value);
 	}
 	@FXML
 	private void handleStartBoidsAmountSlider(MouseEvent event) throws IOException {
