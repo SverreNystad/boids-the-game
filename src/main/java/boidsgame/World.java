@@ -12,11 +12,13 @@ public class World {
 	private boolean worldsPlayerAlive = true;
 	private int xLength;
 	private int yHeight;
+	private Boolean gameOn = true;
+
 	
 	private Collection<Boid> allInitBoids; // Must get the info from settings.json or javaFX
 
 	private double mouseX; // The last known cursor coordinate.
-    private double mouseY; // The last known cursor coordinate.
+	private double mouseY; // The last known cursor coordinate.
 	
 	public World(int xLength, int yHeight, Collection<Boid> allInitBoids){
 		validWorld(xLength, yHeight);
@@ -120,9 +122,10 @@ public class World {
 			if (currentBoid instanceof PlayerBoid){
 				/* Only needs to change the mouse coords if it is the PlayerBoid.
 				Let me use most of the methods given by boid but changes the internal fields to PlayerBoid. */
-				((PlayerBoid) currentBoid).setMouseX(mouseX);
-				((PlayerBoid) currentBoid).setMouseY(mouseY);
+				((PlayerBoid) currentBoid).setMouseX(this.getMouseX());
+				((PlayerBoid) currentBoid).setMouseY(this.getMouseY());
 				this.setWorldsPlayerAlive(currentBoid.isAlive);
+				gameOn = (this.getWorldsPlayerboid().getGameMode().equals("Hoid")) ?  this.isWorldsPlayerAlive() : this.calculateAmountOfHoidsLeftAlive() > 0;
 			}
 			if (!currentBoid.isAlive()) continue; // if current boid is not alive it is no reason to move it futher.
 			currentBoid.move();
@@ -158,6 +161,12 @@ public class World {
 		}
 		return null;
 	}
+	
+	public Boolean getGameOn() {
+		return gameOn;
+	}
+
+
 	public int calculateAmountOfHoidsLeftAlive(){
 		int amountLeftAlive = 0;
 		for (Boid currentBoid : allInitBoids) {

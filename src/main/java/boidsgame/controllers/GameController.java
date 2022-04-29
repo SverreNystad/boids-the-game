@@ -69,8 +69,7 @@ public class GameController extends Controller{
 				if (now - lastUpdate >= 10_000_000) { // 10 000 000 ns = 10 ms
 					gameWorld.drawBoidsOnCanvas(worldCanvas);
 					gameWorld.moveAllBoids();
-					Boolean gameOn = (gameWorld.getWorldsPlayerboid().getGameMode().equals("Hoid")) ?  gameWorld.isWorldsPlayerAlive() : gameWorld.calculateAmountOfHoidsLeftAlive() > 0;
-					if (!gameOn) {
+					if (!gameWorld.getGameOn()) {
 						System.out.println("Game Over");
 						worldCanvas.toBack();
 						background.toBack();

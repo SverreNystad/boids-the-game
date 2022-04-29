@@ -18,21 +18,25 @@ public class PlayerBoidTest {
 		assertTrue(((PlayerBoid) badPlayBoid).getGameMode().equals("Hoid"), "GameMode should be Hoid");
 	}
 
-	@Test
-	@DisplayName("")
-	public void testGetLifeTime() {
-
-	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if playerboid moves towards the mouse ")
 	public void testMove() {
-		Boid badPlayBoid = new PlayerBoid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 0, 0, 0, true, null, "badInput");
+		Boid player = new PlayerBoid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 100, 100, 100, true, null, "badInput");
+		World playeWorld = new World(100, 200, null);
+		List<Boid> playerList = new ArrayList<>();
+		playerList.add(player);
+		playeWorld.setAllInitBoids(playerList);
 
+		((PlayerBoid) player).setMouseX(50);
+		((PlayerBoid) player).setMouseY(50);
+
+		player.move();
+		assertTrue(player.getPosition().equals(new Vector(50, 50)));
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if mousecoords works")
 	public void testSetMouseX() {
 		Boid mousePlayer = new PlayerBoid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 0, 0, 0, true, null, "Hoid");
 		World playeWorld = new World(100, 200, null);
@@ -44,14 +48,10 @@ public class PlayerBoidTest {
 		assertEquals(50, ((PlayerBoid) mousePlayer).getMouseX());
 		((PlayerBoid) mousePlayer).setMouseX(250);
 		assertEquals(50, ((PlayerBoid) mousePlayer).getMouseX());
-
-
-
-
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("Test if mousecoords works")
 	public void testSetMouseY() {
 		Boid mousePlayer = new PlayerBoid(new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), 0, 0, 0, true, null, "Hoid");
 		World playeWorld = new World(100, 200, null);
@@ -59,10 +59,9 @@ public class PlayerBoidTest {
 		playerList.add(mousePlayer);
 		playeWorld.setAllInitBoids(playerList);
 		
-		((PlayerBoid) mousePlayer).setMouseX(50);
-		assertEquals(50, ((PlayerBoid) mousePlayer).getMouseX());
-		((PlayerBoid) mousePlayer).setMouseX(250);
-		assertEquals(50, ((PlayerBoid) mousePlayer).getMouseX());
-
+		((PlayerBoid) mousePlayer).setMouseY(50);
+		assertEquals(50, ((PlayerBoid) mousePlayer).getMouseY());
+		((PlayerBoid) mousePlayer).setMouseY(250);
+		assertEquals(50, ((PlayerBoid) mousePlayer).getMouseY());
 	}
 }

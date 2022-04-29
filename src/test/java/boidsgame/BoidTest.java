@@ -132,16 +132,21 @@ public class BoidTest {
 		}
 	}
 
-
 	@Test
-	@DisplayName("")
-	public void testSetViewRangeRadius() {
-
-	}
-
-	@Test
-	@DisplayName("")
+	@DisplayName("Test if the wall scare gives right vector")
 	public void testWallScarVector() {
-		
+		hoid1.setPosition(new Vector(0, 0));
+		assertTrue(hoid1.wallScarVector().equals(new Vector(45, 45)), "Should be a force south east");
+		hoid1.setPosition(new Vector(hoid1.getBoarderDistance(), hoid1.getBoarderDistance()));
+		assertTrue(hoid1.wallScarVector().equals(new Vector(0, 0)), "Should not be any force");
 	}
+	@Test
+	@DisplayName("Test if the one can give false input to setTurnfactor")
+	public void testSetTurnfactor() {
+		hoid1.setTurnfactor(-10);
+		assertEquals(0, hoid1.getTurnfactor());
+	}
+
+
+	
 }

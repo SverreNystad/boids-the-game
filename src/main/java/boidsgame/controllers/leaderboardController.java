@@ -16,8 +16,8 @@ public class leaderboardController extends Controller{
 	@FXML
 	private void initialize() {
 		try {
-			poidRunsLabel.setText(Filehandler.formatScores(Filehandler.sortHighscoreByGamemodeValue(Filehandler.readFromHighscoreFile()).get(0)));
-			hoidRunsLabel.setText(Filehandler.formatScores(Filehandler.sortHighscoreByGamemodeValue(Filehandler.readFromHighscoreFile()).get(1)));
+			poidRunsLabel.setText(Filehandler.formatScores(Filehandler.sortHighscoreByGamemodeValue(new Filehandler().readFromHighscoreFile()).get(0)));
+			hoidRunsLabel.setText(Filehandler.formatScores(Filehandler.sortHighscoreByGamemodeValue(new Filehandler().readFromHighscoreFile()).get(1)));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

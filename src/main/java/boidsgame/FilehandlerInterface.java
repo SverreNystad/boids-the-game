@@ -22,5 +22,9 @@ public interface FilehandlerInterface {
 	 * @throws FileNotFoundException If filename is not correct or does not exist throw.
 	 */
 	public List<String> readFromFileAndSplitBy(String filename, String splitter) throws FileNotFoundException;
+
+	public List<List<String>> readFromHighscoreFile() throws FileNotFoundException;
+
+
 	
 }

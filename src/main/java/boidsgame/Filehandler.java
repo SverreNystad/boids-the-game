@@ -107,7 +107,7 @@ public class Filehandler implements FilehandlerInterface {
 		temp.storeToFile("highscores.txt", "Gamemode, Kills, Lifetime", player.getGameMode() + ", " + String.valueOf(player.getKillScore()) + ", " + String.valueOf(player.getLifeTime()) + "\n", false);
 	}
 
-	public static List<List<String>> readFromHighscoreFile() throws FileNotFoundException {
+	public List<List<String>> readFromHighscoreFile() throws FileNotFoundException {
 		List<List<String>> highscoreResult = new ArrayList<>();
 		File settingsFile = new File("highscores.txt");
 		if (settingsFile.exists()){
@@ -120,6 +120,7 @@ public class Filehandler implements FilehandlerInterface {
 				for (String dataFromFile : line.split(", ")){
 					innerList.add(dataFromFile);
 				}
+				if (innerList.size() < 3) continue;
 				highscoreResult.add(innerList);
 			}
 			settingsFileReader.close();
@@ -149,7 +150,7 @@ public class Filehandler implements FilehandlerInterface {
 		return sortedHighscore;
 	}
 	public static String formatScores(List<List<String>> sortedHighscore){
-		return "Boid, Kills, Lifetime\n" + sortedHighscore.toString().replace('[', ' ').replace("]]", "").replace("],", "\n");
+		return "Boid, Kills, Lifetime\n " + sortedHighscore.toString().replace("[", "").replace("]]", "").replace("],", "\n");
 	}
 
 }

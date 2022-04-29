@@ -126,12 +126,6 @@ public class Hoid extends Boid {
 		this.acceleration.addition(alignmentVector(findAllBoidsInViewRange()).scalingNewVector(getAlignmentCoefficient()));
 		this.acceleration.addition(scareVector(findAllBoidsInViewRange()));
 		this.acceleration.addition(super.wallScarVector());
-		// System.out.println(
-		// 	"Cohesion: x: " + cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient).getPositionX() + " y: " + cohesionVector(findAllBoidsInViewRange()).scalingNewVector(cohesionCoefficient).getPositionY() +
-		// 	" Seperation: x: " + seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient).getPositionX() + " y: " + seperationVector(findAllBoidsInViewRange()).scalingNewVector(seperationCoefficient).getPositionY() +
-		// 	" Alignment: x: " + alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient).getPositionX() + " y: " + alignmentVector(findAllBoidsInViewRange()).scalingNewVector(alignmentCoefficient).getPositionY() +
-		// 	" Scare: x: " + scareVector(findAllBoidsInViewRange()).getPositionX() + " y: " + scareVector(findAllBoidsInViewRange()).getPositionY()
-		// 	);
 		// Make certain it can not go faster then maxAcceleration
 		this.limitAcceleration();
 		// change speed depending on acceleration
