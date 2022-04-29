@@ -1,2 +1,2 @@
 Gamemode, startBoidsAmount, startPoidProsent, wraparound, poidViewRangeSliderValue, killRadiusSliderValue, poidSeperationCoefficientValue, AttractionToHoidsCoefficientValue, hoidViewRangeSliderValue,  CohesionCoefficientValue,  AlignmentCoefficientValue,  hoidSeperationCoefficientValue
-Hoid, 200, 0, on, 60, 5, 1.0, 1.0, 20, 1.0, 1.0, 1.0
+Hoid, 0, 0, on, 0, 0, 0.0, 0.0, 0, 0.0, 0.0, 0.0

@@ -100,7 +100,7 @@ public class Poid extends Boid{
 		this.setAcceleration(new Vector(0, 0));
 		// Adds forces to acceleration
 		this.acceleration.addition(closestBoidVector(findClosestBoid()).scalingNewVector(this.getAttractionToHoidsCoefficient()));
-		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(this.getSeperationCoefficient())); // TODO 
+		this.acceleration.addition(seperationVector(findAllBoidsInViewRange()).scalingNewVector(this.getSeperationCoefficient()));
 		this.acceleration.addition(super.wallScarVector());
 
 		// Make certain it can not go faster then maxAcceleration

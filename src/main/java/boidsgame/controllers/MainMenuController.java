@@ -12,7 +12,7 @@ public class MainMenuController extends Controller{
 
 	@FXML 
 	private void switchToSettings(ActionEvent event) throws IOException{
-		System.out.println("Load settings");
+		System.out.println("Change to settings");
 		switchToScene(event, "settings.fxml");
 	}
 	@FXML

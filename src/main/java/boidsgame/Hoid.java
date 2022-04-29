@@ -89,19 +89,22 @@ public class Hoid extends Boid {
 	}
 	
 	public Vector scareVector(Collection<Boid> allCloseBoids){
-		// Add the distance from each Poid-oid.
-		// Should use seperationVector but with only scary boids.
-		// CAN CHANGE IT TO LAMBDA EXSPRESSION OR FUNCTIONAL
 		Collection<Boid> unFriendlyBoids = new ArrayList<>();
 		for (Boid boid : allCloseBoids) {
 			if (!isFriendlyBoid(boid)){
 				unFriendlyBoids.add(boid);
 			}
 		}
-		this.setDistanseToFear(this.getViewRangeRadius());
-		Vector resultVector = super.seperationVector(unFriendlyBoids);
-		this.setDistanseToFear(20);
-		return resultVector;
+		Vector totalScareVector = new Vector(0, 0);
+		for (Boid currentBoid : unFriendlyBoids) {
+			totalScareVector.addition(currentBoid.getPosition().distenceBetweenVector(this.getPosition()));
+		}
+
+
+		// this.setDistanseToFear(this.getViewRangeRadius());
+		// Vector resultVector = super.seperationVector(unFriendlyBoids);
+		// this.setDistanseToFear(20);
+		return totalScareVector;
 	}
 
 	public double getCohesionCoefficient() {

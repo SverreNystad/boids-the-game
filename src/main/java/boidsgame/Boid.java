@@ -133,7 +133,6 @@ public abstract class Boid{
 		for (Boid currentBoid : allCloseFriendlyBoids) {
 			if (!this.isFriendlyBoid(currentBoid)) continue;
 			Vector distanceVector = currentBoid.getPosition().distenceBetweenVector(this.getPosition());  // Allways zero. Does not change to (currentBoid.getPosition()).distenceBetweenVector(this.getPosition())
-			// System.out.println("x " + distanceVector.getPositionX() + " y " + distanceVector.getPositionY() + " len " + distanceVector.length()); // TODO REMOVE
 			// It is important that boids far away not have much impact but boids close should make the boid much more causus for collition // BUG Could become Zero: 1/distanceVector.length()
 			if (distanceVector.length() == 0) continue; 
 			allSeperationVectors.add(distanceVector.scalingNewVector((this.minDistanceToOtherBoids/distanceVector.length()))); 
@@ -235,7 +234,6 @@ public abstract class Boid{
 		return this.boidWorld;
 	}
 	public void setBoidWorld(World newWorld){
-		// if (newWorld == null) throw new IllegalArgumentException("This is no world for a boid. This world is null");
 		this.boidWorld = newWorld;
 	}
 	public int getBoarderDistance() {

@@ -13,7 +13,7 @@ public class HoidTest {
 	@Test
 	@DisplayName("Shall test contructor")
 	public void testContructor() {
-		Boid goodHoid = new Hoid(new Vector(10, 10), new Vector(0, 0), new Vector(0, 0), 100, 100, 50, true, null, 1, 0, 0);
+		// Boid goodHoid = new Hoid(new Vector(10, 10), new Vector(0, 0), new Vector(0, 0), 100, 100, 50, true, null, 1, 0, 0);
 		Boid badHoid = new Hoid(new Vector(12, 8), new Vector(0, 0), new Vector(0, 0), 0, 0, 50, true, null, -1, -1, -10);
 
 		assertEquals(0d, ((Hoid) badHoid).getCohesionCoefficient(), "The illegal amount did not get changed to zero.");
@@ -73,7 +73,7 @@ public class HoidTest {
 	@Test
 	@DisplayName("This test will check if the the boids aligmentvector is correct")
 	public void testAlignmentVector() {
-		Vector velocity = new Vector(0, 0);
+		// Vector velocity = new Vector(0, 0);
 		Vector acceleration = new Vector(0, 0);
 
 		Boid b1 = new Hoid(new Vector(10, 10), new Vector(-1, 5), acceleration, 100, 100, 50, true, null, 1, 0, 0);
@@ -126,11 +126,11 @@ public class HoidTest {
 		World testWorld = new World(1000, 1000, null);
 		testWorld.setAllInitBoids(allBoids);
 
-		assertTrue(((Hoid) b1).scareVector(b1.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(0, 0)), "Unexpected amount for ScareVector");
-		assertTrue(((Hoid) b2).scareVector(b2.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(0, 0)), "Unexpected amount for ScareVector");
-		assertTrue(((Hoid) b3).scareVector(b3.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(0, 0)), "Unexpected amount for ScareVector");
-		assertTrue(((Hoid) b4).scareVector(b4.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(0, 0)), "Unexpected amount for ScareVector");
-		assertTrue(((Hoid) b5).scareVector(b5.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(0, 0)), "Unexpected amount for ScareVector");
+		assertTrue(((Hoid) b1).scareVector(b1.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(-5, 0)), "Unexpected amount for ScareVector");
+		assertTrue(((Hoid) b2).scareVector(b2.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(2, -2)), "Unexpected amount for ScareVector");
+		assertTrue(((Hoid) b3).scareVector(b3.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(-1, 0)), "Unexpected amount for ScareVector");
+		assertTrue(((Hoid) b4).scareVector(b4.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(-6, 2)), "Unexpected amount for ScareVector");
+		assertTrue(((Hoid) b5).scareVector(b5.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(5, 10)), "Unexpected amount for ScareVector");
 		assertTrue(((Hoid) outOfRangeHoid).scareVector(outOfRangeHoid.findAllBoidsInViewRange()).scalingNewVector(1).equals(new Vector(0, 0)), "Unexpected amount for ScareVector");
 	}
 	

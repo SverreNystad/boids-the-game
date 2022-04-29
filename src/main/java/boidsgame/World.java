@@ -15,7 +15,7 @@ public class World {
 	private Boolean gameOn = true;
 
 	
-	private Collection<Boid> allInitBoids; // Must get the info from settings.json or javaFX
+	private Collection<Boid> allInitBoids;
 
 	private double mouseX; // The last known cursor coordinate.
 	private double mouseY; // The last known cursor coordinate.
@@ -53,7 +53,6 @@ public class World {
 	 * @param allInitBoids All boids that shall live in this World.
 	 * @throws IllegalArgumentException Cannot be a lifeless World.
 	 */
-
 	public void setAllInitBoids(Collection<Boid> allInitBoids) throws IllegalArgumentException{
 		if (allInitBoids.size() == 0) throw new IllegalArgumentException("No boid are initialization\n Initialization failed!");
 		for (Boid currentBoid : allInitBoids) {
@@ -91,14 +90,12 @@ public class World {
 		allInitBoids.add(new PlayerBoid(new Vector(canvasLength/2, canvasHeight/2), new Vector(0, 0), new Vector(0, 0), 10, 30, 10, true, gameWorld, gameMode));
 		// Adds all Poids and Hoids in random locations and with a random speed
 		int poidAmount = (int) Math.floor((startBoidsAmount) * startPoidProsent/100);
-		// int hoidAmount = startBoidsAmount - poidAmount;
-		System.out.println("Boids " + startBoidsAmount + " poids " + poidAmount + " hoids " + (startBoidsAmount - poidAmount));// TODO: REMOVE
+		System.out.println("Boids " + startBoidsAmount + " poids " + poidAmount + " hoids " + (startBoidsAmount - poidAmount));
 		for (int i = 1; i < startBoidsAmount; i++){
 			int currentPositionX = (int) Math.floor(Math.random() * canvasLength); 
 			int currentPositionY = (int) Math.floor(Math.random() * canvasHeight); 
 			int currentVelocityX = (int) Math.floor(Math.random() * 10 - 5);
 			int currentVelocityY = (int) Math.floor(Math.random() * 10 - 5);
-			// System.out.println("x: " + currentPositionX +" y: " + currentPositionY + " dx: " + currentVelocityX + " dy: " + currentVelocityY); // TODO: REMOVE
 			if (i <= poidAmount){
 				allInitBoids.add(new Poid(new Vector(currentPositionX, currentPositionY), new Vector(currentVelocityX, currentVelocityY), new Vector(0, 0), 7, 20, poidViewRange, true, gameWorld, killRadius, attractionToHoidsCoefficient, poidSeperationCoefficient));
 			}
@@ -118,7 +115,6 @@ public class World {
 	 */
 	public void moveAllBoids(){
 		for (Boid currentBoid : this.getAllInitBoids()) {
-			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
 			if (currentBoid instanceof PlayerBoid){
 				/* Only needs to change the mouse coords if it is the PlayerBoid.
 				Let me use most of the methods given by boid but changes the internal fields to PlayerBoid. */
@@ -129,7 +125,6 @@ public class World {
 			}
 			if (!currentBoid.isAlive()) continue; // if current boid is not alive it is no reason to move it futher.
 			currentBoid.move();
-			// System.out.println(currentBoid.getPosition().getPositionX() + " " + currentBoid.getPosition().getPositionY());
 			// If boids go out of the world bounds and wraparound is legal then change the coordinates
 			if (this.getWraparound()){
 				currentBoid.wraparoundCoordinates();
@@ -152,7 +147,10 @@ public class World {
 	public int getyHeight() {
 		return yHeight;
 	}
-
+	/**
+	 * Finds the first playerBoid
+	 * @return Gives PlayerBoid
+	 */
 	public PlayerBoid getWorldsPlayerboid(){
 		for (Boid currentBoid : allInitBoids) {
 			if (currentBoid instanceof PlayerBoid){
@@ -243,18 +241,11 @@ public class World {
 			gc.strokeOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
 			gc.fillOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
 			// Draws pointer
-			// double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius , directionPoint.getPositionX()};
 			Vector directionPoint = currentBoid.getPosition().additionNewVector(currentBoid.getVelocity().scalingVectorToSize(radius*2));
 			double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius/4 , directionPoint.getPositionX()};
 			double[] horisontalY = {currentBoid.getPosition().getPositionY() - radius/2, currentBoid.getPosition().getPositionY() - radius/2, directionPoint.getPositionY() - radius/2};
-			
-			// double[] verticalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() - radius, directionPoint.getPositionX()};
-			// double[] verticalY = {currentBoid.getPosition().getPositionY() - radius, currentBoid.getPosition().getPositionY() + radius/2, directionPoint.getPositionY()};
-
 			gc.strokePolygon(horisontalX, horisontalY, 3); // horisontal
-			// gc.strokePolygon(verticalX, verticalY, 3); // vertical
 			gc.fillPolygon(horisontalX, horisontalY, 3);
-			// gc.fillPolygon(verticalX, verticalY, 3);
 			gc.closePath();
 		}
 	}

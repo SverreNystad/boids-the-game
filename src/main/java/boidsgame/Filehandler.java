@@ -67,7 +67,7 @@ public class Filehandler implements FilehandlerInterface {
 			System.out.println(e.getMessage());
 		}
 	}
-	private static void valideStoreSettingsInFileArguments(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) throws IllegalArgumentException { // TODO TEST MER
+	private static void valideStoreSettingsInFileArguments(String gameMode, int startBoidsAmountSliderValue, int startPoidProsentSliderValue, String wraparound) throws IllegalArgumentException {
 		if (startBoidsAmountSliderValue < 0) {
 			throw new IllegalArgumentException("Cannot start with no boids.");
 		}

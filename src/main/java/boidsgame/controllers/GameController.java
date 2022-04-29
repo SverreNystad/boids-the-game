@@ -31,7 +31,6 @@ public class GameController extends Controller{
 		catch (FileNotFoundException e){
 			System.out.println("FileNotFoundException: " + e.getMessage());
 		}
-		// System.out.println(settings);
 		gameWorld = World.initGame((int) worldCanvas.getWidth(), (int) worldCanvas.getHeight(), settings.get(12), (int) Integer.valueOf(settings.get(13)), (int) Integer.valueOf(settings.get(14)), (settings.get(15)).equals("on"), (int) Integer.valueOf(settings.get(16)), (int) Integer.valueOf(settings.get(17)), (double) Double.valueOf(settings.get(18)), (double) Double.valueOf(settings.get(19)), (int) Integer.valueOf(settings.get(20)), (double) Double.valueOf(settings.get(21)), (double) Double.valueOf(settings.get(22)), (double) Double.valueOf(settings.get(23)));
 		worldCanvas.toFront();
 		runGame();
