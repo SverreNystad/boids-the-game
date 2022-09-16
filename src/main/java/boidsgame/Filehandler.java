@@ -129,7 +129,11 @@ public class Filehandler implements FilehandlerInterface {
 		return highscoreResult;
 	}
 	
-	 // Ønsker å sortere liseter på et element i en av kolonnene.
+	/**
+	 * Sorts Lists of Highscores.
+	 * @param highscoreResult unsorted list of Hoid and Poid runs
+	 * @return a 3d list. First list is Hoids second is Poids. Both are sorted by wanted value.
+	 */
 	public static List<List<List<String>>> sortHighscoreByGamemodeValue(List<List<String>> highscoreResult){
 		List<List<List<String>>> sortedHighscore = new ArrayList<>();
 		List<List<String>> poidList = new ArrayList<>();
@@ -142,13 +146,20 @@ public class Filehandler implements FilehandlerInterface {
 				poidList.add(stringList);
 			}
 		}
+		// Sorts Poids after kills
 		poidList.sort((List<String> score1, List<String> score2 ) -> Double.valueOf(score2.get(1)).compareTo(Double.valueOf(score1.get(1))));
+		// Sorts Hoids after lifetime
 		hoidList.sort((List<String> score1, List<String> score2 ) -> Double.valueOf(score2.get(2)).compareTo(Double.valueOf(score1.get(2))));
 		sortedHighscore.add(poidList);
 		sortedHighscore.add(hoidList);
 
 		return sortedHighscore;
 	}
+	/**
+	 * Removes "[" and "]" . Makes each run on one line.
+	 * @param sortedHighscore a sorted list
+	 * @return A string in correct order.
+	 */
 	public static String formatScores(List<List<String>> sortedHighscore){
 		return "Boid, Kills, Lifetime\n " + sortedHighscore.toString().replace("[", "").replace("]]", "").replace("],", "\n");
 	}

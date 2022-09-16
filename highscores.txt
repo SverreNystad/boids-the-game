@@ -2,3 +2,14 @@
 Poid, 0, 0.0
 Poid, 0, 0.0
 Hoid, 0, 0.0
+Hoid, 0, 1.0
+Hoid, 0, 42.0
+Hoid, 0, 28.0
+Hoid, 0, 27.0
+Hoid, 0, 14.0
+Hoid, 0, 0.0
+Hoid, 0, 1.0
+Hoid, 0, 6.0
+Hoid, 0, 0.0
+Hoid, 0, 31.0
+Hoid, 0, 3.0

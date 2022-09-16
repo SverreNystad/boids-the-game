@@ -14,7 +14,6 @@ public class World {
 	private int yHeight;
 	private Boolean gameOn = true;
 
-	
 	private Collection<Boid> allInitBoids;
 
 	private double mouseX; // The last known cursor coordinate.

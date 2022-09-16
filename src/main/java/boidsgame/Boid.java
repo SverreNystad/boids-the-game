@@ -35,15 +35,15 @@ public abstract class Boid{
 	 * @param boidWorld The world that the boid is in. It can only interact with boids in the same world.
 	 */
 	public Boid(
-		Vector position,
-		Vector velocity,
-		Vector acceleration,
-		int maxVelocity,
-		int maxAcceleration,
-		int viewRangeRadius,
-		boolean isAlive,
-		World boidWorld
-		){
+			Vector position,
+			Vector velocity,
+			Vector acceleration,
+			int maxVelocity,
+			int maxAcceleration,
+			int viewRangeRadius,
+			boolean isAlive,
+			World boidWorld
+			)	{
 		vailedArgs(maxVelocity,maxAcceleration,viewRangeRadius);
 		vailedVectorArgs(boidWorld, position);
 		this.position = position;
@@ -56,7 +56,7 @@ public abstract class Boid{
 		this.boidWorld = boidWorld;
 		this.minDistanceToOtherBoids = 10;
 		this.distanseToFear = 20;
-		this.boarderDistance = 50;
+		this.boarderDistance = 10;
 		this.turnfactor = 45;
 	}
 	/**
@@ -77,8 +77,9 @@ public abstract class Boid{
 	private static void vailedVectorArgs(World boidWord, final Vector... vecArgs) throws IllegalArgumentException{
 		if (boidWord == null) return;
 		for (Vector v : vecArgs) {
-			if (v.getPositionX() < 0 || v.getPositionX() >= boidWord.getxLength()) throw new IllegalArgumentException("No negativ arguments allowed");
-			if (v.getPositionY() < 0 || v.getPositionY() >= boidWord.getyHeight()) throw new IllegalArgumentException("No negativ arguments allowed");
+			if (v.getPositionX() > 0 || v.getPositionX() <= boidWord.getxLength()) continue;
+			if (v.getPositionY() > 0 || v.getPositionY() <= boidWord.getyHeight()) continue;
+			throw new IllegalArgumentException("No negativ arguments allowed");
 		}
 	}
 
