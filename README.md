@@ -1,5 +1,5 @@
 # Boids the Game README
-![image](https://user-images.githubusercontent.com/89105607/235391409-f2abe552-3d9e-42b0-bde5-02385bc96a67.png)
+![Boids title](https://user-images.githubusercontent.com/89105607/235391464-c957647b-b7ec-4cd6-812f-58d7bb418563.gif)
 
 ## Table of Contents
 - [Boids the Game README](#boids-the-game-readme)
