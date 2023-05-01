@@ -1,4 +1,5 @@
 # Boids the Game README
+![image](https://user-images.githubusercontent.com/89105607/235391409-f2abe552-3d9e-42b0-bde5-02385bc96a67.png)
 
 ## Table of Contents
 - [Boids the Game README](#boids-the-game-readme)
@@ -49,9 +50,17 @@ You can customize your gameplay experience through the settings screen. Here, yo
 ### Game Screens:
 The game features four main screens:
 1. Main Menu: Start a new game or access the settings and scoreboard.
+![image](https://user-images.githubusercontent.com/89105607/235390449-6b0e963d-d793-49e2-907b-90822e660e47.png)
+
 2. Settings: Customize the gameplay experience.
+![image](https://user-images.githubusercontent.com/89105607/235390259-558817ad-ad04-4d06-bd00-758039453efc.png)
+
 3. Scoreboard: View the highest scores achieved.
+![image](https://user-images.githubusercontent.com/89105607/235390531-93a6e6a9-b040-41f5-9519-ada6c42e6b04.png)
+
 4. Game Screen: Play the game.
+![image](https://user-images.githubusercontent.com/89105607/235391383-25de986f-146f-473e-9f04-1c3098971fd4.png)
+
 
 ## Testing
 To run the test suite for Boids the Game, follow these steps:
