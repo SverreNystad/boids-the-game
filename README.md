@@ -1,88 +1,66 @@
-# Skjelettprosjekt for TDT4100 prosjekt V2022
+# Boids the Game README
 
-Dette repoet er et skjelettprosjekt for TDT4100 prosjektet våren 2022.
+## Table of Contents
+- [Boids the Game README](#boids-the-game-readme)
+  - [Table of Contents](#table-of-contents)
+  - [Description of Boids the Game](#description-of-boids-the-game)
+  - [Description of the Boids Algorithm](#description-of-the-boids-algorithm)
+  - [Getting Started](#getting-started)
+  - [Gameplay](#gameplay)
+    - [Poid:](#poid)
+    - [Game Settings:](#game-settings)
+    - [Game Screens:](#game-screens)
+  - [Testing](#testing)
+  - [Acknowledgements](#acknowledgements)
+  - [License](#license)
 
-Vi har opprettet et eksempelprosjekt her, som ment for at dere skal kunne komme raskt igang med deres eget prosjekt.
+## Description of Boids the Game
+Boids the Game is a simulation-based game that is inspired by Craig Reynolds' Boids algorithm, which models the flocking behavior of birds or fish. In this game, players can choose to control a boid known as a Hoid (herd-like boid) and survive as long as possible, or a Poid (predator-like boid) and hunt down as many Hoids as possible. The game is built using Java, JavaFX, and Maven, with a total of four screens: Main Menu, Settings, Scoreboard, and Game Screen.
 
-## TL;DR
+## Description of the Boids Algorithm
+Boids the Game is based on the Boids algorithm, which was developed by Craig Reynolds in 1986 as a model for simulating flocking behavior of birds or fish. The algorithm is simple, yet effective in creating realistic swarm-like movement patterns.
 
-Lag en ny mappe i `src/main/java/` som er deres prosjekt. Opprett en startsfil for appen, slik som [ExampleProjectApp.java](src/main/java/exampleproject/ExampleProjectApp.java) og en kontroller som [ExampleProjectController.java](src/main/java/exampleproject/ExampleProjectController.java) i denne nye mappen. Lag så en mappe i `src/main/resources` med samme navn som prosjektet deres og et view som [App.fxml](src/main/resources/exampleproject/App.fxml) i denne nye mappen.
+The Boids algorithm uses three basic rules to govern the behavior of each individual boid:
 
-**Eventuelt**: Endre navn på filer og mapper fra "ExampleProject" til deres prosjektnavn.
+1. **Separation**: Boids try to maintain a certain distance from other nearby boids to avoid collisions.
+2. **Alignment**: Boids attempt to align their direction and speed with the average direction and speed of nearby boids.
+3. **Cohesion**: Boids move towards the average position of nearby boids, effectively staying together as a group.
 
-## Litt rask info
+## Getting Started
+To get started with Boids the Game, follow these steps:
 
-Allerede nå er det mulig å kjøre filen [ExampleProjectApp.java](src/main/java/exampleproject/ExampleProjectApp.java) i VSCode for å få opp en liten kalkulator-app.
+1. Ensure you have Java and JavaFX installed on your system. If not, download and install them from the official websites.
+2. Clone or download the repository to your local machine.
+3. Navigate to the project's root folder and run `mvn clean install` to build the project using Maven.
+4. Once the build is successful, navigate to the `target` folder and run the game using `java -jar BoidsTheGame-<version>.jar`.
 
-Denne filen er "startsfilen" til applikasjonen. Her settes tittel på appen, hvilken FXML-fil som skal brukes, og den er ansvarlig for å starte selve applikasjonen:
+## Gameplay
+In Boids the Game, you can play as a Hoid or a Poid (predator boid). 
 
-```java
-primaryStage.setTitle("Example App"); // Setter tittel på vinduet
-primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("App.fxml")))); // Sier at appen skal bruke "App.fxml"
-primaryStage.show(); // Viser vinduet
-```
+The Boids algorithm simulates flocking behavior by trying to achieve local flock center, aligning velocity with neighboring boids, and maintaining a minimum distance from other boids. Hoids follow the Boids algorithm, while Poids target the nearest Hoid or PlayerBoid when in Hoid game mode. The PlayerBoid is the character that the player controls, and it follows the cursor in the game.
 
-Kontrolleren til applikasjonen er [ExampleProjectController.java](src/main/java/exampleproject/ExampleProjectController.java). Denne filen er "bindeleddet" mellom FXML-filen(e) og klassen(e) som skal brukes i applikasjonen. I dette eksempelprosjektet har den to metoder: `initCalculator` og `handleButtonClick`. I tillegg har den noen felter som er annotert med `@FXML`. Dette viser at de tilhører [FXML-filen](src/main/resources/exampleproject/App.fxml) vår. Her er navnet på variablene viktige. F.eks er `private Label result` på linje 12 bundet til `Label`-feltet på linje 15 i [FXML-filen](src/main/resources/exampleproject/App.fxml), siden denne har en `fx:id = "result"` og variabelen vår heter `result`:
 
-```java
-@FXML
-private Label result; // Fra ExampleProjectApp.java
+### Poid:
+As a Poid, your goal is to hunt down and capture as many Boids as possible. The player-controlled Poid will also follow the cursor's last known position.
 
-<Label fx:id="result" layoutX="257.0" layoutY="244.0" /> // Fra App.fxml
-```
+### Game Settings:
+You can customize your gameplay experience through the settings screen. Here, you can adjust the number of Boids, the ratio of Hoids vs Poids, and enable or disable the map's wraparound feature.
 
-Noe liknende skjer med metoden `handleButtonClick`, som også er annotert med `@FXML`. Dette gjøres slik at vi "får tak i" denne metoden fra [FXML-filen](src/main/resources/exampleproject/App.fxml). `Button`-feltet i [FXML-filen](src/main/resources/exampleproject/App.fxml) har en `onAction="#handleButtonClick"`, som vil si at metoden `handleButtonClick`, som er annotert med `@FXML`, blir kjørt når vi trykker på knappen:
+### Game Screens:
+The game features four main screens:
+1. Main Menu: Start a new game or access the settings and scoreboard.
+2. Settings: Customize the gameplay experience.
+3. Scoreboard: View the highest scores achieved.
+4. Game Screen: Play the game.
 
-```xml
-<Button layoutX="271.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleButtonClick" text="Kalkuler" /> <!-- Fra App.fxml -->
-```
+## Testing
+To run the test suite for Boids the Game, follow these steps:
 
-Det som gjør at [kontrolleren](src/main/java/exampleproject/ExampleProjectController.java) og [FXML-filen](src/main/resources/exampleproject/App.fxml) er koblet sammen er attributten `fx:controller='exampleproject.ExampleProjectController'` på det aller ytterste elementet i [FXML-filen](src/main/resources/exampleproject/App.fxml).
+1. Navigate to the project's root folder.
+2. Run `mvn test` to execute the test suite.
 
-```xml
-<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="exampleproject.ExampleProjectController"> <!-- Fra App.fxml -->
-```
+## Acknowledgements
+We would like to thank Craig Reynolds for creating the Boids algorithm, which inspired the development of this game. Additionally, we appreciate the support of the Java, JavaFX, and Maven communities for their respective technologies.
 
-Så, når vi trykker på knappen i appen blir som sagt metoden `handleButtonClick` kjørt. Det som skjer inne i denne metoden er først at vi oppretter en ny [kalkulator](src/main/java/exampleproject/Calculator.java). Ved opprettelse av en kalkulator trenger vi en `operator`. Denne henter vi ut fra hva en bruker av appen har skrevet inn i `TextField`-feltet med `fx:id="operator"`. Siden vi allerede har opprettet en variabel `private TextField operator`, som er annortert med `@FXML`, er denne allere linket til dette `TextField`-feltet, og vi kan hente ut teksten som er skrevet inn med `operator.getText()`.
-
-```java
-initCalculator(operator.getText()); // Kaller på initCalculator som oppretter en ny kalkulator. Operator.getText() henter ut teksten som er skrevet inn i `operator`-feltet.
-```
-
-Det samme gjelder nedover i metoden; vi henter ut verdier fra `firstNumber` og `secondNumber`. Det som er verdt å merke seg her er at de blir hentet ut som `String`s, men kalkulatoren vår krever `int`s. Derfor gjør vi de også om til integers. Her bør man og være litt forsiktige, da det ikke er gitt at brukere skriver inn gyldige tall. Derfor har vi wrappet dette inn i en `try/catch`, som sier ifra dersom tallet er ugyldig.
-
-I tillegg til alt dette er det laget en liten [eksempel testfil](src/test/java/exampleproject/CalculatorTest.java). Ingenting spennende som skjer her, det er en test for konstruktøren til [kalkulator klassen vår](src/main/java/exampleproject/Calculator.java), samt en test for metoden `calculate` den har. Alle tester dere skriver til klassene deres legges altså inn i mappen `src/test/java/<deres_prosjekt>`.
-
-## For å komme i gang med deres eget prosjekt
-
-1. Inviter gruppemedlemmene dine til dette repoet, og gi de minst en `Developer`-rolle (helst `Maintainer`)
-2. Klon dette prosjektet et sted på maskinen deres (ikke inne i Students-mappen, men gjerne i samme mappe denne ligger i).
-    - Dersom du har aktivert 2FA på GitLab-kontoen din og blir bedt om innlogging ved kloning/pushing av/til repoet må du opprette en [personal access token](https://gitlab.stud.idi.ntnu.no/-/profile/personal_access_tokens) som har "read_repository" og "write_repository"-rettigheter. Deretter kan du logge inn med ditt feidebrukernavn som brukernavn og denne tokenen som blir laget til deg som passord. En guide for hvordan opprette personal access token finnes [her](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-personal-access-token).
-3. Lag en ny mappe i `src/main/java/` som er deres prosjekt.
-4. Opprett en startsfil for appen deres, slik som [ExampleProjectApp.java](src/main/java/exampleproject/ExampleProjectApp.java) og en kontroller som [ExampleProjectController.java](src/main/java/exampleproject/ExampleProjectController.java) i deres nye prosjekt-mappe.
-5. Opprett en ny mappe i `src/main/resources/` som er deres prosjekt.
-6. Opprett en FXML-fil, slik som [App.fxml](src/main/resources/exampleproject/App.fxml) i deres nye prosjekt-mappe i `src/main/resources/`.
-7. **HUSK** å legge inn `fx:controller='<deres_prosjekt>.<deres_kontroller>'` på det aller ytterste elementet i den nye FXML-filen deres, ellers vil ikke appen starte.
-
-**Eventuelt**: Endre navn på filer og mapper fra "ExampleProject" til deres prosjektnavn.
-
-## Reminder av nøkkelpunkter
-
-| Nøkkelpunkt                              | Beskrivelse                             |
-| ---------------------------------------- | --------------------------------------- |
-| Andel av karakter                        | 35% (appen) + 15% (dokumentasjon/teori) |
-| Frist for godkjenning av prosjektplan    | 25. februar                             |
-| Innleveringsfrist                        | 29. april                               |
-| Demonstrasjonsfrist hos læringsassistent | 03. mai                                 |
-| Gruppestørrelse                          | 1 eller 2 personer                      |
-
-### Anbefalte perioder å jobbe med prosjektet
-
-| Uke   | Fra  | Til  | Beskrivelse                                 |
-| ----- | ---- | ---- | ------------------------------------------- |
-| 7-8   | 14/2 | 25/2 | Grunnklasser og brukergrensesnitt           |
-| 11    | 14/3 | 18/3 | Lagring of filhåndtering                    |
-| 14    | 04/4 | 08/4 | Testing                                     |
-| 16-17 | 19/4 | 29/4 | Fullføre appen med tilhørende dokumentasjon |
-
-**_LYKKE TIL_**
+## License
+Boids the Game is released under the [MIT License](https://opensource.org/licenses/MIT). Please refer to the `LICENSE` file in the project's root folder for the full text.
