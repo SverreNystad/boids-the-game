@@ -1,5 +1,13 @@
 # Boids the Game README
+<div align="center">
+
 ![Boids title](https://user-images.githubusercontent.com/89105607/235391464-c957647b-b7ec-4cd6-812f-58d7bb418563.gif)
+
+![GitHub top language](https://img.shields.io/github/languages/top/SverreNystad/boids-the-game)
+![GitHub language count](https://img.shields.io/github/languages/count/SverreNystad/boids-the-game)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+</div>
 
 ## Table of Contents
 - [Boids the Game README](#boids-the-game-readme)
@@ -32,8 +40,14 @@ To get started with Boids the Game, follow these steps:
 
 1. Ensure you have Java and JavaFX installed on your system. If not, download and install them from the official websites.
 2. Clone or download the repository to your local machine.
-3. Navigate to the project's root folder and run `mvn clean install` to build the project using Maven.
-4. Once the build is successful, navigate to the `target` folder and run the game using `java -jar BoidsTheGame-<version>.jar`.
+   ```bash 
+   git clone https://github.com/SverreNystad/boids-the-game.git
+   cd boids-the-game
+   ```
+3. Navigate to the project's root folder and run 
+   ```bash 
+   mvn clean javafx:run
+   ```
 
 ## Gameplay
 In Boids the Game, you can play as a Hoid or a Poid (predator boid). 
