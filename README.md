@@ -74,8 +74,8 @@ The game features four main screens:
 
 4. Game Screen: Play the game.
 ![image](https://user-images.githubusercontent.com/89105607/235391383-25de986f-146f-473e-9f04-1c3098971fd4.png)
-
-
+[![Image from Gyazo](https://i.gyazo.com/6cd790e5b1516ec82968693f4ff45c76.gif)](https://gyazo.com/6cd790e5b1516ec82968693f4ff45c76)
+[![Image from Gyazo](https://i.gyazo.com/0dc7b698c4eb431d19be66c0b852ff02.gif)](https://gyazo.com/0dc7b698c4eb431d19be66c0b852ff02)
 ## Testing
 To run the test suite for Boids the Game, follow these steps:
 
