@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class World {
@@ -18,6 +19,10 @@ public class World {
 
 	private double mouseX; // The last known cursor coordinate.
 	private double mouseY; // The last known cursor coordinate.
+
+	private Image playerSprite;
+	private Image poidSprite;
+	private Image hoidSprite;
 	
 	public World(int xLength, int yHeight, Collection<Boid> allInitBoids){
 		validWorld(xLength, yHeight);
@@ -25,13 +30,13 @@ public class World {
 		this.yHeight = yHeight;
 		this.allInitBoids = allInitBoids;
 		this.wraparound = false;
+		playerSprite = new Image(getClass().getResource("/boidsgame/player.gif").toExternalForm());
+		poidSprite = new Image(getClass().getResource("/boidsgame/poid.gif").toExternalForm());
+		hoidSprite = new Image(getClass().getResource("/boidsgame/hoid.gif").toExternalForm());
 	}
 
 	public World(int xLength, int yHeight, Collection<Boid> allInitBoids, Boolean wraparound){
-		validWorld(xLength, yHeight);
-		this.xLength = xLength;
-		this.yHeight = yHeight;
-		this.allInitBoids = allInitBoids;
+		this(xLength, yHeight, allInitBoids); // Chain to the first constructor
 		this.wraparound = wraparound;
 	}
 
@@ -129,6 +134,7 @@ public class World {
 				currentBoid.wraparoundCoordinates();
 			}
 		}
+
 	}
 	/**
 	 * Changes the coordinates of the cursor, if the coordinates is not in the world then dont update.
@@ -214,38 +220,61 @@ public class World {
 	 */
 	public void drawBoidsOnCanvas(Canvas worldCanvas) {
 		GraphicsContext gc = worldCanvas.getGraphicsContext2D();
-		// Must clear the screen at the start of each update:
+		// Clear the canvas for the new frame
 		gc.clearRect(0, 0, worldCanvas.getWidth(), worldCanvas.getHeight());
 
 		for (Boid currentBoid : this.getAllInitBoids()) {
 			if (!currentBoid.isAlive()) continue;
-			gc.beginPath();
-			Color currentColor = new Color(0, 0, 0, 0);
+			
+			// Select the sprite based on the boid type:
+			Image sprite;
 			switch (currentBoid.getClass().getSimpleName()) {
 				case "Hoid":
-					currentColor = Color.GREEN;
+					sprite = hoidSprite;
 					break;
 				case "Poid":
-					currentColor = Color.RED;
+					sprite = poidSprite;
 					break;
 				case "PlayerBoid":
-					currentColor = Color.BLUE;
+					sprite = playerSprite;
 					break;
 				default:
-					currentColor = Color.BLACK;
+					// Fallback in case no sprite is available
+					sprite = null;
 			}
-			int radius = 10;
-			// Draws base circle
-			gc.setFill(currentColor);
-			gc.strokeOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
-			gc.fillOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
-			// Draws pointer
-			Vector directionPoint = currentBoid.getPosition().additionNewVector(currentBoid.getVelocity().scalingVectorToSize(radius*2));
-			double[] horisontalX = {currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionX() + radius/4 , directionPoint.getPositionX()};
-			double[] horisontalY = {currentBoid.getPosition().getPositionY() - radius/2, currentBoid.getPosition().getPositionY() - radius/2, directionPoint.getPositionY() - radius/2};
-			gc.strokePolygon(horisontalX, horisontalY, 3); // horisontal
-			gc.fillPolygon(horisontalX, horisontalY, 3);
-			gc.closePath();
-		}
+			
+			// If a sprite is available, draw it with rotation:
+			if (sprite != null) {
+				double posX = currentBoid.getPosition().getPositionX();
+				double posY = currentBoid.getPosition().getPositionY();
+				// Calculate the angle from the velocity vector (in degrees)
+				double angle = Math.toDegrees(Math.atan2(
+						currentBoid.getVelocity().getPositionY(),
+						currentBoid.getVelocity().getPositionX()));
+				
+				// Save the current transform
+				gc.save();
+				// Translate to the boid's position
+				gc.translate(posX, posY);
+				// Rotate the coordinate system according to the boid's direction
+				gc.rotate(angle);
+				
+				// Determine the dimensions of the sprite
+				double spriteWidth = sprite.getWidth();
+				double spriteHeight = sprite.getHeight();
+				// Draw the sprite centered at (0,0) after transformation:
+				gc.drawImage(sprite, -spriteWidth / 2, -spriteHeight / 2, spriteWidth, spriteHeight);
+				
+				// Restore the original coordinate system for the next boid
+				gc.restore();
+			} else {
+				// If no sprite is provided, fall back to drawing a simple shape:
+				gc.beginPath();
+				gc.setFill(Color.BLACK);
+				int radius = 10;
+				gc.fillOval(currentBoid.getPosition().getPositionX() - radius, currentBoid.getPosition().getPositionY() - radius, radius, radius);
+				gc.closePath();
+			}
+ 		}
 	}
 }
