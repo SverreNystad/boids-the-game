@@ -85,5 +85,7 @@ To run the test suite for Boids the Game, follow these steps:
 ## Acknowledgements
 We would like to thank Craig Reynolds for creating the Boids algorithm, which inspired the development of this game. Additionally, we appreciate the support of the Java, JavaFX, and Maven communities for their respective technologies.
 
+"[LPC] Birds" by bluecarrot16, commissioned by castelonia. https://opengameart.org/content/lpc-birds
+
 ## License
 Boids the Game is released under the [MIT License](https://opensource.org/licenses/MIT). Please refer to the `LICENSE` file in the project's root folder for the full text.
